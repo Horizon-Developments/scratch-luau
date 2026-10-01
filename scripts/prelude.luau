@@ -24,4 +24,3 @@ local function loadasset(url)
 	cache[path] = getcustomasset(path)
 	return cache[path]
 end
-

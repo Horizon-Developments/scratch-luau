@@ -24,491 +24,270 @@ local function loadasset(url)
 	cache[path] = getcustomasset(path)
 	return cache[path]
 end
+local a,b,c={},{},{}
+local d={__index=function(d,e)return rawget(d,"__kids")[e]end}
+local function __node(e,g)
+local h=setmetatable({Name=e,Parent=g,__kids={}},d)
+if g then rawget(g,"__kids")[e]=h end
+return h
+end
+local e=__node("BlockScript",nil)
+local function __require(g)
+if type(g)~="table"or not b[g]then return require(g)end
+local h=c[g]
+if h==nil then
+h={v=b[g](g,__require)}
+c[g]=h
+end
+return h.v
+end
+do local g=e for h,i in ipairs({"Lang"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Control"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Custom"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Events"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Lists"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Operators"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Output"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Sensing"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Variables"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core","Interpreter"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core","Plugins"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core","Registry"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core","Validate"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang","Core","Values"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Plugin"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Assets"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","BlockView"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Console"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Drag"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Editor"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Palette"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Program"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Shapes"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Theme"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Toolbar"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Transfer"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"UI","Workspace"})do g=rawget(g,"__kids")[i]or __node(i,g)end end
+do local g=e for h,i in ipairs({"Lang"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
 
-local a
 
+local j=i(h.Core.Registry)
+local k=i(h.Core.Interpreter)
+local l=i(h.Core.Values)
+local m=i(h.Core.Validate)
+local n=i(h.Core.Plugins)
 
-local b={function()local b,c,d=a(1)local e return(function(...)
+local o={Registry=j,Interpreter=k,Values=l,Validate=m,Plugins=n}
 
-
-
-
-local g=game:GetService("Players")
-local h=game:GetService("HttpService")
-local i=game:GetService("UserInputService")
-local j=d(c.Lang)
-local k=d(c.UI.Theme)
-local l=d(c.UI.Program)
-local m=d(c.UI.Palette)
-local n=d(c.UI.Workspace)
-local o=d(c.UI.Editor)
-local p=d(c.UI.Toolbar)
-local q=d(c.UI.Console)
-local r=d(c.UI.Transfer)
-local s=d(c.Plugin)
-
-
-local t=true
-
-local u=j.newRegistry()
-
-local function B(v,w,x)
-local y=u:createBlock(v)
-for z,A in pairs(w or{})do y.inputs[z]=A end
-for z,A in pairs(x or{})do y.stacks[z]=A end
-return y
+function o.newRegistry()
+local p=j.new()
+i(h.Blocks)(p)
+return p
 end
 
-
-local v=l.new({scripts={
-{x=24,y=24,blocks={
-B("events_when_run"),
-B("data_set",{NAME="i",VALUE=0}),
-B("control_repeat",{TIMES=3},{SUBSTACK={
-B("data_change",{NAME="i",BY=1}),
-B("out_print",{TEXT=B("op_join",{A="i = ",B=B("data_get",{NAME="i"})})}),
-}}),
-}},
-{x=24,y=240,blocks={
-B("events_when_run"),
-B("control_if_else",{COND=B("op_contains",{S="block",T="lock"})},{
-THEN={B("out_print",{TEXT="found"})},
-ELSE={B("out_print",{TEXT="missing"})},
-}),
-}},
-}})
-
-local w=Instance.new("ScreenGui")
-w.Name="BlockScript"
-w.ResetOnSpawn=false
-
-
-local function applyInset()w.IgnoreGuiInset=not i.TouchEnabled end
-applyInset()
-i:GetPropertyChangedSignal("TouchEnabled"):Connect(applyInset)
+function o.newInterpreter(p,q)return k.new(p,q)end
 
 
 
-local function guiParent()
-local x,y=pcall(function()return type(gethui)=="function"and gethui()or nil end)
-if x and typeof(y)=="Instance"then
-local z=y
-while z do
-if z:IsA("BasePlayerGui")then return y end
-z=z.Parent
-end
-end
-return g.LocalPlayer:WaitForChild("PlayerGui")
-end
-w.Parent=guiParent()
-
-local x=Instance.new("Frame")
-x.Name="Root"
-x.BackgroundColor3=k.ground
-x.BorderSizePixel=0
-x.Parent=w
-
-local y=Instance.new("UIScale")
-y.Parent=x
-
-local function fit()
-local z=w.AbsoluteSize
-k.scale=math.clamp(math.min(z.X/1100,z.Y/650),0.7,0.8)
-y.Scale=k.scale
-x.Size=UDim2.fromScale(1/k.scale,1/k.scale)
-end
-w:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
-fit()
-
-local z=n.new(x,u,v)
-z.editor=o.new(x,u,v)
-local A=m.new(x,u,
-function(A,C,D)z:spawn(A,C,D)end,
-function(A,C)z:hover(A,C)end,
-function()z:hoverEnd()end)
-
-
-local function syncCustom()
-if u.custom.sync(v:get().scripts)then A:refresh()end
-end
-v:onChanged(syncCustom)
-local C
-
-
-
-v.onSet=function(D,E,F,G)
-if D.op=="custom_define"and E=="NAME"then
-
-local H=u.custom.parse(tostring(G or"")).code
-if H~=""and H~=u.custom.parse(tostring(F or"")).code then
-for I,J in ipairs(v:get().scripts)do
-local K=J.blocks[1]
-if K and K~=D and K.op=="custom_define"
-and u.custom.parse(tostring(K.inputs.NAME or"")).code==H then
-D.inputs.NAME=F
-C:add("A define named \""..tostring(G).."\" already exists. Name not changed.","error")
-return
-end
-end
-end
-u.custom.sync(v:get().scripts)
-u.custom.rename(v:get().scripts,D,F,G)
-end
-if u:shapeOf(D)=="cap"then
-local H,I,J=v:find(D)
-if H and H[I+1]then
-local K=v:get().scripts[J]
-v:detach(H[I+1],K.x+40,K.y+40)
-end
-end
-end
-
-
-C=q.new(x)
-local D=r.new(x)
-local E
-
-
-local F,G={
-["space"]=Enum.KeyCode.Space,["up arrow"]=Enum.KeyCode.Up,["down arrow"]=Enum.KeyCode.Down,
-["right arrow"]=Enum.KeyCode.Right,["left arrow"]=Enum.KeyCode.Left,
-},{}
-local H={"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"}
-for I=string.byte("a"),string.byte("z")do F[string.char(I)]=Enum.KeyCode[string.upper(string.char(I))]end
-for I=0,9 do F[tostring(I)]=Enum.KeyCode[H[I+1] ]end
-for I,J in pairs(F)do G[J]=I end
-
-local I
-I=j.newInterpreter(u,{
-keyDown=function(J)
-if not t then return false end
-if i:GetFocusedTextBox()then return false end
-if J=="any"then
-for K,L in pairs(F)do
-if i:IsKeyDown(L)then return true end
-end
-return false
-end
-local K=F[J]
-return K~=nil and i:IsKeyDown(K)
-end,
-mouseDown=function()return t and i:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)end,
-
-date=function()
-local J=DateTime.now():ToLocalTime()
-return{year=J.Year,month=J.Month,day=J.Day,hour=J.Hour,min=J.Minute,sec=J.Second}
-end,
-output=function(J,K)C:add(J,K)end,
-clear=function()C:clear()end,
-ask=function(J)return C:ask(J)end,
-onError=function(J,K)
-C:add("Error: "..J,"error")
-if K then z:markError(K)end
-end,
-onFinish=function()E:setRunning(false)end,
-})
-
-i.InputBegan:Connect(function(J,K)
-if not t or K or not I.running then return end
-local L=G[J.KeyCode]
-if L then I:fire("key",L)end
-end)
-
-local function stop()
-I:stop()
-C:cancel()
-end
-
-E=p.new(x,{
-onRun=function()
-C:cancel()
-z:clearError()
-C:clear()
-I:run(v:get())
-E:setRunning(I.running)
-end,
-onStop=stop,
-onClear=function()
-stop()
-I:resetData()
-z:clearError()
-v:clear()
-end,
-onSave=function()
-local J={blockscript=j.Validate.VERSION,scripts=v:get().scripts}
-local K,L=pcall(h.JSONEncode,h,J)
-D:open({
-title="Save program",
-hint="Copy this text and keep it. Load takes it back.",
-text=K and L or"",
-error=K and""or("Could not encode: "..string.sub(tostring(L),1,120)),
-actions={{label="Select all",run=function(M,N)
-N:CaptureFocus()
-N.CursorPosition=#N.Text+1
-N.SelectionStart=1
-return true
-end}},
-})
-end,
-onLoad=function()
-D:open({
-title="Load program",
-hint="Paste saved text. Loading replaces everything in the workspace.",
-text="",
-actions={{label="Replace workspace",run=function(J)
-if string.match(J,"^%s*$")then return"Paste saved text first."end
-if#J>j.Values.LIMITS.MAX_JSON_BYTES then return"Text is too large to load."end
-local K,L=pcall(h.JSONDecode,h,J)
-if not K then return"Not valid JSON: "..string.sub(tostring(L),1,120)end
-local M,N=j.importProgram(u,L)
-if not M then
-syncCustom()
-return N
-end
-stop()
-I:resetData()
-z:clearError()
-v:replace(M)
-return nil
-end}},
-})
-end,
-})
-
-
-
-
-local J={Plugin=s,Registry=u,Palette=A,Program=v,
-Interpreter=I,Gui=w,Visible=true}
-
-function J:LoadPlugin(K)
-local L=j.loadPlugin(u,K)
-if L~=nil then return L end
-local M,N=pcall(function()A:refresh()end)
-if not M then return"palette refresh failed after loading plugin: "..tostring(N)end
-return nil
-end
-
-
-function J:SetVisibility(K)
-assert(type(K)=="boolean","SetVisibility expects a boolean")
-t=K
-self.Visible=K
-w.Enabled=K
-end
-
-return J
-
-end)()end,function()local b,c,d=a(2)local e return(function(...)
-
-
-
-
-local g=d(c.Core.Registry)
-local h=d(c.Core.Interpreter)
-local i=d(c.Core.Values)
-local j=d(c.Core.Validate)
-local k=d(c.Core.Plugins)
-
-local l={Registry=g,Interpreter=h,Values=i,Validate=j,Plugins=k}
-
-function l.newRegistry()
-local m=g.new()
-d(c.Blocks)(m)
-return m
-end
-
-function l.newInterpreter(m,n)return h.new(m,n)end
-
-
-
-function l.importProgram(m,n)
-local o=j.checkSize(n)
-if o then return nil,o end
-if m.custom then m.custom.sync(type(n)=="table"and n.scripts or nil,true)end
-return j.program(n,m)
+function o.importProgram(p,q)
+local r=m.checkSize(q)
+if r then return nil,r end
+if p.custom then p.custom.sync(type(q)=="table"and q.scripts or nil,true)end
+return m.program(q,p)
 end
 
 
 
-function l.loadPlugin(m,n)return k.load(m,n)end
+function o.loadPlugin(p,q)return n.load(p,q)end
 
-return l
+return o
 
-end)()end,function()local b,c,d=a(3)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
-return function(g)
-local h=d(c.Parent.Core.Values)
-local i={
-d(c.Events),
-d(c.Control),
-d(c.Operators),
-d(c.Variables),
-d(c.Lists),
-d(c.Sensing),
-d(c.Output),
-d(c.Custom),
+
+return function(j)
+local k=i(h.Parent.Core.Values)
+local l={
+i(h.Events),
+i(h.Control),
+i(h.Operators),
+i(h.Variables),
+i(h.Lists),
+i(h.Sensing),
+i(h.Output),
+i(h.Custom),
 }
-for j,k in ipairs(i)do
-k(g,h)
+for m,n in ipairs(l)do
+n(j,k)
 end
 end
 
-end)()end,function()local b,c,d=a(4)local e return(function(...)return function(g,h)
-g:defineCategory("Control",{name="Control",color={255,171,25}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Control"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Control",{name="Control",color={255,171,25}})
 
-g:defineBlock({id="control_wait",category="Control",shape="stack",
+j:defineBlock({id="control_wait",category="Control",shape="stack",
 label="wait {SECS} seconds",
 inputs={SECS={type="number",default=1}},
-run=function(i,j)i:wait(math.max(0,j.SECS))end})
+run=function(l,m)l:wait(math.max(0,m.SECS))end})
 
-g:defineBlock({id="control_repeat",footerIcon="loop",category="Control",shape="c",
+j:defineBlock({id="control_repeat",footerIcon="loop",category="Control",shape="c",
 label="repeat {TIMES}",stacks={"SUBSTACK"},
 inputs={TIMES={type="number",default=10}},
-run=function(i,j)
-for k=1,math.floor(j.TIMES)do
-if not i:alive()then return"STOP"end
-local l=i:stack("SUBSTACK")
-if l then return l end
-i:loopStep()
+run=function(l,m)
+for n=1,math.floor(m.TIMES)do
+if not l:alive()then return"STOP"end
+local o=l:stack("SUBSTACK")
+if o then return o end
+l:loopStep()
 end
 end})
 
 
-g:defineBlock({id="control_forever",footerIcon="loop",category="Control",shape="cap",
+j:defineBlock({id="control_forever",footerIcon="loop",category="Control",shape="cap",
 label="forever",stacks={"SUBSTACK"},
-run=function(i)
-while i:alive()do
-local j=i:stack("SUBSTACK")
-if j then return j end
-i:loopStep()
+run=function(l)
+while l:alive()do
+local m=l:stack("SUBSTACK")
+if m then return m end
+l:loopStep()
 end
 return"STOP"
 end})
 
-g:defineBlock({id="control_if",category="Control",shape="c",
+j:defineBlock({id="control_if",category="Control",shape="c",
 label="if {COND} then",stacks={"THEN"},
 inputs={COND={type="boolean"}},
-run=function(i,j)
-if j.COND then return i:stack("THEN")end
+run=function(l,m)
+if m.COND then return l:stack("THEN")end
 end})
 
-g:defineBlock({id="control_if_else",category="Control",shape="c",
+j:defineBlock({id="control_if_else",category="Control",shape="c",
 label="if {COND} then",stacks={"THEN","ELSE"},
 inputs={COND={type="boolean"}},
-run=function(i,j)
-return i:stack(j.COND and"THEN"or"ELSE")
+run=function(l,m)
+return l:stack(m.COND and"THEN"or"ELSE")
 end})
 
-g:defineBlock({id="control_wait_until",category="Control",shape="stack",
+j:defineBlock({id="control_wait_until",category="Control",shape="stack",
 label="wait until {COND}",
 inputs={COND={type="boolean",lazy=true}},
-run=function(i)
-while i:alive()and not i:input("COND")do i:yield()end
+run=function(l)
+while l:alive()and not l:input("COND")do l:yield()end
 end})
 
-g:defineBlock({id="control_repeat_until",footerIcon="loop",category="Control",shape="c",
+j:defineBlock({id="control_repeat_until",footerIcon="loop",category="Control",shape="c",
 label="repeat until {COND}",stacks={"SUBSTACK"},
 inputs={COND={type="boolean",lazy=true}},
-run=function(i)
-while i:alive()and not i:input("COND")do
-local j=i:stack("SUBSTACK")
-if j then return j end
-i:loopStep()
+run=function(l)
+while l:alive()and not l:input("COND")do
+local m=l:stack("SUBSTACK")
+if m then return m end
+l:loopStep()
 end
 end})
 
-g:defineBlock({id="control_while",footerIcon="loop",category="Control",shape="c",
+j:defineBlock({id="control_while",footerIcon="loop",category="Control",shape="c",
 label="while {COND}",stacks={"SUBSTACK"},
 inputs={COND={type="boolean",lazy=true}},
-run=function(i)
-while i:alive()and i:input("COND")do
-local j=i:stack("SUBSTACK")
-if j then return j end
-i:loopStep()
+run=function(l)
+while l:alive()and l:input("COND")do
+local m=l:stack("SUBSTACK")
+if m then return m end
+l:loopStep()
 end
 end})
 
 
-g:defineBlock({id="control_for_each",footerIcon="loop",category="Control",shape="c",
+j:defineBlock({id="control_for_each",footerIcon="loop",category="Control",shape="c",
 label="for {VAR} = 1 to {VALUE}",stacks={"SUBSTACK"},
 inputs={VAR={type="variable",default="i"},VALUE={type="number",default=10}},
-run=function(i,j)
-local k=1
-while i:alive()and k<=j.VALUE do
-i.interp:setVar(j.VAR,k)
-local l=i:stack("SUBSTACK")
-if l then return l end
-i:loopStep()
-k=k+1
+run=function(l,m)
+local n=1
+while l:alive()and n<=m.VALUE do
+l.interp:setVar(m.VAR,n)
+local o=l:stack("SUBSTACK")
+if o then return o end
+l:loopStep()
+n=n+1
 end
 end})
 
 
-g:defineBlock({id="control_for_in",footerIcon="loop",category="Control",shape="c",
+j:defineBlock({id="control_for_in",footerIcon="loop",category="Control",shape="c",
 label="for each {VAR} in {LIST}",stacks={"SUBSTACK"},
 inputs={VAR={type="variable",default="item"},LIST={type="list",default="my list"}},
-run=function(i,j)
-local k=i.interp:list(j.LIST)
-local l=1
-while i:alive()and k[l]~=nil do
-i.interp:setVar(j.VAR,k[l])
-local m=i:stack("SUBSTACK")
-if m then return m end
-i:loopStep()
-l=l+1
+run=function(l,m)
+local n=l.interp:list(m.LIST)
+local o=1
+while l:alive()and n[o]~=nil do
+l.interp:setVar(m.VAR,n[o])
+local p=l:stack("SUBSTACK")
+if p then return p end
+l:loopStep()
+o=o+1
 end
 end})
 
 
-g:defineBlock({id="control_all_at_once",category="Control",shape="c",
+j:defineBlock({id="control_all_at_once",category="Control",shape="c",
 label="all at once",stacks={"SUBSTACK"},
-run=function(i)return i:stack("SUBSTACK")end})
+run=function(l)return l:stack("SUBSTACK")end})
 
-g:defineBlock({id="control_get_counter",category="Control",shape="reporter",label="counter",
-run=function(i)return i.interp.counter end})
-g:defineBlock({id="control_incr_counter",category="Control",shape="stack",label="increment counter",
-run=function(i)i.interp.counter=i.interp.counter+1 end})
-g:defineBlock({id="control_clear_counter",category="Control",shape="stack",label="clear counter",
-run=function(i)i.interp.counter=0 end})
+j:defineBlock({id="control_get_counter",category="Control",shape="reporter",label="counter",
+run=function(l)return l.interp.counter end})
+j:defineBlock({id="control_incr_counter",category="Control",shape="stack",label="increment counter",
+run=function(l)l.interp.counter=l.interp.counter+1 end})
+j:defineBlock({id="control_clear_counter",category="Control",shape="stack",label="clear counter",
+run=function(l)l.interp.counter=0 end})
 
 
-g:defineBlock({id="control_stop",category="Control",shape="cap",
+j:defineBlock({id="control_stop",category="Control",shape="cap",
 label="stop {OPTION}",
 inputs={OPTION={type="string",default="this script",options={"this script","all","other scripts"}}},
-shapeOf=function(i)return i.inputs.OPTION=="other scripts"and"stack"or"cap"end,
-run=function(i,j)
-if j.OPTION=="all"then i:stopAll()return"STOP"end
-if j.OPTION=="other scripts"then i:stopOthers()return nil end
+shapeOf=function(l)return l.inputs.OPTION=="other scripts"and"stack"or"cap"end,
+run=function(l,m)
+if m.OPTION=="all"then l:stopAll()return"STOP"end
+if m.OPTION=="other scripts"then l:stopOthers()return nil end
 return"STOP"
 end})
 
 
-g:defineBlock({id="control_error",category="Control",shape="cap",label="error {MESSAGE}",
+j:defineBlock({id="control_error",category="Control",shape="cap",label="error {MESSAGE}",
 inputs={MESSAGE={type="any",default="something went wrong",raw=true}},
-run=function(i,j)error(h.toString(j.MESSAGE),0)end})
+run=function(l,m)error(k.toString(m.MESSAGE),0)end})
 
 
 
-g:defineBlock({id="control_pcall",category="Control",shape="c",
+j:defineBlock({id="control_pcall",category="Control",shape="c",
 label="pcall, error message in {VAR}",stacks={"TRY","CATCH"},
 inputs={VAR={type="variable",default="err"}},
-run=function(i,j)
-local k=i.thread
-local l,m,n,o,p=k.cur,k.execDepth,k.depth,k.frame,k.warp
-local q,r=pcall(i.stack,i,"TRY")
-if q then return r end
-k.cur,k.execDepth,k.depth,k.frame,k.warp=l,m,n,o,p
-i.interp:setVar(j.VAR,h.toString(r))
-return i:stack("CATCH")
+run=function(l,m)
+local n=l.thread
+local o,p,q,r,s=n.cur,n.execDepth,n.depth,n.frame,n.warp
+local t,u=pcall(l.stack,l,"TRY")
+if t then return u end
+n.cur,n.execDepth,n.depth,n.frame,n.warp=o,p,q,r,s
+l.interp:setVar(m.VAR,k.toString(u))
+return l:stack("CATCH")
 end})
 end
 
-end)()end,function()local b,c,d=a(5)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Custom"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
@@ -520,604 +299,625 @@ end)()end,function()local b,c,d=a(5)local e return(function(...)
 
 
 
-return function(g,h)
-local i=h.LIMITS
-g:defineCategory("Custom",{name="My Blocks",color={255,102,128}})
 
-local j=i.MAX_CALL_DEPTH
-local k="custom:"
-local l={"normal","without pausing"}
+return function(j,k)
+local l=k.LIMITS
+j:defineCategory("Custom",{name="My Blocks",color={255,102,128}})
 
-local function trim(m)return(string.match(m,"^%s*(.-)%s*$"))end
+local m=l.MAX_CALL_DEPTH
+local n="custom:"
+local o={"normal","without pausing"}
 
-local function nameOf(m)
-if type(m)=="string"or type(m)=="number"then
-local n=trim(h.toString(m))
-if n~=""then return n end
+local function trim(p)return(string.match(p,"^%s*(.-)%s*$"))end
+
+local function nameOf(p)
+if type(p)=="string"or type(p)=="number"then
+local q=trim(k.toString(p))
+if q~=""then return q end
 end
 end
 
 
 
-local function parse(m)
-local n,o,p={},{},1
-local function literal(q)table.insert(n,(string.gsub(q,"%%","")))end
-while p<=#m do
-local q,r,s=string.find(m,"%(([^()<>]+)%)",p)
-local t,u,v=string.find(m,"<([^()<>]+)>",p)
-local w,x,y,z
-if q and(not t or q<t)then w,x,y,z=q,r,s,"s"
-elseif t then w,x,y,z=t,u,v,"b"end
-if not w then literal(string.sub(m,p))break end
-literal(string.sub(m,p,w-1))
-y=trim(y)
-if y==""then literal(string.sub(m,w,x))
+local function parse(p)
+local q,r,s={},{},1
+local function literal(t)table.insert(q,(string.gsub(t,"%%","")))end
+while s<=#p do
+local t,u,v=string.find(p,"%(([^()<>]+)%)",s)
+local w,x,y=string.find(p,"<([^()<>]+)>",s)
+local z,A,C,D
+if t and(not w or t<w)then z,A,C,D=t,u,v,"s"
+elseif w then z,A,C,D=w,x,y,"b"end
+if not z then literal(string.sub(p,s))break end
+literal(string.sub(p,s,z-1))
+C=trim(C)
+if C==""then literal(string.sub(p,z,A))
 else
-if#o>=i.MAX_PARAMS then literal(string.sub(m,w,x))
+if#r>=l.MAX_PARAMS then literal(string.sub(p,z,A))
 else
-table.insert(o,{name=y,kind=z})
-table.insert(n,"%"..z)
+table.insert(r,{name=C,kind=D})
+table.insert(q,"%"..D)
 end
 end
-p=x+1
+s=A+1
 end
-return{code=trim((string.gsub(table.concat(n),"%s+"," "))),params=o}
-end
-
-
-local function kindsOf(m)
-local n={}
-for o in string.gmatch(m,"%%([sb])")do table.insert(n,o)end
-return n
+return{code=trim((string.gsub(table.concat(q),"%s+"," "))),params=r}
 end
 
-local function defineNameOf(m)
-return nameOf(type(m.inputs)=="table"and m.inputs.NAME)
+
+local function kindsOf(p)
+local q={}
+for r in string.gmatch(p,"%%([sb])")do table.insert(q,r)end
+return q
 end
 
-local function findDefine(m,n)
-for o,p in ipairs(m and m.scripts or{})do
-local q=p.blocks and p.blocks[1]
-if q and q.op=="custom_define"then
-local r=defineNameOf(q)
-if r and parse(r).code==n then return p,q end
+local function defineNameOf(p)
+return nameOf(type(p.inputs)=="table"and p.inputs.NAME)
+end
+
+local function findDefine(p,q)
+for r,s in ipairs(p and p.scripts or{})do
+local t=s.blocks and s.blocks[1]
+if t and t.op=="custom_define"then
+local u=defineNameOf(t)
+if u and parse(u).code==q then return s,t end
 end
 end
 end
 
-g:defineBlock({id="custom_define",category="Custom",shape="hat",bowler=true,label="define {NAME} {MODE}",
+j:defineBlock({id="custom_define",category="Custom",shape="hat",bowler=true,label="define {NAME} {MODE}",
 inputs={NAME={type="string",default="my block",reporters=false},
-MODE={type="string",default="normal",options=l}},
+MODE={type="string",default="normal",options=o}},
 hat={event="define"}})
 
 
-g:defineBlock({id="custom_arg",category="Custom",shape="reporter",label="{NAME}",listed=false,
+j:defineBlock({id="custom_arg",category="Custom",shape="reporter",label="{NAME}",listed=false,
 inputs={NAME={type="param",default=""}},
-run=function(m,n)
-local o=m.thread.frame
-local p=o and o.vals[n.NAME]
-if p==nil then return 0 end
-return p
+run=function(p,q)
+local r=p.thread.frame
+local s=r and r.vals[q.NAME]
+if s==nil then return 0 end
+return s
 end})
-g:defineBlock({id="custom_arg_bool",category="Custom",shape="boolean",label="{NAME}",listed=false,
+j:defineBlock({id="custom_arg_bool",category="Custom",shape="boolean",label="{NAME}",listed=false,
 inputs={NAME={type="param",default=""}},
-run=function(m,n)
-local o=m.thread.frame
-return o~=nil and h.toBool(o.vals[n.NAME])
+run=function(p,q)
+local r=p.thread.frame
+return r~=nil and k.toBool(r.vals[q.NAME])
 end})
 
-local m={}
+local p={}
 
-local function defineCall(n)
-local o=kindsOf(n)
-local p,q,r={},{},1
-for s,t in ipairs(o)do
-local u,v=string.find(n,"%%"..t,r)
-table.insert(q,(string.gsub(string.sub(n,r,u-1),"[{}%%]","")))
-table.insert(q,"{P"..s.."}")
-p["P"..s]=t=="b"and{type="boolean"}or{type="any",default=""}
-r=v+1
+local function defineCall(q)
+local r=kindsOf(q)
+local s,t,u={},{},1
+for v,w in ipairs(r)do
+local x,y=string.find(q,"%%"..w,u)
+table.insert(t,(string.gsub(string.sub(q,u,x-1),"[{}%%]","")))
+table.insert(t,"{P"..v.."}")
+s["P"..v]=w=="b"and{type="boolean"}or{type="any",default=""}
+u=y+1
 end
-table.insert(q,(string.gsub(string.sub(n,r),"[{}%%]","")))
-local s=table.concat(q)
-if string.find(s,"^%s*$")then s="block"end
-local t=g:defineBlock({id=k..n,category="Custom",shape="stack",label=s,listed=false,
-inputs=p,
-run=function(t,u)
-local v=t.interp
-local w,x=findDefine(v.program,n)
-if not w then error("\""..n.."\" has no define block",0)end
-local y=t.thread
-y.depth=(y.depth or 0)+1
-if y.depth>j then error("blocks nested too deep (recursion without an end?)",0)end
-local z={parent=y.frame,vals={}}
-for A,C in ipairs(parse(defineNameOf(x)).params)do z.vals[C.name]=u["P"..A]end
-y.frame=z
-local A=x.inputs.MODE=="without pausing"
-if A then v:enterWarp(y)end
-local C=v:runStack(y,w.blocks,2)
-if A then v:exitWarp(y)end
-y.frame=z.parent
-y.depth=y.depth-1
+table.insert(t,(string.gsub(string.sub(q,u),"[{}%%]","")))
+local v=table.concat(t)
+if string.find(v,"^%s*$")then v="block"end
+local w=j:defineBlock({id=n..q,category="Custom",shape="stack",label=v,listed=false,
+inputs=s,
+run=function(w,x)
+local y=w.interp
+local z,A=findDefine(y.program,q)
+if not z then error("\""..q.."\" has no define block",0)end
+local C=w.thread
+C.depth=(C.depth or 0)+1
+if C.depth>m then error("blocks nested too deep (recursion without an end?)",0)end
+local D={parent=C.frame,vals={}}
+for E,F in ipairs(parse(defineNameOf(A)).params)do D.vals[F.name]=x["P"..E]end
+C.frame=D
+local E=A.inputs.MODE=="without pausing"
+if E then y:enterWarp(C)end
+local F=y:runStack(C,z.blocks,2)
+if E then y:exitWarp(C)end
+C.frame=D.parent
+C.depth=C.depth-1
 
-if C and not t:alive()then return"STOP"end
+if F and not w:alive()then return"STOP"end
 end})
-m[n]=t
-return t
+p[q]=w
+return w
 end
 
-local function walk(n,o,p)
-if type(n)~="table"or p>100 then return end
-for q,r in ipairs(n)do
+local function walk(q,r,s)
+if type(q)~="table"or s>100 then return end
+for t,u in ipairs(q)do
+if type(u)=="table"then
+r(u)
+if type(u.inputs)=="table"then
+for v,w in pairs(u.inputs)do
+if type(w)=="table"and w.op then walk({w},r,s+1)end
+end
+end
+if type(u.stacks)=="table"then
+for v,w in pairs(u.stacks)do walk(w,r,s+1)end
+end
+end
+end
+end
+
+local q={}
+j.custom=q
+q.parse=parse
+
+
+
+function q.sync(r,s)
+local t,u,v,w={},{},false,false
 if type(r)=="table"then
-o(r)
-if type(r.inputs)=="table"then
-for s,t in pairs(r.inputs)do
-if type(t)=="table"and t.op then walk({t},o,p+1)end
+for x,y in ipairs(r)do
+if type(y)=="table"and type(y.blocks)=="table"then
+local z=y.blocks[1]
+if type(z)=="table"and z.op=="custom_define"then
+local A=defineNameOf(z)
+if A then
+local C=parse(A)
+t[C.code]=true
+if#C.params>0 then v=true end
 end
 end
-if type(r.stacks)=="table"then
-for s,t in pairs(r.stacks)do walk(t,o,p+1)end
-end
-end
-end
-end
-
-local n={}
-g.custom=n
-n.parse=parse
-
-
-
-function n.sync(o,p)
-local q,r,s,t={},{},false,false
-if type(o)=="table"then
-for u,v in ipairs(o)do
-if type(v)=="table"and type(v.blocks)=="table"then
-local w=v.blocks[1]
-if type(w)=="table"and w.op=="custom_define"then
-local x=defineNameOf(w)
-if x then
-local y=parse(x)
-q[y.code]=true
-if#y.params>0 then s=true end
-end
-end
-walk(v.blocks,function(x)
-if type(x.op)=="string"and string.sub(x.op,1,#k)==k then
-r[string.sub(x.op,#k+1)]=true
+walk(y.blocks,function(A)
+if type(A.op)=="string"and string.sub(A.op,1,#n)==n then
+u[string.sub(A.op,#n+1)]=true
 end
 end,1)
 end
 end
 end
-for u in pairs(q)do r[u]=true end
-local u=0
-for v in pairs(r)do
-if not m[v]and not g:get(k..v)then
-u=u+1
-if u>i.MAX_CUSTOM then break end
-defineCall(v)
-t=true
+for x in pairs(t)do u[x]=true end
+local x=0
+for y in pairs(u)do
+if not p[y]and not j:get(n..y)then
+x=x+1
+if x>l.MAX_CUSTOM then break end
+defineCall(y)
+w=true
 end
 end
-if not p then
-local v,w={},false
-for x in pairs(m)do
-if not r[x]then v[k..x]=true;w=true end
+if not s then
+local y,z={},false
+for A in pairs(p)do
+if not u[A]then y[n..A]=true;z=true end
 end
-if w then
-for x in pairs(v)do m[string.sub(x,#k+1)]=nil end
-g:removeBlocks(v)
-t=true
+if z then
+for A in pairs(y)do p[string.sub(A,#n+1)]=nil end
+j:removeBlocks(y)
+w=true
 end
 end
-for v,w in pairs(m)do
-local x=q[v]==true
-if(w.listed~=false)~=x then t=true end
-w.listed=x
-end
-
-for v,w in ipairs({"custom_arg","custom_arg_bool"})do
-local x=g:get(w)
-if(x.listed~=false)~=s then t=true end
-x.listed=s
-end
-return t
+for y,z in pairs(p)do
+local A=t[y]==true
+if(z.listed~=false)~=A then w=true end
+z.listed=A
 end
 
-
+for y,z in ipairs({"custom_arg","custom_arg_bool"})do
+local A=j:get(z)
+if(A.listed~=false)~=v then w=true end
+A.listed=v
+end
+return w
+end
 
 
 
-function n.rename(o,p,q,r)
-local s,t=parse(nameOf(q)or""),parse(nameOf(r)or"")
-local u=0
-if type(o)~="table"then return u end
 
 
-local v={}
-for w,x in ipairs(s.params)do
-local y=t.params[w]
-if y and y.name~=x.name then v[x.name]=y.name end
-end
-if next(v)then
-for w,x in ipairs(o)do
-if type(x)=="table"and type(x.blocks)=="table"and x.blocks[1]==p then
-walk(x.blocks,function(y)
-if(y.op=="custom_arg"or y.op=="custom_arg_bool")and type(y.inputs)=="table"and v[y.inputs.NAME]then
-y.inputs.NAME=v[y.inputs.NAME]
-u=u+1
-end
-end,1)
-end
-end
-end
+function q.rename(r,s,t,u)
+local v,w=parse(nameOf(t)or""),parse(nameOf(u)or"")
+local x=0
+if type(r)~="table"then return x end
 
-if s.code==t.code or s.code==""or t.code==""then return u end
-for w,x in ipairs(o)do
-local y=type(x)=="table"and type(x.blocks)=="table"and x.blocks[1]
-if y and y~=p and type(y)=="table"and y.op=="custom_define"then
-local z=defineNameOf(y)
-if z and parse(z).code==s.code then return u end
+
+local y={}
+for z,A in ipairs(v.params)do
+local C=w.params[z]
+if C and C.name~=A.name then y[A.name]=C.name end
 end
-end
-if not g:get(k..t.code)then defineCall(t.code)end
-local w=g:get(k..t.code)
-local x,y=k..s.code,k..t.code
-for z,A in ipairs(o)do
-if type(A)=="table"then
+if next(y)then
+for z,A in ipairs(r)do
+if type(A)=="table"and type(A.blocks)=="table"and A.blocks[1]==s then
 walk(A.blocks,function(C)
-if C.op==x then
-local D=type(C.inputs)=="table"and C.inputs or{}
-C.op=y
-C.inputs={}
-for E,F in pairs(w.inputs)do
-local G=D[E]
-if G==nil then G=F.default end
-C.inputs[E]=G
-end
-u=u+1
+if(C.op=="custom_arg"or C.op=="custom_arg_bool")and type(C.inputs)=="table"and y[C.inputs.NAME]then
+C.inputs.NAME=y[C.inputs.NAME]
+x=x+1
 end
 end,1)
 end
 end
-return u
+end
+
+if v.code==w.code or v.code==""or w.code==""then return x end
+for z,A in ipairs(r)do
+local C=type(A)=="table"and type(A.blocks)=="table"and A.blocks[1]
+if C and C~=s and type(C)=="table"and C.op=="custom_define"then
+local D=defineNameOf(C)
+if D and parse(D).code==v.code then return x end
+end
+end
+if not j:get(n..w.code)then defineCall(w.code)end
+local z=j:get(n..w.code)
+local A,C=n..v.code,n..w.code
+for D,E in ipairs(r)do
+if type(E)=="table"then
+walk(E.blocks,function(F)
+if F.op==A then
+local G=type(F.inputs)=="table"and F.inputs or{}
+F.op=C
+F.inputs={}
+for H,I in pairs(z.inputs)do
+local J=G[H]
+if J==nil then J=I.default end
+F.inputs[H]=J
+end
+x=x+1
+end
+end,1)
+end
+end
+return x
 end
 end
 
-end)()end,function()local b,c,d=a(6)local e return(function(...)return function(g,h)
-g:defineCategory("Events",{name="Events",color={255,191,0}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Events"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Events",{name="Events",color={255,191,0}})
 
-g:defineBlock({id="events_when_run",category="Events",shape="hat",
+j:defineBlock({id="events_when_run",category="Events",shape="hat",
 label="when {@flag} clicked",hat={event="run"}})
 
-g:defineBlock({id="events_when_broadcast",category="Events",shape="hat",
+j:defineBlock({id="events_when_broadcast",category="Events",shape="hat",
 label="when I receive {MESSAGE}",
 inputs={MESSAGE={type="string",default="message1",reporters=false}},
-hat={event="broadcast",filter=function(i,j)return h.equals(i.MESSAGE,j)end}})
+hat={event="broadcast",filter=function(l,m)return k.equals(l.MESSAGE,m)end}})
 
 
-g:defineBlock({id="events_when_key",category="Events",shape="hat",
+j:defineBlock({id="events_when_key",category="Events",shape="hat",
 label="when {KEY} key pressed",
-inputs={KEY={type="string",default="space",options=h.KEYS,reporters=false}},
-hat={event="key",persistent=true,once=true,filter=function(i,j)return i.KEY=="any"or i.KEY==j end}})
+inputs={KEY={type="string",default="space",options=k.KEYS,reporters=false}},
+hat={event="key",persistent=true,once=true,filter=function(l,m)return l.KEY=="any"or l.KEY==m end}})
 
 
-g:defineBlock({id="events_when_timer",category="Events",shape="hat",
+j:defineBlock({id="events_when_timer",category="Events",shape="hat",
 label="when timer > {VALUE}",
 inputs={VALUE={type="number",default=10}},
-hat={event="edge",poll=function(i,j)return j:timer()>i.VALUE end}})
+hat={event="edge",poll=function(l,m)return m:timer()>l.VALUE end}})
 
-g:defineBlock({id="events_broadcast",category="Events",shape="stack",
+j:defineBlock({id="events_broadcast",category="Events",shape="stack",
 label="broadcast {MESSAGE}",
 inputs={MESSAGE={type="string",default="message1"}},
-run=function(i,j)i.interp:fire("broadcast",j.MESSAGE,i.thread)end})
+run=function(l,m)l.interp:fire("broadcast",m.MESSAGE,l.thread)end})
 
-g:defineBlock({id="events_broadcast_wait",category="Events",shape="stack",
+j:defineBlock({id="events_broadcast_wait",category="Events",shape="stack",
 label="broadcast {MESSAGE} and wait",
 inputs={MESSAGE={type="string",default="message1"}},
-run=function(i,j)
-local k=i.interp:fire("broadcast",j.MESSAGE,i.thread)
+run=function(l,m)
+local n=l.interp:fire("broadcast",m.MESSAGE,l.thread)
 local function pending()
-for l,m in ipairs(k)do if not m.done then return true end end
+for o,p in ipairs(n)do if not p.done then return true end end
 return false
 end
-while i:alive()and pending()do i:yield()end
+while l:alive()and pending()do l:yield()end
 end})
 end
 
-end)()end,function()local b,c,d=a(7)local e return(function(...)return function(g,h)
-g:defineCategory("Lists",{name="Lists",color={255,102,26}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Lists"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Lists",{name="Lists",color={255,102,26}})
 
-local function list(i,j)return i.interp:list(j)end
-local i={type="list",default="my list"}
+local function list(l,m)return l.interp:list(m)end
+local l={type="list",default="my list"}
 
-local function INDEX(j)return{type="any",default=j or 1}end
+local function INDEX(m)return{type="any",default=m or 1}end
 
-g:defineBlock({id="list_add",category="Lists",shape="stack",label="add {ITEM} to {LIST}",
-inputs={ITEM={type="any",default="thing"},LIST=i},
-run=function(j,k)
-local l=list(j,k.LIST)
-j.interp:checkListGrow(l,k.ITEM)
-l[#l+1]=k.ITEM
+j:defineBlock({id="list_add",category="Lists",shape="stack",label="add {ITEM} to {LIST}",
+inputs={ITEM={type="any",default="thing"},LIST=l},
+run=function(m,n)
+local o=list(m,n.LIST)
+m.interp:checkListGrow(o,n.ITEM)
+o[#o+1]=n.ITEM
 end})
 
-g:defineBlock({id="list_delete",category="Lists",shape="stack",label="delete {INDEX} of {LIST}",
-inputs={INDEX=INDEX(),LIST=i},
-run=function(j,k)
-local l=list(j,k.LIST)
-local m=h.listIndex(k.INDEX,#l,true)
-if m=="all"then j.interp.lists[k.LIST]={}
-elseif m then table.remove(l,m)end
+j:defineBlock({id="list_delete",category="Lists",shape="stack",label="delete {INDEX} of {LIST}",
+inputs={INDEX=INDEX(),LIST=l},
+run=function(m,n)
+local o=list(m,n.LIST)
+local p=k.listIndex(n.INDEX,#o,true)
+if p=="all"then m.interp.lists[n.LIST]={}
+elseif p then table.remove(o,p)end
 end})
 
-g:defineBlock({id="list_clear",category="Lists",shape="stack",label="delete all of {LIST}",
-inputs={LIST=i},run=function(j,k)list(j,k.LIST)j.interp.lists[k.LIST]={}end})
+j:defineBlock({id="list_clear",category="Lists",shape="stack",label="delete all of {LIST}",
+inputs={LIST=l},run=function(m,n)list(m,n.LIST)m.interp.lists[n.LIST]={}end})
 
-g:defineBlock({id="list_insert",category="Lists",shape="stack",label="insert {ITEM} at {INDEX} of {LIST}",
-inputs={ITEM={type="any",default="thing"},INDEX=INDEX(),LIST=i},
-run=function(j,k)
-local l=list(j,k.LIST)
-local m=h.listIndex(k.INDEX,#l+1,false)
-if m then
-j.interp:checkListGrow(l,k.ITEM)
-table.insert(l,m,k.ITEM)
+j:defineBlock({id="list_insert",category="Lists",shape="stack",label="insert {ITEM} at {INDEX} of {LIST}",
+inputs={ITEM={type="any",default="thing"},INDEX=INDEX(),LIST=l},
+run=function(m,n)
+local o=list(m,n.LIST)
+local p=k.listIndex(n.INDEX,#o+1,false)
+if p then
+m.interp:checkListGrow(o,n.ITEM)
+table.insert(o,p,n.ITEM)
 end
 end})
 
-g:defineBlock({id="list_replace",category="Lists",shape="stack",label="replace item {INDEX} of {LIST} with {ITEM}",
-inputs={INDEX=INDEX(),LIST=i,ITEM={type="any",default="thing"}},
-run=function(j,k)
-local l=list(j,k.LIST)
-local m=h.listIndex(k.INDEX,#l,false)
-if m then l[m]=h.limitString(k.ITEM)end
+j:defineBlock({id="list_replace",category="Lists",shape="stack",label="replace item {INDEX} of {LIST} with {ITEM}",
+inputs={INDEX=INDEX(),LIST=l,ITEM={type="any",default="thing"}},
+run=function(m,n)
+local o=list(m,n.LIST)
+local p=k.listIndex(n.INDEX,#o,false)
+if p then o[p]=k.limitString(n.ITEM)end
 end})
 
-g:defineBlock({id="list_item",category="Lists",shape="reporter",output="any",label="item {INDEX} of {LIST}",
-inputs={INDEX=INDEX(),LIST=i},
-run=function(j,k)
-local l=list(j,k.LIST)
-local m=h.listIndex(k.INDEX,#l,false)
-if not m then return nil end
-return l[m]
+j:defineBlock({id="list_item",category="Lists",shape="reporter",output="any",label="item {INDEX} of {LIST}",
+inputs={INDEX=INDEX(),LIST=l},
+run=function(m,n)
+local o=list(m,n.LIST)
+local p=k.listIndex(n.INDEX,#o,false)
+if not p then return nil end
+return o[p]
 end})
 
 
-g:defineBlock({id="list_indexof",category="Lists",shape="reporter",output="any",label="item # of {ITEM} in {LIST}",
-inputs={ITEM={type="any",default="thing"},LIST=i},
-run=function(j,k)
-for l,m in ipairs(list(j,k.LIST))do if h.equals(m,k.ITEM)then return l end end
+j:defineBlock({id="list_indexof",category="Lists",shape="reporter",output="any",label="item # of {ITEM} in {LIST}",
+inputs={ITEM={type="any",default="thing"},LIST=l},
+run=function(m,n)
+for o,p in ipairs(list(m,n.LIST))do if k.equals(p,n.ITEM)then return o end end
 return nil
 end})
 
-g:defineBlock({id="list_length",category="Lists",shape="reporter",label="length of {LIST}",
-inputs={LIST=i},run=function(j,k)return#list(j,k.LIST)end})
+j:defineBlock({id="list_length",category="Lists",shape="reporter",label="length of {LIST}",
+inputs={LIST=l},run=function(m,n)return#list(m,n.LIST)end})
 
-g:defineBlock({id="list_contains",category="Lists",shape="boolean",label="{LIST} contains {ITEM}",
-inputs={LIST=i,ITEM={type="any",default="thing"}},
-run=function(j,k)
-for l,m in ipairs(list(j,k.LIST))do if h.equals(m,k.ITEM)then return true end end
+j:defineBlock({id="list_contains",category="Lists",shape="boolean",label="{LIST} contains {ITEM}",
+inputs={LIST=l,ITEM={type="any",default="thing"}},
+run=function(m,n)
+for o,p in ipairs(list(m,n.LIST))do if k.equals(p,n.ITEM)then return true end end
 return false
 end})
 
 
-g:defineBlock({id="list_contents",category="Lists",shape="reporter",label="{LIST}",
-inputs={LIST=i},run=function(j,k)return h.listContents(list(j,k.LIST))end})
+j:defineBlock({id="list_contents",category="Lists",shape="reporter",label="{LIST}",
+inputs={LIST=l},run=function(m,n)return k.listContents(list(m,n.LIST))end})
 end
 
-end)()end,function()local b,c,d=a(8)local e return(function(...)return function(g,h)
-g:defineCategory("Operators",{name="Operators",color={89,192,89}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Operators"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Operators",{name="Operators",color={89,192,89}})
 
-local function binary(i,j,k,l,m,n)
-g:defineBlock({id=i,category="Operators",shape=k,
-label="{A} "..j.." {B}",
-inputs={A={type=l,default=n and n[1]},B={type=l,default=n and n[2]}},
-run=function(o,p)return m(p.A,p.B)end})
+local function binary(l,m,n,o,p,q)
+j:defineBlock({id=l,category="Operators",shape=n,
+label="{A} "..m.." {B}",
+inputs={A={type=o,default=q and q[1]},B={type=o,default=q and q[2]}},
+run=function(r,s)return p(s.A,s.B)end})
 end
 
-binary("op_add","+","reporter","number",function(i,j)return i+j end)
-binary("op_sub","-","reporter","number",function(i,j)return i-j end)
-binary("op_mul","*","reporter","number",function(i,j)return i*j end)
-binary("op_div","/","reporter","number",function(i,j)return i/j end)
-binary("op_mod","mod","reporter","number",function(i,j)
-if j==0 then return 0/0 end
-local k=math.fmod(i,j)
-if k/j<0 then k=k+j end
-return k
+binary("op_add","+","reporter","number",function(l,m)return l+m end)
+binary("op_sub","-","reporter","number",function(l,m)return l-m end)
+binary("op_mul","*","reporter","number",function(l,m)return l*m end)
+binary("op_div","/","reporter","number",function(l,m)return l/m end)
+binary("op_mod","mod","reporter","number",function(l,m)
+if m==0 then return 0/0 end
+local n=math.fmod(l,m)
+if n/m<0 then n=n+m end
+return n
 end)
 
-binary("op_gt",">","boolean","any",function(i,j)return h.less(j,i)end,{0,50})
-binary("op_lt","<","boolean","any",function(i,j)return h.less(i,j)end,{0,50})
-binary("op_eq","=","boolean","any",function(i,j)return h.equals(i,j)end,{0,50})
+binary("op_gt",">","boolean","any",function(l,m)return k.less(m,l)end,{0,50})
+binary("op_lt","<","boolean","any",function(l,m)return k.less(l,m)end,{0,50})
+binary("op_eq","=","boolean","any",function(l,m)return k.equals(l,m)end,{0,50})
 
 
 
-local function logic(i,j,k)
-g:defineBlock({id=i,category="Operators",shape="boolean",label="{A} "..j.." {B}",
+local function logic(l,m,n)
+j:defineBlock({id=l,category="Operators",shape="boolean",label="{A} "..m.." {B}",
 inputs={A={type="boolean",raw=true,lazy=true},B={type="boolean",raw=true,lazy=true}},
-run=function(l)
-local m=l:input("A")
-if h.toBool(m)==k then return m end
-return l:input("B")
+run=function(o)
+local p=o:input("A")
+if k.toBool(p)==n then return p end
+return o:input("B")
 end})
 end
 logic("op_and","and",false)
 logic("op_or","or",true)
 
-g:defineBlock({id="op_not",category="Operators",shape="boolean",label="not {A}",
-inputs={A={type="boolean"}},run=function(i,j)return not j.A end})
+j:defineBlock({id="op_not",category="Operators",shape="boolean",label="not {A}",
+inputs={A={type="boolean"}},run=function(l,m)return not m.A end})
 
 
 
-g:defineBlock({id="op_if_else",category="Operators",shape="reporter",label="if {COND} then {A} else {B}",
+j:defineBlock({id="op_if_else",category="Operators",shape="reporter",label="if {COND} then {A} else {B}",
 inputs={COND={type="boolean",lazy=true},A={type="any",default=1,lazy=true},B={type="any",default=0,lazy=true}},
-run=function(i)
-if i:input("COND")then return i:input("A")end
-return i:input("B")
+run=function(l)
+if l:input("COND")then return l:input("A")end
+return l:input("B")
 end})
 
 
-g:defineBlock({id="op_random",category="Operators",shape="reporter",
+j:defineBlock({id="op_random",category="Operators",shape="reporter",
 label="pick random {FROM} to {TO}",
 inputs={FROM={type="number",default=1},TO={type="number",default=10}},
-run=function(i,j)
+run=function(l,m)
 
-local k=2147483647
-local function whole(l)l=math.max(-k,math.min(k,l))return l>=0 and math.floor(l)or-math.floor(-l)end
-local l,m=whole(j.FROM),whole(j.TO)
-if l>m then error("interval is empty",0)end
-return math.random(l,m)
+local n=2147483647
+local function whole(o)o=math.max(-n,math.min(n,o))return o>=0 and math.floor(o)or-math.floor(-o)end
+local o,p=whole(m.FROM),whole(m.TO)
+if o>p then error("interval is empty",0)end
+return math.random(o,p)
 end})
 
 
-local function str(i)
-if type(i)=="string"then return i end
-if type(i)=="number"then return h.toString(i)end
-error("expected text, got "..h.typeName(i),0)
+local function str(l)
+if type(l)=="string"then return l end
+if type(l)=="number"then return k.toString(l)end
+error("expected text, got "..k.typeName(l),0)
 end
 
 
-g:defineBlock({id="op_join",category="Operators",shape="reporter",label="join {A} {B}",
+j:defineBlock({id="op_join",category="Operators",shape="reporter",label="join {A} {B}",
 inputs={A={type="any",default="apple ",raw=true},B={type="any",default="banana",raw=true}},
-run=function(i,j)
-if type(j.A)~="string"and type(j.A)~="number"then error("attempt to concatenate "..h.typeName(j.A),0)end
-if type(j.B)~="string"and type(j.B)~="number"then error("attempt to concatenate "..h.typeName(j.B),0)end
-local k,l=str(j.A),str(j.B)
-if#k+#l>h.LIMITS.MAX_STRING then error("string too long",0)end
-return k..l
+run=function(l,m)
+if type(m.A)~="string"and type(m.A)~="number"then error("attempt to concatenate "..k.typeName(m.A),0)end
+if type(m.B)~="string"and type(m.B)~="number"then error("attempt to concatenate "..k.typeName(m.B),0)end
+local n,o=str(m.A),str(m.B)
+if#n+#o>k.LIMITS.MAX_STRING then error("string too long",0)end
+return n..o
 end})
 
 
-g:defineBlock({id="op_letter",category="Operators",shape="reporter",label="letter {N} of {S}",
+j:defineBlock({id="op_letter",category="Operators",shape="reporter",label="letter {N} of {S}",
 inputs={N={type="number",default=1},S={type="any",default="apple",raw=true}},
-run=function(i,j)
-local k=j.N>=0 and math.floor(j.N)or-math.floor(-j.N)
-if k~=k or k==math.huge or k==-math.huge then return""end
-return string.sub(str(j.S),k,k)
+run=function(l,m)
+local n=m.N>=0 and math.floor(m.N)or-math.floor(-m.N)
+if n~=n or n==math.huge or n==-math.huge then return""end
+return string.sub(str(m.S),n,n)
 end})
 
 
-g:defineBlock({id="op_length",category="Operators",shape="reporter",label="length of {S}",
-inputs={S={type="any",default="apple",raw=true}},run=function(i,j)return#str(j.S)end})
+j:defineBlock({id="op_length",category="Operators",shape="reporter",label="length of {S}",
+inputs={S={type="any",default="apple",raw=true}},run=function(l,m)return#str(m.S)end})
 
 
-g:defineBlock({id="op_contains",category="Operators",shape="boolean",label="{S} contains {T}",
+j:defineBlock({id="op_contains",category="Operators",shape="boolean",label="{S} contains {T}",
 inputs={S={type="any",default="apple",raw=true},T={type="any",default="a",raw=true}},
-run=function(i,j)return string.find(str(j.S),str(j.T),1,true)~=nil end})
+run=function(l,m)return string.find(str(m.S),str(m.T),1,true)~=nil end})
 
 
-g:defineBlock({id="op_tonumber",category="Operators",shape="reporter",output="any",label="tonumber {A}",
+j:defineBlock({id="op_tonumber",category="Operators",shape="reporter",output="any",label="tonumber {A}",
 inputs={A={type="any",default="10",raw=true}},
-run=function(i,j)
-if type(j.A)=="number"then return j.A end
-if type(j.A)=="string"then return h.parseNumber(j.A)end
+run=function(l,m)
+if type(m.A)=="number"then return m.A end
+if type(m.A)=="string"then return k.parseNumber(m.A)end
 return nil
 end})
-g:defineBlock({id="op_tostring",category="Operators",shape="reporter",label="tostring {A}",
+j:defineBlock({id="op_tostring",category="Operators",shape="reporter",label="tostring {A}",
 inputs={A={type="any",default=10,raw=true}},
-run=function(i,j)return h.toString(j.A)end})
+run=function(l,m)return k.toString(m.A)end})
 
 
-g:defineBlock({id="op_nil",category="Operators",shape="reporter",output="any",label="nil",
+j:defineBlock({id="op_nil",category="Operators",shape="reporter",output="any",label="nil",
 run=function()return nil end})
 
 
-g:defineBlock({id="op_round",category="Operators",shape="reporter",label="round {A}",
-inputs={A={type="number"}},run=function(i,j)return h.round(j.A)end})
+j:defineBlock({id="op_round",category="Operators",shape="reporter",label="round {A}",
+inputs={A={type="number"}},run=function(l,m)return k.round(m.A)end})
 
 
-g:defineBlock({id="op_pi",category="Operators",shape="reporter",label="pi",run=function()return math.pi end})
+j:defineBlock({id="op_pi",category="Operators",shape="reporter",label="pi",run=function()return math.pi end})
 
-local i={
+local l={
 abs=math.abs,floor=math.floor,ceiling=math.ceil,sqrt=math.sqrt,
 sin=math.sin,cos=math.cos,tan=math.tan,
 asin=math.asin,acos=math.acos,atan=math.atan,
-ln=math.log,log=function(i)return math.log(i)/math.log(10)end,
-["e ^"]=math.exp,["10 ^"]=function(i)return 10^i end,
+ln=math.log,log=function(l)return math.log(l)/math.log(10)end,
+["e ^"]=math.exp,["10 ^"]=function(l)return 10^l end,
 }
-g:defineBlock({id="op_math",category="Operators",shape="reporter",label="{FN} of {A}",
+j:defineBlock({id="op_math",category="Operators",shape="reporter",label="{FN} of {A}",
 inputs={FN={type="string",default="abs",options={"abs","floor","ceiling","sqrt","sin","cos","tan","asin","acos","atan","ln","log","e ^","10 ^"}},
 A={type="number"}},
-run=function(j,k)local l=i[k.FN]return l and l(k.A)or 0 end})
+run=function(m,n)local o=l[n.FN]return o and o(n.A)or 0 end})
 end
 
-end)()end,function()local b,c,d=a(9)local e return(function(...)return function(g,h)
-g:defineCategory("Output",{name="Output",color={15,189,140}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Output"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Output",{name="Output",color={15,189,140}})
 
-g:defineBlock({id="out_print",category="Output",shape="stack",label="print {TEXT}",
+j:defineBlock({id="out_print",category="Output",shape="stack",label="print {TEXT}",
 inputs={TEXT={type="string",default="Hello!"}},
-run=function(i,j)i:say(j.TEXT,"say")end})
+run=function(l,m)l:say(m.TEXT,"say")end})
 
-g:defineBlock({id="out_clear",category="Output",shape="stack",label="clear output",
-run=function(i)if i.interp.opts.clear then i.interp.opts.clear()end end})
+j:defineBlock({id="out_clear",category="Output",shape="stack",label="clear output",
+run=function(l)if l.interp.opts.clear then l.interp.opts.clear()end end})
 end
 
-end)()end,function()local b,c,d=a(10)local e return(function(...)return function(g,h)
-g:defineCategory("Sensing",{name="Sensing",color={92,177,214}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Sensing"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Sensing",{name="Sensing",color={92,177,214}})
 
-g:defineBlock({id="sensing_ask",category="Sensing",shape="stack",label="ask {PROMPT} and wait",
+j:defineBlock({id="sensing_ask",category="Sensing",shape="stack",label="ask {PROMPT} and wait",
 inputs={PROMPT={type="string",default="What's your name?"}},
-run=function(i,j)
-local k=i.interp.opts.ask
-local l=i.thread
-l.asking=true
-local m,n=pcall(function()return k and h.toString(k(j.PROMPT))or""end)
-l.asking=false
-if not m then error(n,0)end
-i.interp.answer=string.sub(n,1,h.LIMITS.MAX_STRING)
+run=function(l,m)
+local n=l.interp.opts.ask
+local o=l.thread
+o.asking=true
+local p,q=pcall(function()return n and k.toString(n(m.PROMPT))or""end)
+o.asking=false
+if not p then error(q,0)end
+l.interp.answer=string.sub(q,1,k.LIMITS.MAX_STRING)
 end})
 
-g:defineBlock({id="sensing_answer",category="Sensing",shape="reporter",label="answer",
-run=function(i)return i.interp.answer end})
+j:defineBlock({id="sensing_answer",category="Sensing",shape="reporter",label="answer",
+run=function(l)return l.interp.answer end})
 
 
 
-g:defineBlock({id="sensing_keypressed",category="Sensing",shape="boolean",label="key {KEY} pressed?",
-inputs={KEY={type="string",default="space",options=h.KEYS,reporters=true}},
-run=function(i,j)return i.interp:keyDown(j.KEY)end})
+j:defineBlock({id="sensing_keypressed",category="Sensing",shape="boolean",label="key {KEY} pressed?",
+inputs={KEY={type="string",default="space",options=k.KEYS,reporters=true}},
+run=function(l,m)return l.interp:keyDown(m.KEY)end})
 
-g:defineBlock({id="sensing_mousedown",category="Sensing",shape="boolean",label="mouse down?",
-run=function(i)return i.interp:mouseDown()end})
+j:defineBlock({id="sensing_mousedown",category="Sensing",shape="boolean",label="mouse down?",
+run=function(l)return l.interp:mouseDown()end})
 
-local i={"year","month","date","day of week","hour","minute","second"}
-g:defineBlock({id="sensing_current",category="Sensing",shape="reporter",label="current {UNIT}",
-inputs={UNIT={type="string",default="year",options=i}},
-run=function(j,k)
-local l=j.interp:localDate()
-local m={year=l.year,month=l.month,date=l.day,["day of week"]=l.wday,
-hour=l.hour,minute=l.min,second=l.sec}
-return m[k.UNIT]or 0
+local l={"year","month","date","day of week","hour","minute","second"}
+j:defineBlock({id="sensing_current",category="Sensing",shape="reporter",label="current {UNIT}",
+inputs={UNIT={type="string",default="year",options=l}},
+run=function(m,n)
+local o=m.interp:localDate()
+local p={year=o.year,month=o.month,date=o.day,["day of week"]=o.wday,
+hour=o.hour,minute=o.min,second=o.sec}
+return p[n.UNIT]or 0
 end})
 
-g:defineBlock({id="sensing_dayssince2000",category="Sensing",shape="reporter",label="days since 2000",
-run=function(j)return j.interp:daysSince2000()end})
+j:defineBlock({id="sensing_dayssince2000",category="Sensing",shape="reporter",label="days since 2000",
+run=function(m)return m.interp:daysSince2000()end})
 
-g:defineBlock({id="sensing_timer",category="Sensing",shape="reporter",label="timer",
-run=function(j)return j.interp:timer()end})
+j:defineBlock({id="sensing_timer",category="Sensing",shape="reporter",label="timer",
+run=function(m)return m.interp:timer()end})
 
-g:defineBlock({id="sensing_reset_timer",category="Sensing",shape="stack",label="reset timer",
-run=function(j)j.interp:resetTimer()end})
+j:defineBlock({id="sensing_reset_timer",category="Sensing",shape="stack",label="reset timer",
+run=function(m)m.interp:resetTimer()end})
 end
 
-end)()end,function()local b,c,d=a(11)local e return(function(...)return function(g,h)
-g:defineCategory("Variables",{name="Variables",color={255,140,26}})
+end end
+do local g=e for h,i in ipairs({"Lang","Blocks","Variables"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+return function(j,k)
+j:defineCategory("Variables",{name="Variables",color={255,140,26}})
 
-g:defineBlock({id="data_set",category="Variables",shape="stack",label="set {NAME} to {VALUE}",
+j:defineBlock({id="data_set",category="Variables",shape="stack",label="set {NAME} to {VALUE}",
 inputs={NAME={type="variable",default="my variable"},VALUE={type="any",default=0}},
-run=function(i,j)i.interp:setVar(j.NAME,j.VALUE)end})
+run=function(l,m)l.interp:setVar(m.NAME,m.VALUE)end})
 
-g:defineBlock({id="data_change",category="Variables",shape="stack",label="change {NAME} by {BY}",
+j:defineBlock({id="data_change",category="Variables",shape="stack",label="change {NAME} by {BY}",
 inputs={NAME={type="variable",default="my variable"},BY={type="number",default=1}},
-run=function(i,j)i.interp:setVar(j.NAME,h.toNumber(i.interp.vars[j.NAME])+j.BY)end})
+run=function(l,m)l.interp:setVar(m.NAME,k.toNumber(l.interp.vars[m.NAME])+m.BY)end})
 
-g:defineBlock({id="data_get",category="Variables",shape="reporter",output="any",label="{NAME}",
+j:defineBlock({id="data_get",category="Variables",shape="reporter",output="any",label="{NAME}",
 inputs={NAME={type="variable",default="my variable"}},
 
-run=function(i,j)return i.interp.vars[j.NAME]end})
+run=function(l,m)return l.interp.vars[m.NAME]end})
 end
 
-end)()end,[13]=function()local b,c,d=a(13)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"Lang","Core","Interpreter"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
@@ -1135,153 +935,154 @@ end)()end,[13]=function()local b,c,d=a(13)local e return(function(...)
 
 
 
-local g=d(c.Parent.Values)
 
-local h={}
-h.__index=h
-
-local i=g.LIMITS
-local j=0.1
-
-
-local function daysFromCivil(k,l,m)
-if l<=2 then k=k-1 end
-local n=math.floor(k/400)
-local o=k-n*400
-local p=math.floor((153*(l+(l>2 and-3 or 9))+2)/5)+m-1
-local q=o*365+math.floor(o/4)-math.floor(o/100)+p
-return n*146097+q-719468
-end
-
+local j=i(h.Parent.Values)
 
 local k={}
 k.__index=k
-function k:stack(l)return self.interp:runStack(self.thread,self.block.stacks[l]or{})end
-function k:input(l)return self.interp:evalInput(self.thread,self.block,l)end
-function k:alive()return not(self.thread.stopped or self.interp.halted)end
-function k:tick()self.interp:tick(self.thread)end
-function k:loopStep()self.interp:loopStep(self.thread)end
-function k:yield()self.interp:pause(self.thread)end
-function k:warp(l)if l then self.interp:enterWarp(self.thread)else self.interp:exitWarp(self.thread)end end
-function k:stopOthers()self.interp:stopOthers(self.thread)end
-function k:wait(l)self.interp:sleep(self.thread,l)end
-function k:say(l,m)self.interp:say(l,m)end
-function k:stopAll()self.interp:stop()end
 
-function h.new(l,m)
-m=m or{}
-local n=setmetatable({},h)
-n.registry=l
-n.opts=m
-n.spawn=m.spawn or(task and task.spawn)or function(o)o()end
-n.defer=m.defer or(task and task.defer)or nil
-n.cancel=m.cancel or(task and task.cancel)or nil
-n.turn=m.turn or(task and task.defer and function()
-local o=coroutine.running()
-task.defer(o)
+local l=j.LIMITS
+local m=0.1
+
+
+local function daysFromCivil(n,o,p)
+if o<=2 then n=n-1 end
+local q=math.floor(n/400)
+local r=n-q*400
+local s=math.floor((153*(o+(o>2 and-3 or 9))+2)/5)+p-1
+local t=r*365+math.floor(r/4)-math.floor(r/100)+s
+return q*146097+t-719468
+end
+
+
+local n={}
+n.__index=n
+function n:stack(o)return self.interp:runStack(self.thread,self.block.stacks[o]or{})end
+function n:input(o)return self.interp:evalInput(self.thread,self.block,o)end
+function n:alive()return not(self.thread.stopped or self.interp.halted)end
+function n:tick()self.interp:tick(self.thread)end
+function n:loopStep()self.interp:loopStep(self.thread)end
+function n:yield()self.interp:pause(self.thread)end
+function n:warp(o)if o then self.interp:enterWarp(self.thread)else self.interp:exitWarp(self.thread)end end
+function n:stopOthers()self.interp:stopOthers(self.thread)end
+function n:wait(o)self.interp:sleep(self.thread,o)end
+function n:say(o,p)self.interp:say(o,p)end
+function n:stopAll()self.interp:stop()end
+
+function k.new(o,p)
+p=p or{}
+local q=setmetatable({},k)
+q.registry=o
+q.opts=p
+q.spawn=p.spawn or(task and task.spawn)or function(r)r()end
+q.defer=p.defer or(task and task.defer)or nil
+q.cancel=p.cancel or(task and task.cancel)or nil
+q.turn=p.turn or(task and task.defer and function()
+local r=coroutine.running()
+task.defer(r)
 coroutine.yield()
 end)or nil
-n.wait=m.wait or(task and task.wait)or function()end
-n.clock=m.clock or os.clock
-n.budget=m.budget or 500
-n.vars,n.lists,n.threads,n.watchers={},{},{},{}
-n.program,n.halted,n.running=nil,false,false
-n.active,n.steps,n.answer,n.timerStart,n.runId=0,0,"",0,0
-n.counter=0
-n.nthreads,n.starts,n.lines,n.frameStart=0,0,0,nil
-n.uncounted,n.throttled=false,false
-return n
+q.wait=p.wait or(task and task.wait)or function()end
+q.clock=p.clock or os.clock
+q.budget=p.budget or 500
+q.vars,q.lists,q.threads,q.watchers={},{},{},{}
+q.program,q.halted,q.running=nil,false,false
+q.active,q.steps,q.answer,q.timerStart,q.runId=0,0,"",0,0
+q.counter=0
+q.nthreads,q.starts,q.lines,q.frameStart=0,0,0,nil
+q.uncounted,q.throttled=false,false
+return q
 end
 
 
 
-function h:_frameCheck()
-local l=self.clock()
-local m=self.frameStart
-if m==nil or l<m or l-m>=i.FRAME_WINDOW then
-self.frameStart,self.starts,self.lines=l,0,0
+function k:_frameCheck()
+local o=self.clock()
+local p=self.frameStart
+if p==nil or o<p or o-p>=l.FRAME_WINDOW then
+self.frameStart,self.starts,self.lines=o,0,0
 end
-return l
-end
-
-
-function h:_overBudget()
-local l=self:_frameCheck()
-return l-self.frameStart>=i.FRAME_SECONDS
+return o
 end
 
 
-function h:say(l,m)
-local n=g.toString(l)
-if#n>i.MAX_PRINT then
-local o=i.MAX_PRINT
-while o>0 do
-local p=string.byte(n,o+1)
-if p and p>=0x80 and p<0xC0 then o=o-1 else break end
+function k:_overBudget()
+local o=self:_frameCheck()
+return o-self.frameStart>=l.FRAME_SECONDS
 end
-n=string.sub(n,1,o).."..."
+
+
+function k:say(o,p)
+local q=j.toString(o)
+if#q>l.MAX_PRINT then
+local r=l.MAX_PRINT
+while r>0 do
+local s=string.byte(q,r+1)
+if s and s>=0x80 and s<0xC0 then r=r-1 else break end
+end
+q=string.sub(q,1,r).."..."
 end
 self:_frameCheck()
 self.lines=self.lines+1
-if self.lines>i.MAX_LINES_PER_FRAME then
+if self.lines>l.MAX_LINES_PER_FRAME then
 if self.throttled then return end
-self.throttled,n,m=true,"output throttled (too many lines per frame)","say"
+self.throttled,q,p=true,"output throttled (too many lines per frame)","say"
 end
-if self.opts.output then self.opts.output(n,m or"say")else print(n)end
-end
-
-
-function h:setVar(l,m)
-local n=self.vars
-if n[l]==nil then
-if#l>i.MAX_NAME then error("name too long",0)end
-local o=0
-for p in pairs(n)do o=o+1 end
-if o>=i.MAX_VARS then error("too many variables",0)end
-end
-n[l]=g.limitString(m)
-end
-
-function h:list(l)
-local m=self.lists[l]
-if m then return m end
-if#l>i.MAX_NAME then error("name too long",0)end
-local n=0
-for o in pairs(self.lists)do n=n+1 end
-if n>=i.MAX_LISTS then error("too many lists",0)end
-m={}
-self.lists[l]=m
-return m
+if self.opts.output then self.opts.output(q,p or"say")else print(q)end
 end
 
 
-function h:checkListGrow(l,m)
-g.limitString(m)
-if#l>=i.MAX_LIST then error("list too long",0)end
-local n=0
-for o,p in pairs(self.lists)do n=n+#p end
-if n>=i.MAX_LISTS_TOTAL_ITEMS then error("too many list items",0)end
+function k:setVar(o,p)
+local q=self.vars
+if q[o]==nil then
+if#o>l.MAX_NAME then error("name too long",0)end
+local r=0
+for s in pairs(q)do r=r+1 end
+if r>=l.MAX_VARS then error("too many variables",0)end
+end
+q[o]=j.limitString(p)
 end
 
-function h:timer()return self.clock()-self.timerStart end
-function h:resetTimer()self.timerStart=self.clock()end
-
-
-
-function h:enterWarp(l)
-if(l.warp or 0)==0 then l.warpStart=self.clock()end
-l.warp=(l.warp or 0)+1
+function k:list(o)
+local p=self.lists[o]
+if p then return p end
+if#o>l.MAX_NAME then error("name too long",0)end
+local q=0
+for r in pairs(self.lists)do q=q+1 end
+if q>=l.MAX_LISTS then error("too many lists",0)end
+p={}
+self.lists[o]=p
+return p
 end
 
-function h:exitWarp(l)
-l.warp=math.max(0,(l.warp or 0)-1)
+
+function k:checkListGrow(o,p)
+j.limitString(p)
+if#o>=l.MAX_LIST then error("list too long",0)end
+local q=0
+for r,s in pairs(self.lists)do q=q+#s end
+if q>=l.MAX_LISTS_TOTAL_ITEMS then error("too many list items",0)end
+end
+
+function k:timer()return self.clock()-self.timerStart end
+function k:resetTimer()self.timerStart=self.clock()end
+
+
+
+function k:enterWarp(o)
+if(o.warp or 0)==0 then o.warpStart=self.clock()end
+o.warp=(o.warp or 0)+1
+end
+
+function k:exitWarp(o)
+o.warp=math.max(0,(o.warp or 0)-1)
 end
 
 
-function h:pause(l)
-if l and(l.warp or 0)>0 then
-if self.clock()-l.warpStart<i.WARP_SECONDS then return end
-l.warpStart=self.clock()
+function k:pause(o)
+if o and(o.warp or 0)>0 then
+if self.clock()-o.warpStart<l.WARP_SECONDS then return end
+o.warpStart=self.clock()
 end
 self.wait()
 self:_frameCheck()
@@ -1289,21 +1090,21 @@ end
 
 
 
-function h:tick(l)
+function k:tick(o)
 self.steps=self.steps+1
 if self.steps>=self.budget then
 self.steps=0
-self:pause(l)
+self:pause(o)
 elseif self.steps%16==0 and self:_overBudget()then
-self:pause(l)
+self:pause(o)
 end
 end
 
 
 
-function h:loopStep(l)
-self:tick(l)
-if(l.warp or 0)>0 then return end
+function k:loopStep(o)
+self:tick(o)
+if(o.warp or 0)>0 then return end
 if self:_overBudget()then
 self.steps=0
 self.wait()
@@ -1314,45 +1115,45 @@ end
 end
 
 
-function h:resetData()
+function k:resetData()
 self.vars,self.lists,self.counter,self.answer={},{},0,""
 end
 
 
 
-function h:sleep(l,m)
-local n,o=m,true
-while o or n>0 do
-o=false
-local p=n<j and n or j
-self.wait(p)
-n=n-p
-if l.stopped or self.halted then return end
+function k:sleep(o,p)
+local q,r=p,true
+while r or q>0 do
+r=false
+local s=q<m and q or m
+self.wait(s)
+q=q-s
+if o.stopped or self.halted then return end
 end
 end
 
-function h:stopOthers(l)
-local m={}
-for n in pairs(self.threads)do
-if n~=l then m[#m+1]=n end
+function k:stopOthers(o)
+local p={}
+for q in pairs(self.threads)do
+if q~=o then p[#p+1]=q end
 end
-for n,o in ipairs(m)do self:_kill(o)end
-end
-
-
-function h:_kill(l)
-l.stopped=true
-if not l.asking then self:_cancel(l.handle)end
-self:_retire(l)
+for q,r in ipairs(p)do self:_kill(r)end
 end
 
 
-function h:_retire(l)
-if l.retired then return end
-l.retired,l.done=true,true
-if l.runId~=self.runId then return end
-if self.threads[l]then
-self.threads[l]=nil
+function k:_kill(o)
+o.stopped=true
+if not o.asking then self:_cancel(o.handle)end
+self:_retire(o)
+end
+
+
+function k:_retire(o)
+if o.retired then return end
+o.retired,o.done=true,true
+if o.runId~=self.runId then return end
+if self.threads[o]then
+self.threads[o]=nil
 self.nthreads=self.nthreads-1
 end
 self.active=self.active-1
@@ -1360,106 +1161,106 @@ if self.active==0 then self:_finish()end
 end
 
 
-function h:_threadFor(l)
-for m in pairs(self.threads)do
-if m.script==l and not m.retired then return m end
+function k:_threadFor(o)
+for p in pairs(self.threads)do
+if p.script==o and not p.retired then return p end
 end
 end
 
 
-function h:localDate()
-local l=self.opts.date and self.opts.date()
-if not l and DateTime then
-local m=DateTime.now():ToLocalTime()
-l={year=m.Year,month=m.Month,day=m.Day,hour=m.Hour,min=m.Minute,sec=m.Second}
+function k:localDate()
+local o=self.opts.date and self.opts.date()
+if not o and DateTime then
+local p=DateTime.now():ToLocalTime()
+o={year=p.Year,month=p.Month,day=p.Day,hour=p.Hour,min=p.Minute,sec=p.Second}
 end
-l=l or os.date("*t")
-local m=daysFromCivil(l.year,l.month,l.day)
-return{year=l.year,month=l.month,day=l.day,wday=(m+4)%7+1,
-hour=l.hour or 0,min=l.min or 0,sec=l.sec or 0,days=m}
-end
-
-function h:daysSince2000()
-local l=self:localDate()
-return l.days-daysFromCivil(2000,1,1)+(l.hour*3600+l.min*60+l.sec)/86400
+o=o or os.date("*t")
+local p=daysFromCivil(o.year,o.month,o.day)
+return{year=o.year,month=o.month,day=o.day,wday=(p+4)%7+1,
+hour=o.hour or 0,min=o.min or 0,sec=o.sec or 0,days=p}
 end
 
-function h:keyDown(l)return self.opts.keyDown~=nil and self.opts.keyDown(l)==true end
-function h:mouseDown()return self.opts.mouseDown~=nil and self.opts.mouseDown()==true end
+function k:daysSince2000()
+local o=self:localDate()
+return o.days-daysFromCivil(2000,1,1)+(o.hour*3600+o.min*60+o.sec)/86400
+end
 
-function h:fail(l,m)
+function k:keyDown(o)return self.opts.keyDown~=nil and self.opts.keyDown(o)==true end
+function k:mouseDown()return self.opts.mouseDown~=nil and self.opts.mouseDown()==true end
+
+function k:fail(o,p)
 self:stop()
-if self.opts.onError then self.opts.onError(tostring(l),m)else warn("[BlockScript] "..tostring(l))end
+if self.opts.onError then self.opts.onError(tostring(o),p)else warn("[BlockScript] "..tostring(o))end
 end
 
-function h:_finish()
+function k:_finish()
 if not self.running then return end
 self.running=false
 if self.opts.onFinish then self.opts.onFinish()end
 end
 
 
-function h:_cancel(l)
-if l~=nil and self.cancel and l~=coroutine.running()then pcall(self.cancel,l)end
+function k:_cancel(o)
+if o~=nil and self.cancel and o~=coroutine.running()then pcall(self.cancel,o)end
 end
 
-function h:stop()
+function k:stop()
 self.halted=true
-for l in pairs(self.threads)do
-l.stopped,l.retired=true,true
-if not l.asking then self:_cancel(l.handle)end
+for o in pairs(self.threads)do
+o.stopped,o.retired=true,true
+if not o.asking then self:_cancel(o.handle)end
 end
-for l,m in ipairs(self.watchers)do self:_cancel(m)end
+for o,p in ipairs(self.watchers)do self:_cancel(p)end
 self.threads,self.watchers,self.nthreads={},{},0
 self:_finish()
 end
 
 
 
-function h:execBlock(l,m)
-local n=self.registry:get(m.op)
-if not n then
-l.cur=m
-error("Unknown block: "..tostring(m.op),0)
+function k:execBlock(o,p)
+local q=self.registry:get(p.op)
+if not q then
+o.cur=p
+error("Unknown block: "..tostring(p.op),0)
 end
-local o=(l.execDepth or 0)+1
-if o>i.MAX_EXEC_DEPTH then
-l.cur=m
+local r=(o.execDepth or 0)+1
+if r>l.MAX_EXEC_DEPTH then
+o.cur=p
 error("blocks nested too deep",0)
 end
-l.execDepth=o
-local p=l.cur
-l.cur=m
-local q=setmetatable({interp=self,thread=l,block=m,def=n},k)
-local r={}
-for s,t in pairs(n.inputs)do
-if not t.lazy then r[s]=self:evalInput(l,m,s)end
+o.execDepth=r
+local s=o.cur
+o.cur=p
+local t=setmetatable({interp=self,thread=o,block=p,def=q},n)
+local u={}
+for v,w in pairs(q.inputs)do
+if not w.lazy then u[v]=self:evalInput(o,p,v)end
 end
-local s
-if not(self.halted or l.stopped)then
-self:tick(l)
-s=n.run(q,r)
+local v
+if not(self.halted or o.stopped)then
+self:tick(o)
+v=q.run(t,u)
 end
-l.execDepth=o-1
-l.cur=p
-return s
-end
-
-function h:evalInput(l,m,n)
-local o=self.registry:get(m.op)
-local p=o.inputs[n]
-local q=m.inputs[n]
-if type(q)=="table"and q.op then q=self:execBlock(l,q)end
-if p.raw then return q end
-return g.coerce(p.type,q)
+o.execDepth=r-1
+o.cur=s
+return v
 end
 
+function k:evalInput(o,p,q)
+local r=self.registry:get(p.op)
+local s=r.inputs[q]
+local t=p.inputs[q]
+if type(t)=="table"and t.op then t=self:execBlock(o,t)end
+if s.raw then return t end
+return j.coerce(s.type,t)
+end
 
-function h:runStack(l,m,n)
-for o=n or 1,#m do
-if l.stopped or self.halted then return"STOP"end
-local p=self:execBlock(l,m[o])
-if p then return p end
+
+function k:runStack(o,p,q)
+for r=q or 1,#p do
+if o.stopped or self.halted then return"STOP"end
+local s=self:execBlock(o,p[r])
+if s then return s end
 end
 return nil
 end
@@ -1467,113 +1268,113 @@ end
 
 
 
-function h:_launch(l,m)
-if self.defer then return self.defer(l)end
-if m then return self.spawn(function()self.wait()l()end)end
-return self.spawn(l)
+function k:_launch(o,p)
+if self.defer then return self.defer(o)end
+if p then return self.spawn(function()self.wait()o()end)end
+return self.spawn(o)
 end
 
 
-function h:_startThread(l,m,n)
-if self.nthreads>=i.MAX_THREADS then
+function k:_startThread(o,p,q)
+if self.nthreads>=l.MAX_THREADS then
 self:fail("too many scripts running")
 return nil
 end
 if not self.uncounted then
 self:_frameCheck()
 self.starts=self.starts+1
-if self.starts>i.MAX_STARTS_PER_FRAME then
+if self.starts>l.MAX_STARTS_PER_FRAME then
 self:fail("too many scripts running")
 return nil
 end
 end
-local o={stopped=false,done=false,script=l,runId=self.runId}
-self.threads[o]=true
+local r={stopped=false,done=false,script=o,runId=self.runId}
+self.threads[r]=true
 self.nthreads=self.nthreads+1
 self.active=self.active+1
-local p=self.runId
-o.handle=self:_launch(function()
-if o.stopped or self.halted or p~=self.runId then return end
+local s=self.runId
+r.handle=self:_launch(function()
+if r.stopped or self.halted or s~=self.runId then return end
 self:_frameCheck()
-local q,r=pcall(self.runStack,self,o,l.blocks,m)
-if not q and not self.halted and p==self.runId then self:fail(r,o.cur)end
-self:_retire(o)
-end,n)
-return o
+local t,u=pcall(self.runStack,self,r,o.blocks,p)
+if not t and not self.halted and s==self.runId then self:fail(u,r.cur)end
+self:_retire(r)
+end,q)
+return r
 end
 
-local function hatArgs(l,m,n)
-local o,p={stopped=false},{}
-for q in pairs(n.inputs)do p[q]=l:evalInput(o,m,q)end
-return p
+local function hatArgs(o,p,q)
+local r,s={stopped=false},{}
+for t in pairs(q.inputs)do s[t]=o:evalInput(r,p,t)end
+return s
 end
 
 
 
-function h:_startWatchers()
-local l=false
-local m=self.runId
-for n,o in ipairs(self.program.scripts)do
-local p=o.blocks[1]
-local q=p and self.registry:get(p.op)
-if q and q.shape=="hat"and(q.hat.persistent or q.hat.poll)then
-l=true
-if q.hat.poll then
-local r=self:_launch(function()
-local r=false
-while not self.halted and m==self.runId do
-if not self:_threadFor(o)then
-local s,t=pcall(function()return q.hat.poll(hatArgs(self,p,q),self)end)
-if not s then self:fail(t,p)return end
-if t and not r then self:_startThread(o,2,true)end
-r=t and true or false
+function k:_startWatchers()
+local o=false
+local p=self.runId
+for q,r in ipairs(self.program.scripts)do
+local s=r.blocks[1]
+local t=s and self.registry:get(s.op)
+if t and t.shape=="hat"and(t.hat.persistent or t.hat.poll)then
+o=true
+if t.hat.poll then
+local u=self:_launch(function()
+local u=false
+while not self.halted and p==self.runId do
+if not self:_threadFor(r)then
+local v,w=pcall(function()return t.hat.poll(hatArgs(self,s,t),self)end)
+if not v then self:fail(w,s)return end
+if w and not u then self:_startThread(r,2,true)end
+u=w and true or false
 end
 self.wait()
 end
 end,false)
-if r~=nil then table.insert(self.watchers,r)end
+if u~=nil then table.insert(self.watchers,u)end
 end
 end
 end
-if l then self.active=self.active+1 end
-end
-
-
-
-function h:fire(l,m,n)
-local o={}
-if not self.program then return o end
-for p,q in ipairs(self.program.scripts)do
-local r=q.blocks[1]
-local s=r and self.registry:get(r.op)
-if s and s.shape=="hat"and s.hat.event==l then
-local t=true
-if s.hat.filter then
-local u,v=pcall(function()return s.hat.filter(hatArgs(self,r,s),m)end)
-if not u then self:fail(v,r)break end
-t=v
-end
-if t then
-local u=self:_threadFor(q)
-if u and s.hat.once then
-t=false
-elseif u then
-self:_kill(u)
-end
-end
-if t then
-local u=self:_startThread(q,2,n~=nil)
-if not u then break end
-table.insert(o,u)
-end
-end
-end
-return o
+if o then self.active=self.active+1 end
 end
 
-function h:run(l)
+
+
+function k:fire(o,p,q)
+local r={}
+if not self.program then return r end
+for s,t in ipairs(self.program.scripts)do
+local u=t.blocks[1]
+local v=u and self.registry:get(u.op)
+if v and v.shape=="hat"and v.hat.event==o then
+local w=true
+if v.hat.filter then
+local x,y=pcall(function()return v.hat.filter(hatArgs(self,u,v),p)end)
+if not x then self:fail(y,u)break end
+w=y
+end
+if w then
+local x=self:_threadFor(t)
+if x and v.hat.once then
+w=false
+elseif x then
+self:_kill(x)
+end
+end
+if w then
+local x=self:_startThread(t,2,q~=nil)
+if not x then break end
+table.insert(r,x)
+end
+end
+end
+return r
+end
+
+function k:run(o)
 self:stop()
-self.program=l
+self.program=o
 self.runId=self.runId+1
 self.threads,self.watchers={},{}
 self.halted,self.running,self.active,self.steps=false,true,1,0
@@ -1587,70 +1388,71 @@ self.active=self.active-1
 if self.active==0 then self:_finish()end
 end
 
-return h
+return k
 
-end)()end,[14]=function()local b,c,d=a(14)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"Lang","Core","Plugins"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
-local g={}
 
-local function deepCopy(h,i)
-if type(h)~="table"then return h end
-i=i or{}
-if i[h]then return i[h]end
 local j={}
-i[h]=j
-for k,l in pairs(h)do j[deepCopy(k,i)]=deepCopy(l,i)end
-return j
+
+local function deepCopy(k,l)
+if type(k)~="table"then return k end
+l=l or{}
+if l[k]then return l[k]end
+local m={}
+l[k]=m
+for n,o in pairs(k)do m[deepCopy(n,l)]=deepCopy(o,l)end
+return m
 end
 
 
-function g.load(h,i)
-local j="plugin"
-local k,l={},{}
-local m,n=pcall(function()
-assert(type(i)=="table"and type(i.GetData)=="function","not a plugin (no GetData)")
-local m=i:GetData()
-assert(type(m)=="table","GetData must return a table")
-assert(type(m.Name)=="string"and m.Name~="","plugin needs a Name")
-j=m.Name
-h.plugins=h.plugins or{}
-assert(not h.plugins[j],"plugin already loaded")
+function j.load(k,l)
+local m="plugin"
+local n,o={},{}
+local p,q=pcall(function()
+assert(type(l)=="table"and type(l.GetData)=="function","not a plugin (no GetData)")
+local p=l:GetData()
+assert(type(p)=="table","GetData must return a table")
+assert(type(p.Name)=="string"and p.Name~="","plugin needs a Name")
+m=p.Name
+k.plugins=k.plugins or{}
+assert(not k.plugins[m],"plugin already loaded")
 
 
-for n,o in ipairs(m.Categories or{})do
-assert(type(o)=="table"and type(o.id)=="string","category needs a string id")
-if not h.categories[o.id]then
-h:defineCategory(o.id,o)
-table.insert(k,o.id)
+for q,r in ipairs(p.Categories or{})do
+assert(type(r)=="table"and type(r.id)=="string","category needs a string id")
+if not k.categories[r.id]then
+k:defineCategory(r.id,r)
+table.insert(n,r.id)
 end
 end
-for n,o in ipairs(m.Blocks or{})do
-assert(type(o)=="table"and type(o.id)=="string","block needs a string id")
-assert(not h.blocks[o.id],"block id already exists: "..o.id)
+for q,r in ipairs(p.Blocks or{})do
+assert(type(r)=="table"and type(r.id)=="string","block needs a string id")
+assert(not k.blocks[r.id],"block id already exists: "..r.id)
 
-local p={}
-for q,r in pairs(o)do p[q]=deepCopy(r)end
-h:defineBlock(p)
-l[o.id]=true
+local s={}
+for t,u in pairs(r)do s[t]=deepCopy(u)end
+k:defineBlock(s)
+o[r.id]=true
 end
 end)
-if not m then
-h:removeBlocks(l)
-for o,p in ipairs(k)do h:removeCategory(p)end
+if not p then
+k:removeBlocks(o)
+for r,s in ipairs(n)do k:removeCategory(s)end
 
-return j..": "..(string.gsub(tostring(n),"^[^\n:]*:%d+: ",""))
+return m..": "..(string.gsub(tostring(q),"^[^\n:]*:%d+: ",""))
 end
-h.plugins[j]={categories=k,blocks=l}
+k.plugins[m]={categories=n,blocks=o}
 return nil
 end
 
-return g
+return j
 
-end)()end,[15]=function()local b,c,d=a(15)local e return(function(...)
-
-
-
-
+end end
+do local g=e for h,i in ipairs({"Lang","Core","Registry"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
@@ -1672,135 +1474,142 @@ end)()end,[15]=function()local b,c,d=a(15)local e return(function(...)
 
 
 
-local g={}
-g.__index=g
 
-local h={hat=true,stack=true,cap=true,c=true,reporter=true,boolean=true}
 
-local function parseLabel(i)
-local j,k={},1
+
+
+
+local j={}
+j.__index=j
+
+local k={hat=true,stack=true,cap=true,c=true,reporter=true,boolean=true}
+
+local function parseLabel(l)
+local m,n={},1
 while true do
-local l,m,n=string.find(i,"{(@?[%w_]+)}",k)
-if not l then break end
-if l>k then table.insert(j,{text=string.sub(i,k,l-1)})end
-if string.sub(n,1,1)=="@"then table.insert(j,{icon=string.sub(n,2)})
-else table.insert(j,{input=n})end
-k=m+1
+local o,p,q=string.find(l,"{(@?[%w_]+)}",n)
+if not o then break end
+if o>n then table.insert(m,{text=string.sub(l,n,o-1)})end
+if string.sub(q,1,1)=="@"then table.insert(m,{icon=string.sub(q,2)})
+else table.insert(m,{input=q})end
+n=p+1
 end
-if k<=#i then table.insert(j,{text=string.sub(i,k)})end
-return j
-end
-
-function g.new()
-return setmetatable({blocks={},blockOrder={},categories={},categoryOrder={}},g)
+if n<=#l then table.insert(m,{text=string.sub(l,n)})end
+return m
 end
 
-function g:defineCategory(i,j)
-assert(type(i)=="string","category id must be a string")
-j=j or{}
-if not self.categories[i]then table.insert(self.categoryOrder,i)end
-self.categories[i]={id=i,name=j.name or i,color=j.color or{150,150,150}}
+function j.new()
+return setmetatable({blocks={},blockOrder={},categories={},categoryOrder={}},j)
 end
 
-function g:defineBlock(i)
-assert(type(i)=="table"and type(i.id)=="string","block needs a string id")
-assert(not self.blocks[i.id],"duplicate block id: "..i.id)
-assert(h[i.shape],"bad shape for "..i.id)
-assert(self.categories[i.category],"unknown category for "..i.id)
-i.inputs=i.inputs or{}
-i.stacks=i.stacks or{}
-i.label=i.label or i.id
-i.segments=parseLabel(i.label)
-if i.shape=="hat"then
-assert(i.hat and i.hat.event,"hat block needs hat.event: "..i.id)
-i.run=i.run or function()end
-end
-assert(type(i.run)=="function","block needs run(): "..i.id)
-for j,k in ipairs(i.segments)do
-if k.input then assert(i.inputs[k.input],i.id..": label uses undeclared input "..k.input)end
-end
-self.blocks[i.id]=i
-table.insert(self.blockOrder,i.id)
-return i
+function j:defineCategory(l,m)
+assert(type(l)=="string","category id must be a string")
+m=m or{}
+if not self.categories[l]then table.insert(self.categoryOrder,l)end
+self.categories[l]={id=l,name=m.name or l,color=m.color or{150,150,150}}
 end
 
-
-function g:removeBlocks(i)
-local j,k={},0
-for l,m in ipairs(self.blockOrder)do
-if i[m]then self.blocks[m]=nil;k=k+1 else table.insert(j,m)end
+function j:defineBlock(l)
+assert(type(l)=="table"and type(l.id)=="string","block needs a string id")
+assert(not self.blocks[l.id],"duplicate block id: "..l.id)
+assert(k[l.shape],"bad shape for "..l.id)
+assert(self.categories[l.category],"unknown category for "..l.id)
+l.inputs=l.inputs or{}
+l.stacks=l.stacks or{}
+l.label=l.label or l.id
+l.segments=parseLabel(l.label)
+if l.shape=="hat"then
+assert(l.hat and l.hat.event,"hat block needs hat.event: "..l.id)
+l.run=l.run or function()end
 end
-self.blockOrder=j
-return k
+assert(type(l.run)=="function","block needs run(): "..l.id)
+for m,n in ipairs(l.segments)do
+if n.input then assert(l.inputs[n.input],l.id..": label uses undeclared input "..n.input)end
+end
+self.blocks[l.id]=l
+table.insert(self.blockOrder,l.id)
+return l
 end
 
 
-function g:removeCategory(i)
-if not self.categories[i]then return false end
-self.categories[i]=nil
-local j={}
-for k,l in ipairs(self.categoryOrder)do
-if l~=i then table.insert(j,l)end
+function j:removeBlocks(l)
+local m,n={},0
+for o,p in ipairs(self.blockOrder)do
+if l[p]then self.blocks[p]=nil;n=n+1 else table.insert(m,p)end
 end
-self.categoryOrder=j
+self.blockOrder=m
+return n
+end
+
+
+function j:removeCategory(l)
+if not self.categories[l]then return false end
+self.categories[l]=nil
+local m={}
+for n,o in ipairs(self.categoryOrder)do
+if o~=l then table.insert(m,o)end
+end
+self.categoryOrder=m
 return true
 end
 
-function g:get(i)return self.blocks[i]end
+function j:get(l)return self.blocks[l]end
 
 
-function g:shapeOf(i)
-local j=self.blocks[i.op]
-if j.shapeOf then return j.shapeOf(i)end
-return j.shape
+function j:shapeOf(l)
+local m=self.blocks[l.op]
+if m.shapeOf then return m.shapeOf(l)end
+return m.shape
 end
 
 
 
-function g:accepts(i,j,k,l)
-local m=i and i.inputs[j]
-if not m then return false end
-if k~="reporter"and k~="boolean"then return false end
-local n=m.reporters
-if n==nil then
-n=not(m.options~=nil or m.type=="variable"or m.type=="list"or m.type=="param")
+function j:accepts(l,m,n,o)
+local p=l and l.inputs[m]
+if not p then return false end
+if n~="reporter"and n~="boolean"then return false end
+local q=p.reporters
+if q==nil then
+q=not(p.options~=nil or p.type=="variable"or p.type=="list"or p.type=="param")
 end
-if not n then return false end
-if m.type=="boolean"then return k=="boolean"or(l~=nil and l.output=="any")end
+if not q then return false end
+if p.type=="boolean"then return n=="boolean"or(o~=nil and o.output=="any")end
 return true
 end
 
 
 
-function g:wrapSlot(i)
-local j=i and self.blocks[i.op]
-local k=j and j.stacks[1]
-if not k then return nil end
-local l=i.stacks and i.stacks[k]
-if l and#l>0 then return nil end
-return k
+function j:wrapSlot(l)
+local m=l and self.blocks[l.op]
+local n=m and m.stacks[1]
+if not n then return nil end
+local o=l.stacks and l.stacks[n]
+if o and#o>0 then return nil end
+return n
 end
 
-function g:listByCategory(i)
-local j={}
-for k,l in ipairs(self.blockOrder)do
-if self.blocks[l].category==i and self.blocks[l].listed~=false then table.insert(j,self.blocks[l])end
+function j:listByCategory(l)
+local m={}
+for n,o in ipairs(self.blockOrder)do
+if self.blocks[o].category==l and self.blocks[o].listed~=false then table.insert(m,self.blocks[o])end
 end
+return m
+end
+
+
+function j:createBlock(l)
+local m=assert(self.blocks[l],"unknown block: "..tostring(l))
+local n={op=l,inputs={},stacks={}}
+for o,p in pairs(m.inputs)do n.inputs[o]=p.default end
+for o,p in ipairs(m.stacks)do n.stacks[p]={}end
+return n
+end
+
 return j
-end
 
-
-function g:createBlock(i)
-local j=assert(self.blocks[i],"unknown block: "..tostring(i))
-local k={op=i,inputs={},stacks={}}
-for l,m in pairs(j.inputs)do k.inputs[l]=m.default end
-for l,m in ipairs(j.stacks)do k.stacks[m]={}end
-return k
-end
-
-return g
-
-end)()end,[16]=function()local b,c,d=a(16)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"Lang","Core","Validate"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
@@ -1809,156 +1618,160 @@ end)()end,[16]=function()local b,c,d=a(16)local e return(function(...)
 
 
 
-local g=d(c.Parent.Values)
-local h=g.LIMITS
-local i={VERSION=1}
 
-local j=h.MAX_DEPTH
+local j=i(h.Parent.Values)
+local k=j.LIMITS
+local l={VERSION=1}
 
-local function isValueShape(k)return k=="reporter"or k=="boolean"end
+local m=k.MAX_DEPTH
+
+local function isValueShape(n)return n=="reporter"or n=="boolean"end
 
 
 
-function i.checkSize(k)
-if type(k)~="table"or type(k.scripts)~="table"then return nil end
-if#k.scripts>h.MAX_SCRIPTS then return"too many scripts (max "..h.MAX_SCRIPTS..")"end
-local l=0
-local function walk(m,n)
-if type(m)~="table"then return nil end
-l=l+1
-if l>h.MAX_BLOCKS then return"too many blocks (max "..h.MAX_BLOCKS..")"end
-if n>j then return"blocks nested too deep"end
-if type(m.inputs)=="table"then
-for o,p in pairs(m.inputs)do
-if type(p)=="table"then local q=walk(p,n+1)if q then return q end end
+function l.checkSize(n)
+if type(n)~="table"or type(n.scripts)~="table"then return nil end
+if#n.scripts>k.MAX_SCRIPTS then return"too many scripts (max "..k.MAX_SCRIPTS..")"end
+local o=0
+local function walk(p,q)
+if type(p)~="table"then return nil end
+o=o+1
+if o>k.MAX_BLOCKS then return"too many blocks (max "..k.MAX_BLOCKS..")"end
+if q>m then return"blocks nested too deep"end
+if type(p.inputs)=="table"then
+for r,s in pairs(p.inputs)do
+if type(s)=="table"then local t=walk(s,q+1)if t then return t end end
 end
 end
-if type(m.stacks)=="table"then
-for o,p in pairs(m.stacks)do
-if type(p)=="table"then
-for q=1,#p do local r=walk(p[q],n+1)if r then return r end end
+if type(p.stacks)=="table"then
+for r,s in pairs(p.stacks)do
+if type(s)=="table"then
+for t=1,#s do local u=walk(s[t],q+1)if u then return u end end
 end
 end
 end
 return nil
 end
-for m=1,#k.scripts do
-local n=k.scripts[m]
-if type(n)=="table"and type(n.blocks)=="table"then
-for o=1,#n.blocks do local p=walk(n.blocks[o],1)if p then return p end end
+for p=1,#n.scripts do
+local q=n.scripts[p]
+if type(q)=="table"and type(q.blocks)=="table"then
+for r=1,#q.blocks do local s=walk(q.blocks[r],1)if s then return s end end
 end
 end
 return nil
 end
 
-local k
+local n
 
-local function block(l,m,n,o,p)
-if type(m)~="table"then return nil,n..": block must be an object"end
-if o>j then return nil,n..": blocks nested too deep"end
-local q=type(m.op)=="string"and l:get(m.op)
-if not q then return nil,n..": unknown block "..tostring(m.op)end
-local r=isValueShape(q.shape)
-if p and not r then return nil,n..": "..q.id.." cannot go in an input"end
-if not p and r then return nil,n..": "..q.id.." cannot be a stack block"end
+local function block(o,p,q,r,s)
+if type(p)~="table"then return nil,q..": block must be an object"end
+if r>m then return nil,q..": blocks nested too deep"end
+local t=type(p.op)=="string"and o:get(p.op)
+if not t then return nil,q..": unknown block "..tostring(p.op)end
+local u=isValueShape(t.shape)
+if s and not u then return nil,q..": "..t.id.." cannot go in an input"end
+if not s and u then return nil,q..": "..t.id.." cannot be a stack block"end
 
-local s=l:createBlock(m.op)
-if m.inputs~=nil and type(m.inputs)~="table"then return nil,n..": inputs must be an object"end
-for t,u in pairs(m.inputs or{})do
-if q.inputs[t]then
-local v=n.."."..tostring(t)
-local w=type(u)
-if w=="table"then
-local x,y=block(l,u,v,o+1,true)
-if not x then return nil,y end
-if not l:accepts(q,t,l:get(x.op).shape,l:get(x.op))then
-return nil,v..": "..x.op.." cannot go in the "..t.." slot of "..q.id
+local v=o:createBlock(p.op)
+if p.inputs~=nil and type(p.inputs)~="table"then return nil,q..": inputs must be an object"end
+for w,x in pairs(p.inputs or{})do
+if t.inputs[w]then
+local y=q.."."..tostring(w)
+local z=type(x)
+if z=="table"then
+local A,C=block(o,x,y,r+1,true)
+if not A then return nil,C end
+if not o:accepts(t,w,o:get(A.op).shape,o:get(A.op))then
+return nil,y..": "..A.op.." cannot go in the "..w.." slot of "..t.id
 end
-s.inputs[t]=x
-elseif w=="string"or w=="number"or w=="boolean"then
-if w=="string"and#u>h.MAX_LITERAL then return nil,v..": text longer than "..h.MAX_LITERAL.." characters"end
-if w=="string"and m.op=="custom_define"and t=="NAME"and#u>h.MAX_NAME then
-return nil,v..": name longer than "..h.MAX_NAME.." characters"
+v.inputs[w]=A
+elseif z=="string"or z=="number"or z=="boolean"then
+if z=="string"and#x>k.MAX_LITERAL then return nil,y..": text longer than "..k.MAX_LITERAL.." characters"end
+if z=="string"and p.op=="custom_define"and w=="NAME"and#x>k.MAX_NAME then
+return nil,y..": name longer than "..k.MAX_NAME.." characters"
 end
-s.inputs[t]=u
+v.inputs[w]=x
 else
-return nil,v..": input must be a value or a block"
+return nil,y..": input must be a value or a block"
 end
 end
 end
 
-if m.stacks~=nil and type(m.stacks)~="table"then return nil,n..": stacks must be an object"end
-for t,u in ipairs(q.stacks)do
-local v=m.stacks and m.stacks[u]
-if v~=nil then
-if type(v)~="table"then return nil,n.."."..u..": stack must be a list"end
-local w,x=k(l,v,n.."."..u,o+1,false)
+if p.stacks~=nil and type(p.stacks)~="table"then return nil,q..": stacks must be an object"end
+for w,x in ipairs(t.stacks)do
+local y=p.stacks and p.stacks[x]
+if y~=nil then
+if type(y)~="table"then return nil,q.."."..x..": stack must be a list"end
+local z,A=n(o,y,q.."."..x,r+1,false)
+if not z then return nil,A end
+v.stacks[x]=z
+end
+end
+return v
+end
+
+
+function n(o,p,q,r,s)
+local t={}
+for u=1,#p do
+local v=q.."["..u.."]"
+local w,x=block(o,p[u],v,r,false)
 if not w then return nil,x end
-s.stacks[u]=w
+local y=o:get(w.op)
+if y.shape=="hat"and not(s and u==1)then
+return nil,v..": "..y.id.." can only start a script"
 end
+if u<#p and o:shapeOf(w)=="cap"then
+return nil,v..": nothing can follow "..y.id
 end
-return s
+t[u]=w
 end
-
-
-function k(l,m,n,o,p)
-local q={}
-for r=1,#m do
-local s=n.."["..r.."]"
-local t,u=block(l,m[r],s,o,false)
-if not t then return nil,u end
-local v=l:get(t.op)
-if v.shape=="hat"and not(p and r==1)then
-return nil,s..": "..v.id.." can only start a script"
-end
-if r<#m and l:shapeOf(t)=="cap"then
-return nil,s..": nothing can follow "..v.id
-end
-q[r]=t
-end
-return q
+return t
 end
 
-function i.program(l,m)
-if type(l)~="table"then return nil,"program must be an object"end
-if type(l.blockscript)=="number"and l.blockscript>i.VERSION then
-return nil,"saved by a newer BlockScript (format "..l.blockscript..")"
+function l.program(o,p)
+if type(o)~="table"then return nil,"program must be an object"end
+if type(o.blockscript)=="number"and o.blockscript>l.VERSION then
+return nil,"saved by a newer BlockScript (format "..o.blockscript..")"
 end
-if type(l.scripts)~="table"then return nil,"program has no scripts list"end
-local n=i.checkSize(l)
-if n then return nil,n end
-local o={}
-for p=1,#l.scripts do
-local q=l.scripts[p]
-local r="scripts["..p.."]"
-if type(q)~="table"or type(q.blocks)~="table"or#q.blocks==0 then
-return nil,r..": needs a non-empty blocks list"
+if type(o.scripts)~="table"then return nil,"program has no scripts list"end
+local q=l.checkSize(o)
+if q then return nil,q end
+local r={}
+for s=1,#o.scripts do
+local t=o.scripts[s]
+local u="scripts["..s.."]"
+if type(t)~="table"or type(t.blocks)~="table"or#t.blocks==0 then
+return nil,u..": needs a non-empty blocks list"
 end
-local s,t
-local u=#q.blocks==1 and type(q.blocks[1])=="table"and type(q.blocks[1].op)=="string"and m:get(q.blocks[1].op)
-if u and isValueShape(u.shape)then
-local v,w=block(m,q.blocks[1],r..".blocks[1]",1,true)
-if not v then return nil,w end
-s={v}
+local v,w
+local x=#t.blocks==1 and type(t.blocks[1])=="table"and type(t.blocks[1].op)=="string"and p:get(t.blocks[1].op)
+if x and isValueShape(x.shape)then
+local y,z=block(p,t.blocks[1],u..".blocks[1]",1,true)
+if not y then return nil,z end
+v={y}
 else
-s,t=k(m,q.blocks,r..".blocks",1,true)
-if not s then return nil,t end
+v,w=n(p,t.blocks,u..".blocks",1,true)
+if not v then return nil,w end
 end
-local v=type(q.x)=="number"and q.x or 0
-local w=type(q.y)=="number"and q.y or 0
-o[p]={x=math.max(0,v),y=math.max(0,w),blocks=s}
+local y=type(t.x)=="number"and t.x or 0
+local z=type(t.y)=="number"and t.y or 0
+r[s]={x=math.max(0,y),y=math.max(0,z),blocks=v}
 end
-return{scripts=o}
+return{scripts=r}
 end
 
-return i
+return l
 
-end)()end,[17]=function()local b,c,d=a(17)local e return(function(...)
-local g={}
+end end
+do local g=e for h,i in ipairs({"Lang","Core","Values"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+
+local j={}
 
 
 
-g.LIMITS={
+j.LIMITS={
 MAX_THREADS=200,
 MAX_STARTS_PER_FRAME=50,
 FRAME_SECONDS=0.008,
@@ -1976,149 +1789,150 @@ MAX_JSON_BYTES=1000000,
 MAX_NAME=200,MAX_PARAMS=16,MAX_CUSTOM=500,
 MAX_LITERAL=10000,MAX_DEPTH=100,
 }
-local h=g.LIMITS
+local k=j.LIMITS
 
 
-function g.typeName(i)
-if i==nil then return"nil"end
-return type(i)
+function j.typeName(l)
+if l==nil then return"nil"end
+return type(l)
 end
 
 
 
-function g.parseNumber(i)
-local j=string.match(i,"^%s*(.-)%s*$")
-if j==""or string.find(j,"[nNpP]")then return nil end
-local k=tonumber(j)
-if k==nil or k~=k then return nil end
-return k+0.0
+function j.parseNumber(l)
+local m=string.match(l,"^%s*(.-)%s*$")
+if m==""or string.find(m,"[nNpP]")then return nil end
+local n=tonumber(m)
+if n==nil or n~=n then return nil end
+return n+0.0
 end
 
 
 
-function g.toNumber(i)
-if type(i)=="number"then return i+0.0 end
-if type(i)=="string"then
-local j=g.parseNumber(i)
-if j~=nil then return j end
+function j.toNumber(l)
+if type(l)=="number"then return l+0.0 end
+if type(l)=="string"then
+local m=j.parseNumber(l)
+if m~=nil then return m end
 end
-error("expected a number, got "..(type(i)=="string"and"text \""..string.sub(i,1,20).."\""or g.typeName(i)),0)
-end
-
-
-function g.limitString(i)
-if type(i)=="string"and#i>h.MAX_STRING then error("string too long",0)end
-return i
+error("expected a number, got "..(type(l)=="string"and"text \""..string.sub(l,1,20).."\""or j.typeName(l)),0)
 end
 
 
-function g.toString(i)
-if type(i)=="number"then
-if i~=i then return"nan"end
-if i==math.huge then return"inf"end
-if i==-math.huge then return"-inf"end
-return string.format("%.14g",i)
-end
-return tostring(i)
+function j.limitString(l)
+if type(l)=="string"and#l>k.MAX_STRING then error("string too long",0)end
+return l
 end
 
 
-function g.round(i)
-if i>=0 then return math.floor(i+0.5)end
-return-math.floor(-i+0.5)
+function j.toString(l)
+if type(l)=="number"then
+if l~=l then return"nan"end
+if l==math.huge then return"inf"end
+if l==-math.huge then return"-inf"end
+return string.format("%.14g",l)
+end
+return tostring(l)
+end
+
+
+function j.round(l)
+if l>=0 then return math.floor(l+0.5)end
+return-math.floor(-l+0.5)
 end
 
 
 
-function g.chars(i)
-local j={}
-if utf8 and utf8.len(i)then
-for k in string.gmatch(i,utf8.charpattern)do j[#j+1]=k end
+function j.chars(l)
+local m={}
+if utf8 and utf8.len(l)then
+for n in string.gmatch(l,utf8.charpattern)do m[#m+1]=n end
 else
-for k=1,#i do j[k]=string.sub(i,k,k)end
+for n=1,#l do m[n]=string.sub(l,n,n)end
 end
-return j
-end
-
-
-function g.length(i)
-return(utf8 and utf8.len(i))or#i
+return m
 end
 
 
-function g.letter(i,j)
-local k=g.length(i)
-if j~=j or j<1 or j>k then return""end
-if utf8 and utf8.len(i)then
-local l=utf8.offset(i,j)
-local m=utf8.offset(i,j+1)
-return string.sub(i,l,(m or#i+1)-1)
-end
-return string.sub(i,j,j)
+function j.length(l)
+return(utf8 and utf8.len(l))or#l
 end
 
 
+function j.letter(l,m)
+local n=j.length(l)
+if m~=m or m<1 or m>n then return""end
+if utf8 and utf8.len(l)then
+local o=utf8.offset(l,m)
+local p=utf8.offset(l,m+1)
+return string.sub(l,o,(p or#l+1)-1)
+end
+return string.sub(l,m,m)
+end
 
 
-function g.listIndex(i,j,k)
-if type(i)=="string"then
-if i=="all"then return k and"all"or nil end
-if i=="last"then return j>0 and j or nil end
-if i=="random"or i=="any"then return j>0 and math.random(1,j)or nil end
+
+
+function j.listIndex(l,m,n)
+if type(l)=="string"then
+if l=="all"then return n and"all"or nil end
+if l=="last"then return m>0 and m or nil end
+if l=="random"or l=="any"then return m>0 and math.random(1,m)or nil end
 return nil
 end
-if type(i)~="number"or i~=math.floor(i)or i<1 or i>j then return nil end
-return math.floor(i)
+if type(l)~="number"or l~=math.floor(l)or l<1 or l>m then return nil end
+return math.floor(l)
 end
 
 
-function g.toBool(i)
-return i~=nil and i~=false
+function j.toBool(l)
+return l~=nil and l~=false
 end
 
 
-function g.equals(i,j)return i==j end
+function j.equals(l,m)return l==m end
 
 
-function g.less(i,j)
-local k,l=type(i),type(j)
-if k==l and(k=="number"or k=="string")then return i<j end
-error("attempt to compare "..g.typeName(i).." with "..g.typeName(j),0)
+function j.less(l,m)
+local n,o=type(l),type(m)
+if n==o and(n=="number"or n=="string")then return l<m end
+error("attempt to compare "..j.typeName(l).." with "..j.typeName(m),0)
 end
 
 
-function g.listContents(i)
-local j=true
-for k,l in ipairs(i)do
-if not(type(l)=="string"and g.length(l)==1)then j=false break end
+function j.listContents(l)
+local m=true
+for n,o in ipairs(l)do
+if not(type(o)=="string"and j.length(o)==1)then m=false break end
 end
-local k,l={},0
-for m,n in ipairs(i)do
-local o=g.toString(n)
-l=l+#o+1
-if l>h.MAX_STRING then error("string too long",0)end
-k[m]=o
+local n,o={},0
+for p,q in ipairs(l)do
+local r=j.toString(q)
+o=o+#r+1
+if o>k.MAX_STRING then error("string too long",0)end
+n[p]=r
 end
-return table.concat(k,j and""or" ")
+return table.concat(n,m and""or" ")
 end
 
 
-g.KEYS={"space","up arrow","down arrow","right arrow","left arrow","any"}
-for i=string.byte("a"),string.byte("z")do table.insert(g.KEYS,string.char(i))end
-for i=0,9 do table.insert(g.KEYS,tostring(i))end
+j.KEYS={"space","up arrow","down arrow","right arrow","left arrow","any"}
+for l=string.byte("a"),string.byte("z")do table.insert(j.KEYS,string.char(l))end
+for l=0,9 do table.insert(j.KEYS,tostring(l))end
 
 
-function g.coerce(i,j)
-if i=="number"then return g.toNumber(j)end
-if i=="string"or i=="variable"or i=="list"or i=="param"then return g.toString(j)end
-if i=="boolean"then return g.toBool(j)end
+function j.coerce(l,m)
+if l=="number"then return j.toNumber(m)end
+if l=="string"or l=="variable"or l=="list"or l=="param"then return j.toString(m)end
+if l=="boolean"then return j.toBool(m)end
+return m
+end
+
 return j
-end
 
-return g
-
-end)()end,[18]=function()local b,c,d=a(18)local e return(function(...)
-
+end end
+do local g=e for h,i in ipairs({"Plugin"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
@@ -2128,585 +1942,596 @@ end)()end,[18]=function()local b,c,d=a(18)local e return(function(...)
 
 
 
-local g={}
-g.__index=g
-
-local h={hat=true,stack=true,cap=true,c=true,reporter=true,boolean=true}
 
 
+local j={}
+j.__index=j
 
-local i={}
-i.__index=i
+local k={hat=true,stack=true,cap=true,c=true,reporter=true,boolean=true}
 
-function i:SetLabel(j)self.label=j;return self end
-function i:SetShape(j)
-assert(h[j],"bad shape: "..tostring(j))
-self.shape=j
+
+
+local l={}
+l.__index=l
+
+function l:SetLabel(m)self.label=m;return self end
+function l:SetShape(m)
+assert(k[m],"bad shape: "..tostring(m))
+self.shape=m
 return self
 end
-function i:SetCategory(j)self.category=j;return self end
-function i:SetRun(j)
-assert(type(j)=="function","run must be a function")
-self.run=j
+function l:SetCategory(m)self.category=m;return self end
+function l:SetRun(m)
+assert(type(m)=="function","run must be a function")
+self.run=m
 return self
 end
-function i:SetInput(j,k)self.inputs[j]=k;return self end
-function i:RemoveInput(j)self.inputs[j]=nil;return self end
+function l:SetInput(m,n)self.inputs[m]=n;return self end
+function l:RemoveInput(m)self.inputs[m]=nil;return self end
 
-function i:SetStacks(j)self.stacks=j;return self end
-function i:SetHat(j)self.hat=j;return self end
-function i:Set(j,k)self[j]=k;return self end
+function l:SetStacks(m)self.stacks=m;return self end
+function l:SetHat(m)self.hat=m;return self end
+function l:Set(m,n)self[m]=n;return self end
 
 
-function i:ToDef()
-local j={}
-for k,l in pairs(self)do j[k]=l end
+function l:ToDef()
+local m={}
+for n,o in pairs(self)do m[n]=o end
+return m
+end
+
+
+function j.new(m)
+m=m or{}
+assert(type(m)=="table","Plugin.new expects a table")
+local n=setmetatable({},j)
+n._data={}
+for o,p in pairs(m)do n._data[o]=p end
+if n._data.Name==nil then n._data.Name="Unnamed plugin"end
+if n._data.Description==nil then n._data.Description=""end
+n._categories,n._categoryById={},{}
+n._blocks,n._blockById={},{}
+return n
+end
+
+
+
+function j:CreateCategory(m,n)
+assert(type(m)=="string"and m~="","category id must be a non-empty string")
+local o=self._categoryById[m]
+if o then return o end
+n=n or{}
+o={id=m,name=n.name or m,color=n.color or{150,150,150}}
+self._categoryById[m]=o
+table.insert(self._categories,o)
+return o
+end
+
+
+
+
+
+function j:CreateBlock(m,n)
+assert(type(m)=="string"and m~="","block id must be a non-empty string")
+assert(not self._blockById[m],"duplicate block id in plugin: "..m)
+n=n or{}
+assert(type(n)=="table","CreateBlock fields must be a table")
+local o=setmetatable({},l)
+for p,q in pairs(n)do o[p]=q end
+o.id=m
+o.shape=o.shape or"stack"
+assert(k[o.shape],"bad shape for "..m..": "..tostring(o.shape))
+o.category=o.category or(self._categories[#self._categories]and self._categories[#self._categories].id)
+assert(o.category,"block "..m.." has no category: pass fields.category or call CreateCategory first")
+o.label=o.label or m
+o.inputs=o.inputs or{}
+o.stacks=o.stacks or{}
+self._blockById[m]=o
+table.insert(self._blocks,o)
+return o
+end
+
+
+
+
+function j:GetData()
+local m={}
+for n,o in pairs(self._data)do m[n]=o end
+m.Categories=table.move(self._categories,1,#self._categories,1,{})
+m.Blocks=table.move(self._blocks,1,#self._blocks,1,{})
+return m
+end
+
+j.Block=l
+
 return j
-end
 
-
-function g.new(j)
-j=j or{}
-assert(type(j)=="table","Plugin.new expects a table")
-local k=setmetatable({},g)
-k._data={}
-for l,m in pairs(j)do k._data[l]=m end
-if k._data.Name==nil then k._data.Name="Unnamed plugin"end
-if k._data.Description==nil then k._data.Description=""end
-k._categories,k._categoryById={},{}
-k._blocks,k._blockById={},{}
-return k
-end
-
-
-
-function g:CreateCategory(j,k)
-assert(type(j)=="string"and j~="","category id must be a non-empty string")
-local l=self._categoryById[j]
-if l then return l end
-k=k or{}
-l={id=j,name=k.name or j,color=k.color or{150,150,150}}
-self._categoryById[j]=l
-table.insert(self._categories,l)
-return l
-end
+end end
+do local g=e for h,i in ipairs({"UI","Assets"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
 
 
-function g:CreateBlock(j,k)
-assert(type(j)=="string"and j~="","block id must be a non-empty string")
-assert(not self._blockById[j],"duplicate block id in plugin: "..j)
-k=k or{}
-assert(type(k)=="table","CreateBlock fields must be a table")
-local l=setmetatable({},i)
-for m,n in pairs(k)do l[m]=n end
-l.id=j
-l.shape=l.shape or"stack"
-assert(h[l.shape],"bad shape for "..j..": "..tostring(l.shape))
-l.category=l.category or(self._categories[#self._categories]and self._categories[#self._categories].id)
-assert(l.category,"block "..j.." has no category: pass fields.category or call CreateCategory first")
-l.label=l.label or j
-l.inputs=l.inputs or{}
-l.stacks=l.stacks or{}
-self._blockById[j]=l
-table.insert(self._blocks,l)
-return l
-end
 
-
-
-
-function g:GetData()
 local j={}
-for k,l in pairs(self._data)do j[k]=l end
-j.Categories=table.move(self._categories,1,#self._categories,1,{})
-j.Blocks=table.move(self._blocks,1,#self._blocks,1,{})
-return j
-end
 
-g.Block=i
-
-return g
-
-end)()end,[20]=function()local b,c,d=a(20)local e return(function(...)
+j.BASE="https://raw.githubusercontent.com/Horizon-Developments/scratch-luau/refs/heads/main/"
 
 
-
-
-
-local g={}
-
-g.BASE="https://raw.githubusercontent.com/Horizon-Developments/scratch-luau/refs/heads/main/"
-
-
-g.PATHS={
+j.PATHS={
 flag="assets/icons/flag.png",
 loop="assets/icons/loop.png",
 }
 
-local h={}
-local i={}
+local k={}
+local l={}
 
 local function loader()
-local j,k=pcall(function()return loadasset end)
-if j and type(k)=="function"then return k end
+local m,n=pcall(function()return loadasset end)
+if m and type(n)=="function"then return n end
 return nil
 end
 
-local function fetch(j,k)
-local l,m=g.PATHS[j],loader()
-if not l or not m then h[j]=false;return k(nil)end
-i[j]={k}
+local function fetch(m,n)
+local o,p=j.PATHS[m],loader()
+if not o or not p then k[m]=false;return n(nil)end
+l[m]={n}
 local function work()
-local n,o=pcall(function()return m(g.BASE..l)end)
-local p=n and type(o)=="string"and o~=""and o or nil
-h[j]=p or false
-local q=i[j]
-i[j]=nil
-for r,s in ipairs(q)do s(p)end
+local q,r=pcall(function()return p(j.BASE..o)end)
+local s=q and type(r)=="string"and r~=""and r or nil
+k[m]=s or false
+local t=l[m]
+l[m]=nil
+for u,v in ipairs(t)do v(s)end
 end
 if task and task.spawn then task.spawn(work)else work()end
 end
 
 
-function g.get(j,k)
-local l=h[j]
-if l~=nil then return k(l or nil)end
-if i[j]then table.insert(i[j],k)return end
-fetch(j,k)
+function j.get(m,n)
+local o=k[m]
+if o~=nil then return n(o or nil)end
+if l[m]then table.insert(l[m],n)return end
+fetch(m,n)
 end
 
-function g.apply(j,k)
-g.get(k,function(l)
-if l and j.Parent then j.Image=l end
+function j.apply(m,n)
+j.get(n,function(o)
+if o and m.Parent then m.Image=o end
 end)
 end
 
 
-function g.icon(j,k,l,m)
-local n=Instance.new("ImageLabel")
-n.Name="Icon_"..k
-n.BackgroundTransparency=1
-n.BorderSizePixel=0
-n.Size=UDim2.new(0,l,0,l)
-n.ScaleType=Enum.ScaleType.Fit
-n.LayoutOrder=m or 0
-n.Image=""
-n.Parent=j
-g.apply(n,k)
-return n
-end
-
-return g
-
-end)()end,[21]=function()local b,c,d=a(21)local e return(function(...)
-
-
-
-
-
-
-local g=d(c.Parent.Theme)
-local h=d(c.Parent.Shapes)
-local i=d(c.Parent.Assets)
-
-local j={}
-j.__index=j
-
-
-
-
-
-function j.new(k,l,m)
-return setmetatable({registry=k,map=l,targets=m},j)
-end
-
-function j:_target(k,l,m)
-if self.targets then self.targets.inputs[k]={block=l,name=m}end
-end
-
-
-function j:_field(k,l,m)
-if self.targets and self.targets.fields then self.targets.fields[k]={block=l,name=m}end
-end
-
-local function corner(k,l)
-local m=Instance.new("UICorner")
-m.CornerRadius=l
-m.Parent=k
-return m
-end
-
-local function padding(k,l,m,n,o)
-local p=Instance.new("UIPadding")
-p.PaddingLeft,p.PaddingRight=UDim.new(0,l),UDim.new(0,m)
-p.PaddingTop,p.PaddingBottom=UDim.new(0,n),UDim.new(0,o)
-p.Parent=k
-end
-
-local function listLayout(k,l,m,n)
-local o=Instance.new("UIListLayout")
-o.FillDirection=l
-o.Padding=UDim.new(0,m)
-o.SortOrder=Enum.SortOrder.LayoutOrder
-o.VerticalAlignment=n or Enum.VerticalAlignment.Top
-o.Parent=k
-return o
-end
-
-local function frame(k,l,m)
-local n=Instance.new("Frame")
-n.Name=l
-n.BackgroundColor3=m
-n.BorderSizePixel=0
-n.AutomaticSize=Enum.AutomaticSize.XY
-n.Size=UDim2.new(0,0,0,0)
-n.Parent=k
-return n
-end
-
-local function label(k,l,m,n)
-local o=Instance.new("TextLabel")
-o.Name="Text"
-o.BackgroundTransparency=1
-o.AutomaticSize=Enum.AutomaticSize.XY
-o.Size=UDim2.new(0,0,0,24)
-o.Font=g.blockFont
-o.TextSize=g.textSize
-o.TextColor3=m
-o.Text=l
-o.LayoutOrder=n
-o.Parent=k
-return o
-end
-
-
-
-
-local function field(k,l,m,n)
-local o=n and g.dropdown(n)or g.field
-local p=frame(k,"Field",o)
-p.LayoutOrder=m
-p.Size=UDim2.new(0,0,0,24)
-p.AutomaticSize=Enum.AutomaticSize.X
-corner(p,UDim.new(0.5,0))
-local q=Instance.new("TextLabel")
+function j.icon(m,n,o,p)
+local q=Instance.new("ImageLabel")
+q.Name="Icon_"..n
 q.BackgroundTransparency=1
-q.AutomaticSize=Enum.AutomaticSize.X
-q.Size=UDim2.new(0,0,1,0)
-q.Font=g.blockFont
-q.TextSize=g.textSize
-q.TextColor3=n and g.textOn(o)or g.fieldText
-q.Text=tostring(l==nil and""or l)
-q.Parent=p
-padding(q,10,10,0,0)
-local r=Instance.new("UISizeConstraint")
-r.MinSize=Vector2.new(28,24)
-r.Parent=p
-return p
-end
-
-
-local function emptySlot(k,l,m)
-local n=Instance.new("Frame")
-n.Name="EmptySlot"
-n.BackgroundTransparency=1
-n.BorderSizePixel=0
-n.LayoutOrder=l
-n.Size=UDim2.new(0,40,0,24)
-n.Parent=k
-h.hexagon(n,g.recess(m),nil,1)
-return n
-end
-
-function j:_row(k,l,m,n,o)
-local p=Instance.new("Frame")
-p.Name="Row"
-p.BackgroundTransparency=1
-p.AutomaticSize=Enum.AutomaticSize.XY
-p.Size=UDim2.new(0,0,0,g.rowHeight)
-p.Parent=n
-listLayout(p,Enum.FillDirection.Horizontal,g.gap,Enum.VerticalAlignment.Center)
-
-
-local q=o=="boolean"and g.pad+14 or g.pad
-padding(p,q,q,4,4)
-local r=g.textOn(m)
-
-for s,t in ipairs(l.segments)do
-if t.icon then
-i.icon(p,t.icon,g.iconSize,s)
-elseif t.text then
-
-local u=t.text:gsub("^%s+",""):gsub("%s+$","")
-if u~=""then label(p,u,r,s)end
-else
-local u=l.inputs[t.input]
-local v=k.inputs[t.input]
-if type(v)=="table"and v.op then
-local w=self:build(v,p)
-w.LayoutOrder=s
-self:_target(w,k,t.input)
-elseif u.type=="boolean"and v==nil then
-self:_target(emptySlot(p,s,m),k,t.input)
-else
-local w=u.options~=nil or u.type=="variable"or u.type=="list"or u.type=="param"
-local x=field(p,v,s,w and m or nil)
-self:_target(x,k,t.input)
-self:_field(x,k,t.input)
-end
-end
-end
-return p
-end
-
-function j:build(k,l)
-local m=assert(self.registry:get(k.op),"unknown block: "..tostring(k.op))
-local n=g.categoryColor(self.registry.categories[m.category])
-local o=self.registry:shapeOf(k)
-
-local p=frame(l,"Block_"..k.op,n)
-
-local q=h.surface(p,o,n,g.edge(n),{bowler=m.bowler})
-listLayout(q,Enum.FillDirection.Vertical,0)
-if self.map then self.map[p]=k end
-
-local r=self:_row(k,m,n,q,o)
-r.LayoutOrder=1
-
-if#m.stacks>0 then
-for s,t in ipairs(m.stacks)do
-if s>1 then
-
-local u=Instance.new("Frame")
-u.Name="Divider_"..t
-u.BackgroundTransparency=1
-u.AutomaticSize=Enum.AutomaticSize.XY
-u.Size=UDim2.new(0,0,0,g.rowHeight)
-u.LayoutOrder=s*2
-u.Parent=q
-padding(u,g.pad,g.pad,0,0)
-local v=label(u,string.lower(t),g.textOn(n),1)
-v.Position=UDim2.new(0,0,0.5,-12)
-end
-local u=Instance.new("Frame")
-u.Name="Slot_"..t
-u.BackgroundTransparency=1
-u.AutomaticSize=Enum.AutomaticSize.XY
-u.Size=UDim2.new(0,0,0,g.cSlotMinHeight)
-u.LayoutOrder=s*2+1
-u.Parent=q
-if self.targets then self.targets.slots[u]={block=k,name=t}end
-padding(u,g.cSlotIndent,0,0,0)
-local v=self:buildStack(k.stacks[t]or{},u)
-v.LayoutOrder=1
-local w=Instance.new("UISizeConstraint")
-w.MinSize=Vector2.new(60,g.cSlotMinHeight)
-w.Parent=v
-end
-local s=Instance.new("Frame")
-s.Name="Footer"
-s.BackgroundTransparency=1
-s.Size=UDim2.new(0,0,0,m.footerIcon and g.cFooterIcon or g.cFooter)
-s.LayoutOrder=1000
-s.Parent=q
-if m.footerIcon then
-
-local t=i.icon(s,m.footerIcon,g.iconSize)
-t.Position=UDim2.new(0,g.pad,0.5,-g.iconSize/2)
-end
-end
-
-return p
-end
-
-
-function j:buildStack(k,l)
-local m=Instance.new("Frame")
-m.Name="Stack"
-m.BackgroundTransparency=1
-m.AutomaticSize=Enum.AutomaticSize.XY
-m.Size=UDim2.new(0,0,0,0)
-m.Parent=l
-listLayout(m,Enum.FillDirection.Vertical,0)
-for n,o in ipairs(k)do
-local p=self:build(o,m)
-p.LayoutOrder=n
-
-p.ZIndex=#k-n+1
-end
-return m
+q.BorderSizePixel=0
+q.Size=UDim2.new(0,o,0,o)
+q.ScaleType=Enum.ScaleType.Fit
+q.LayoutOrder=p or 0
+q.Image=""
+q.Parent=m
+j.apply(q,n)
+return q
 end
 
 return j
 
-end)()end,[22]=function()local b,c,d=a(22)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"UI","BlockView"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
 
 
-local g=d(c.Parent.Theme)
 
-local h={}
-h.__index=h
 
-local i=500
-local j=48
-local k=44
+local j=i(h.Parent.Theme)
+local k=i(h.Parent.Shapes)
+local l=i(h.Parent.Assets)
 
-local function corner(l)
-local m=Instance.new("UICorner")
-m.CornerRadius=g.radius
-m.Parent=l
+local m={}
+m.__index=m
+
+
+
+
+
+function m.new(n,o,p)
+return setmetatable({registry=n,map=o,targets=p},m)
 end
 
-local l={
-say=g.text,
-error=g.error,
-ask=g.textDim,
-input=g.textDim,
+function m:_target(n,o,p)
+if self.targets then self.targets.inputs[n]={block=o,name=p}end
+end
+
+
+function m:_field(n,o,p)
+if self.targets and self.targets.fields then self.targets.fields[n]={block=o,name=p}end
+end
+
+local function corner(n,o)
+local p=Instance.new("UICorner")
+p.CornerRadius=o
+p.Parent=n
+return p
+end
+
+local function padding(n,o,p,q,r)
+local s=Instance.new("UIPadding")
+s.PaddingLeft,s.PaddingRight=UDim.new(0,o),UDim.new(0,p)
+s.PaddingTop,s.PaddingBottom=UDim.new(0,q),UDim.new(0,r)
+s.Parent=n
+end
+
+local function listLayout(n,o,p,q)
+local r=Instance.new("UIListLayout")
+r.FillDirection=o
+r.Padding=UDim.new(0,p)
+r.SortOrder=Enum.SortOrder.LayoutOrder
+r.VerticalAlignment=q or Enum.VerticalAlignment.Top
+r.Parent=n
+return r
+end
+
+local function frame(n,o,p)
+local q=Instance.new("Frame")
+q.Name=o
+q.BackgroundColor3=p
+q.BorderSizePixel=0
+q.AutomaticSize=Enum.AutomaticSize.XY
+q.Size=UDim2.new(0,0,0,0)
+q.Parent=n
+return q
+end
+
+local function label(n,o,p,q)
+local r=Instance.new("TextLabel")
+r.Name="Text"
+r.BackgroundTransparency=1
+r.AutomaticSize=Enum.AutomaticSize.XY
+r.Size=UDim2.new(0,0,0,24)
+r.Font=j.blockFont
+r.TextSize=j.textSize
+r.TextColor3=p
+r.Text=o
+r.LayoutOrder=q
+r.Parent=n
+return r
+end
+
+
+
+
+local function field(n,o,p,q)
+local r=q and j.dropdown(q)or j.field
+local s=frame(n,"Field",r)
+s.LayoutOrder=p
+s.Size=UDim2.new(0,0,0,24)
+s.AutomaticSize=Enum.AutomaticSize.X
+corner(s,UDim.new(0.5,0))
+local t=Instance.new("TextLabel")
+t.BackgroundTransparency=1
+t.AutomaticSize=Enum.AutomaticSize.X
+t.Size=UDim2.new(0,0,1,0)
+t.Font=j.blockFont
+t.TextSize=j.textSize
+t.TextColor3=q and j.textOn(r)or j.fieldText
+t.Text=tostring(o==nil and""or o)
+t.Parent=s
+padding(t,10,10,0,0)
+local u=Instance.new("UISizeConstraint")
+u.MinSize=Vector2.new(28,24)
+u.Parent=s
+return s
+end
+
+
+local function emptySlot(n,o,p)
+local q=Instance.new("Frame")
+q.Name="EmptySlot"
+q.BackgroundTransparency=1
+q.BorderSizePixel=0
+q.LayoutOrder=o
+q.Size=UDim2.new(0,40,0,24)
+q.Parent=n
+k.hexagon(q,j.recess(p),nil,1)
+return q
+end
+
+function m:_row(n,o,p,q,r)
+local s=Instance.new("Frame")
+s.Name="Row"
+s.BackgroundTransparency=1
+s.AutomaticSize=Enum.AutomaticSize.XY
+s.Size=UDim2.new(0,0,0,j.rowHeight)
+s.Parent=q
+listLayout(s,Enum.FillDirection.Horizontal,j.gap,Enum.VerticalAlignment.Center)
+
+
+local t=r=="boolean"and j.pad+14 or j.pad
+padding(s,t,t,4,4)
+local u=j.textOn(p)
+
+for v,w in ipairs(o.segments)do
+if w.icon then
+l.icon(s,w.icon,j.iconSize,v)
+elseif w.text then
+
+local x=w.text:gsub("^%s+",""):gsub("%s+$","")
+if x~=""then label(s,x,u,v)end
+else
+local x=o.inputs[w.input]
+local y=n.inputs[w.input]
+if type(y)=="table"and y.op then
+local z=self:build(y,s)
+z.LayoutOrder=v
+self:_target(z,n,w.input)
+elseif x.type=="boolean"and y==nil then
+self:_target(emptySlot(s,v,p),n,w.input)
+else
+local z=x.options~=nil or x.type=="variable"or x.type=="list"or x.type=="param"
+local A=field(s,y,v,z and p or nil)
+self:_target(A,n,w.input)
+self:_field(A,n,w.input)
+end
+end
+end
+return s
+end
+
+function m:build(n,o)
+local p=assert(self.registry:get(n.op),"unknown block: "..tostring(n.op))
+local q=j.categoryColor(self.registry.categories[p.category])
+local r=self.registry:shapeOf(n)
+
+local s=frame(o,"Block_"..n.op,q)
+
+local t=k.surface(s,r,q,j.edge(q),{bowler=p.bowler})
+listLayout(t,Enum.FillDirection.Vertical,0)
+if self.map then self.map[s]=n end
+
+local u=self:_row(n,p,q,t,r)
+u.LayoutOrder=1
+
+if#p.stacks>0 then
+for v,w in ipairs(p.stacks)do
+if v>1 then
+
+local x=Instance.new("Frame")
+x.Name="Divider_"..w
+x.BackgroundTransparency=1
+x.AutomaticSize=Enum.AutomaticSize.XY
+x.Size=UDim2.new(0,0,0,j.rowHeight)
+x.LayoutOrder=v*2
+x.Parent=t
+padding(x,j.pad,j.pad,0,0)
+local y=label(x,string.lower(w),j.textOn(q),1)
+y.Position=UDim2.new(0,0,0.5,-12)
+end
+local x=Instance.new("Frame")
+x.Name="Slot_"..w
+x.BackgroundTransparency=1
+x.AutomaticSize=Enum.AutomaticSize.XY
+x.Size=UDim2.new(0,0,0,j.cSlotMinHeight)
+x.LayoutOrder=v*2+1
+x.Parent=t
+if self.targets then self.targets.slots[x]={block=n,name=w}end
+padding(x,j.cSlotIndent,0,0,0)
+local y=self:buildStack(n.stacks[w]or{},x)
+y.LayoutOrder=1
+local z=Instance.new("UISizeConstraint")
+z.MinSize=Vector2.new(60,j.cSlotMinHeight)
+z.Parent=y
+end
+local v=Instance.new("Frame")
+v.Name="Footer"
+v.BackgroundTransparency=1
+v.Size=UDim2.new(0,0,0,p.footerIcon and j.cFooterIcon or j.cFooter)
+v.LayoutOrder=1000
+v.Parent=t
+if p.footerIcon then
+
+local w=l.icon(v,p.footerIcon,j.iconSize)
+w.Position=UDim2.new(0,j.pad,0.5,-j.iconSize/2)
+end
+end
+
+return s
+end
+
+
+function m:buildStack(n,o)
+local p=Instance.new("Frame")
+p.Name="Stack"
+p.BackgroundTransparency=1
+p.AutomaticSize=Enum.AutomaticSize.XY
+p.Size=UDim2.new(0,0,0,0)
+p.Parent=o
+listLayout(p,Enum.FillDirection.Vertical,0)
+for q,r in ipairs(n)do
+local s=self:build(r,p)
+s.LayoutOrder=q
+
+s.ZIndex=#n-q+1
+end
+return p
+end
+
+return m
+
+end end
+do local g=e for h,i in ipairs({"UI","Console"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+
+
+
+
+
+
+local j=i(h.Parent.Theme)
+
+local k={}
+k.__index=k
+
+local l=500
+local m=48
+local n=44
+
+local function corner(o)
+local p=Instance.new("UICorner")
+p.CornerRadius=j.radius
+p.Parent=o
+end
+
+local o={
+say=j.text,
+error=j.error,
+ask=j.textDim,
+input=j.textDim,
 }
 
-function h.new(m)
-local n=setmetatable({nodes={},count=0,pending=nil},h)
+function k.new(p)
+local q=setmetatable({nodes={},count=0,pending=nil},k)
 
-local o=Instance.new("Frame")
-o.Name="Console"
-o.BackgroundColor3=g.panel
-o.BorderSizePixel=0
-o.Position=UDim2.new(0,g.paletteWidth,1,-g.consoleHeight)
-o.Size=UDim2.new(1,-g.paletteWidth,0,g.consoleHeight)
-o.Parent=m
-n.root=o
-
-local p=Instance.new("TextLabel")
-p.Name="Title"
-p.BackgroundTransparency=1
-p.Position=UDim2.fromOffset(12,0)
-p.Size=UDim2.new(0.5,0,0,j)
-p.Font=g.font
-p.TextSize=g.textSize
-p.TextColor3=g.textDim
-p.TextXAlignment=Enum.TextXAlignment.Left
-p.Text="Output"
-p.Parent=o
-
-local q=Instance.new("TextButton")
-q.Name="ClearOutput"
-q.AutoButtonColor=false
-q.BackgroundColor3=g.ground
-q.BorderSizePixel=0
-q.AnchorPoint=Vector2.new(1,0.5)
-q.Position=UDim2.new(1,-8,0,j/2)
-q.Size=UDim2.fromOffset(120,44)
-q.Font=g.font
-q.TextSize=g.textSize
-q.TextColor3=g.text
-q.Text="Clear output"
-q.Parent=o
-corner(q)
-q.Activated:Connect(function()n:clear()end)
-
-local r=Instance.new("ScrollingFrame")
-r.Name="Lines"
-r.BackgroundColor3=g.ground
+local r=Instance.new("Frame")
+r.Name="Console"
+r.BackgroundColor3=j.panel
 r.BorderSizePixel=0
-r.Position=UDim2.fromOffset(8,j)
-r.Size=UDim2.new(1,-16,1,-j-8)
-r.CanvasSize=UDim2.new(0,0,0,0)
-r.AutomaticCanvasSize=Enum.AutomaticSize.Y
-r.ScrollingDirection=Enum.ScrollingDirection.Y
-r.ScrollBarThickness=6
-r.ScrollBarImageColor3=g.textDim
-r.Parent=o
-corner(r)
-local s=Instance.new("UIListLayout")
-s.SortOrder=Enum.SortOrder.LayoutOrder
+r.Position=UDim2.new(0,j.paletteWidth,1,-j.consoleHeight)
+r.Size=UDim2.new(1,-j.paletteWidth,0,j.consoleHeight)
+r.Parent=p
+q.root=r
+
+local s=Instance.new("TextLabel")
+s.Name="Title"
+s.BackgroundTransparency=1
+s.Position=UDim2.fromOffset(12,0)
+s.Size=UDim2.new(0.5,0,0,m)
+s.Font=j.font
+s.TextSize=j.textSize
+s.TextColor3=j.textDim
+s.TextXAlignment=Enum.TextXAlignment.Left
+s.Text="Output"
 s.Parent=r
-local t=Instance.new("UIPadding")
-t.PaddingLeft,t.PaddingRight=UDim.new(0,8),UDim.new(0,8)
-t.PaddingTop,t.PaddingBottom=UDim.new(0,6),UDim.new(0,6)
+
+local t=Instance.new("TextButton")
+t.Name="ClearOutput"
+t.AutoButtonColor=false
+t.BackgroundColor3=j.ground
+t.BorderSizePixel=0
+t.AnchorPoint=Vector2.new(1,0.5)
+t.Position=UDim2.new(1,-8,0,m/2)
+t.Size=UDim2.fromOffset(120,44)
+t.Font=j.font
+t.TextSize=j.textSize
+t.TextColor3=j.text
+t.Text="Clear output"
 t.Parent=r
-n.scroll=r
+corner(t)
+t.Activated:Connect(function()q:clear()end)
 
-
-local u=Instance.new("TextBox")
-u.Name="Answer"
-u.Visible=false
-u.BackgroundColor3=g.field
+local u=Instance.new("ScrollingFrame")
+u.Name="Lines"
+u.BackgroundColor3=j.ground
 u.BorderSizePixel=0
-u.ClearTextOnFocus=false
-u.Font=g.monoFont
-u.TextSize=g.textSize
-u.TextColor3=g.fieldText
-u.PlaceholderText="Type an answer, then Enter"
-u.PlaceholderColor3=g.textDim
-u.Text=""
-u.TextXAlignment=Enum.TextXAlignment.Left
-u.AnchorPoint=Vector2.new(0,1)
-u.Position=UDim2.new(0,8,1,-8)
-u.Size=UDim2.new(1,-16,0,k)
-u.Parent=o
+u.Position=UDim2.fromOffset(8,m)
+u.Size=UDim2.new(1,-16,1,-m-8)
+u.CanvasSize=UDim2.new(0,0,0,0)
+u.AutomaticCanvasSize=Enum.AutomaticSize.Y
+u.ScrollingDirection=Enum.ScrollingDirection.Y
+u.ScrollBarThickness=6
+u.ScrollBarImageColor3=j.textDim
+u.Parent=r
 corner(u)
-local v=Instance.new("UIPadding")
-v.PaddingLeft,v.PaddingRight=UDim.new(0,8),UDim.new(0,8)
+local v=Instance.new("UIListLayout")
+v.SortOrder=Enum.SortOrder.LayoutOrder
 v.Parent=u
-
-local w=Instance.new("UIStroke")
-w.Color=g.accent
-w.Thickness=2
-w.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+local w=Instance.new("UIPadding")
+w.PaddingLeft,w.PaddingRight=UDim.new(0,8),UDim.new(0,8)
+w.PaddingTop,w.PaddingBottom=UDim.new(0,6),UDim.new(0,6)
 w.Parent=u
-n.box=u
-u.FocusLost:Connect(function(x)
-if x then n:_submit(u.Text)end
+q.scroll=u
+
+
+local x=Instance.new("TextBox")
+x.Name="Answer"
+x.Visible=false
+x.BackgroundColor3=j.field
+x.BorderSizePixel=0
+x.ClearTextOnFocus=false
+x.Font=j.monoFont
+x.TextSize=j.textSize
+x.TextColor3=j.fieldText
+x.PlaceholderText="Type an answer, then Enter"
+x.PlaceholderColor3=j.textDim
+x.Text=""
+x.TextXAlignment=Enum.TextXAlignment.Left
+x.AnchorPoint=Vector2.new(0,1)
+x.Position=UDim2.new(0,8,1,-8)
+x.Size=UDim2.new(1,-16,0,n)
+x.Parent=r
+corner(x)
+local y=Instance.new("UIPadding")
+y.PaddingLeft,y.PaddingRight=UDim.new(0,8),UDim.new(0,8)
+y.Parent=x
+
+local z=Instance.new("UIStroke")
+z.Color=j.accent
+z.Thickness=2
+z.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+z.Parent=x
+q.box=x
+x.FocusLost:Connect(function(A)
+if A then q:_submit(x.Text)end
 end)
 
-return n
+return q
 end
 
-function h:_scrollToEnd()
+function k:_scrollToEnd()
 task.defer(function()
 self.scroll.CanvasPosition=Vector2.new(0,1e6)
 end)
 end
 
-function h:add(m,n)
-n=n or"say"
+function k:add(p,q)
+q=q or"say"
 self.count+=1
-local o=Instance.new("TextLabel")
-o.Name="Line"
-o.BackgroundTransparency=1
-o.AutomaticSize=Enum.AutomaticSize.Y
-o.Size=UDim2.new(1,0,0,0)
-o.LayoutOrder=self.count
-o.Font=g.monoFont
-o.TextSize=g.textSize
-o.TextColor3=l[n]or g.text
-o.TextWrapped=true
-o.TextXAlignment=Enum.TextXAlignment.Left
-o.TextYAlignment=Enum.TextYAlignment.Top
-o.Text=tostring(m)
-o.Parent=self.scroll
-table.insert(self.nodes,o)
-if#self.nodes>i then
+local r=Instance.new("TextLabel")
+r.Name="Line"
+r.BackgroundTransparency=1
+r.AutomaticSize=Enum.AutomaticSize.Y
+r.Size=UDim2.new(1,0,0,0)
+r.LayoutOrder=self.count
+r.Font=j.monoFont
+r.TextSize=j.textSize
+r.TextColor3=o[q]or j.text
+r.TextWrapped=true
+r.TextXAlignment=Enum.TextXAlignment.Left
+r.TextYAlignment=Enum.TextYAlignment.Top
+r.Text=tostring(p)
+r.Parent=self.scroll
+table.insert(self.nodes,r)
+if#self.nodes>l then
 table.remove(self.nodes,1):Destroy()
 end
 self:_scrollToEnd()
 end
 
-function h:clear()
-for m,n in ipairs(self.nodes)do n:Destroy()end
+function k:clear()
+for p,q in ipairs(self.nodes)do q:Destroy()end
 self.nodes={}
 end
 
-function h:_showInput(m)
-self.box.Visible=m
-self.scroll.Size=m and UDim2.new(1,-16,1,-j-k-16)or UDim2.new(1,-16,1,-j-8)
-if m then
+function k:_showInput(p)
+self.box.Visible=p
+self.scroll.Size=p and UDim2.new(1,-16,1,-m-n-16)or UDim2.new(1,-16,1,-m-8)
+if p then
 self.box.Text=""
 self.box:CaptureFocus()
 else
@@ -2714,89 +2539,95 @@ self.box:ReleaseFocus()
 end
 end
 
-function h:_submit(m)
-local n=self.pending
-if not n then return end
+function k:_submit(p)
+local q=self.pending
+if not q then return end
 self.pending=nil
 self:_showInput(false)
-self:add("> "..m,"input")
-task.spawn(n,m)
+self:add("> "..p,"input")
+task.spawn(q,p)
 end
 
 
-function h:ask(m)
+function k:ask(p)
 self:cancel()
-self:add(m,"ask")
+self:add(p,"ask")
 self.pending=coroutine.running()
 self:_showInput(true)
 return coroutine.yield()
 end
 
-function h:cancel()
-local m=self.pending
-if not m then return end
+function k:cancel()
+local p=self.pending
+if not p then return end
 self.pending=nil
 self:_showInput(false)
-task.spawn(m,"")
+task.spawn(p,"")
 end
 
-return h
+return k
 
-end)()end,[23]=function()local b,c,d=a(23)local e return(function(...)local g=game:GetService("UserInputService")
+end end
+do local g=e for h,i in ipairs({"UI","Drag"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
+local j=game:GetService("UserInputService")
 
-local h={}
+local k={}
 
 
-function h.track(i,j,k)
-local l=i.UserInputType==Enum.UserInputType.Touch
-local m,n
-m=g.InputChanged:Connect(function(o)
-if o==i or(not l and o.UserInputType==Enum.UserInputType.MouseMovement)then
-j(Vector2.new(o.Position.X,o.Position.Y))
-end
-end)
-n=g.InputEnded:Connect(function(o)
-if o==i or(not l and o.UserInputType==i.UserInputType)then
-m:Disconnect()
-n:Disconnect()
-if k then k(Vector2.new(o.Position.X,o.Position.Y))end
+function k.track(l,m,n)
+local o=l.UserInputType==Enum.UserInputType.Touch
+local p,q
+p=j.InputChanged:Connect(function(r)
+if r==l or(not o and r.UserInputType==Enum.UserInputType.MouseMovement)then
+m(Vector2.new(r.Position.X,r.Position.Y))
 end
 end)
+q=j.InputEnded:Connect(function(r)
+if r==l or(not o and r.UserInputType==l.UserInputType)then
+p:Disconnect()
+q:Disconnect()
+if n then n(Vector2.new(r.Position.X,r.Position.Y))end
+end
+end)
 end
 
-return h
+return k
 
-end)()end,[24]=function()local b,c,d=a(24)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"UI","Editor"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
 
 
-local g=d(c.Parent.Theme)
 
-local h={}
-h.__index=h
+local j=i(h.Parent.Theme)
 
-local i=40
-local j=168
-local k=280
+local k={}
+k.__index=k
 
-function h.new(l,m,n)
-return setmetatable({parent=l,registry=m,program=n},h)
+local l=40
+local m=168
+local n=280
+
+function k.new(o,p,q)
+return setmetatable({parent=o,registry=p,program=q},k)
 end
 
-local function corner(l)
-local m=Instance.new("UICorner")
-m.CornerRadius=g.radius
-m.Parent=l
+local function corner(o)
+local p=Instance.new("UICorner")
+p.CornerRadius=j.radius
+p.Parent=o
 end
 
 
-function h:_rel(l)
-return(l-self.parent.AbsolutePosition)/g.scale
+function k:_rel(o)
+return(o-self.parent.AbsolutePosition)/j.scale
 end
 
-function h:close()
+function k:close()
 if self.layer then
 self.layer:Destroy()
 self.layer=nil
@@ -2804,584 +2635,590 @@ end
 end
 
 
-function h:_backdrop()
+function k:_backdrop()
 self:close()
-local l=Instance.new("TextButton")
-l.Name="EditorBackdrop"
-l.BackgroundTransparency=1
-l.Text=""
-l.AutoButtonColor=false
-l.Size=UDim2.fromScale(1,1)
-l.ZIndex=250
-l.Parent=self.parent
-l.Activated:Connect(function()self:close()end)
-self.layer=l
-return l
-end
-
-function h:_commit(l,m,n,o)
-local p=o
-if n.type=="number"or n.type=="any"then
-local q=tonumber(o)
-if q~=nil then
-p=q
-end
-end
-self:close()
-self.program:setInput(l,m,p)
-end
-
-function h:_text(l,m,n,o,p)
-local q=self:_backdrop()
-local r,s=self:_rel(l.AbsolutePosition),l.AbsoluteSize/g.scale
-local t=Instance.new("TextBox")
-t.Name="FieldBox"
-t.BackgroundColor3=g.field
-t.BorderSizePixel=0
-t.ClearTextOnFocus=false
-t.Font=g.font
-t.TextSize=g.textSize
-t.TextColor3=g.fieldText
-t.TextXAlignment=Enum.TextXAlignment.Left
-t.Text=tostring(p==nil and""or p)
-t.Position=UDim2.fromOffset(r.X,r.Y)
-t.Size=UDim2.fromOffset(math.max(s.X,72),math.max(s.Y,24))
-t.ZIndex=300
-t.Parent=q
-corner(t)
-local u=Instance.new("UIPadding")
-u.PaddingLeft,u.PaddingRight=UDim.new(0,6),UDim.new(0,6)
-u.Parent=t
-
-local v=Instance.new("UIStroke")
-v.Color=g.accent
-v.Thickness=2
-v.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
-v.Parent=t
-local w=false
-t.FocusLost:Connect(function()
-if w then return end
-w=true
-self:_commit(m,n,o,t.Text)
-end)
-t:CaptureFocus()
-end
-
-
-function h:_names(l,m)
-local n,o={},{}
-local function add(p)
-if type(p)=="string"and p~=""and not n[p]then
-n[p]=true
-table.insert(o,p)
-end
-end
-local function walk(p)
-for q,r in ipairs(p)do
-local s=self.registry:get(r.op)
-if s then
-for t,u in pairs(s.inputs)do
-local v=r.inputs[t]
-if u.type==l then add(v)end
-if type(v)=="table"and v.op then walk({v})end
-end
-end
-for t,u in pairs(r.stacks)do walk(u)end
-end
-end
-for p,q in ipairs(self.program:get().scripts)do walk(q.blocks)end
-add(m)
-table.sort(o,function(p,q)return string.lower(p)<string.lower(q)end)
+local o=Instance.new("TextButton")
+o.Name="EditorBackdrop"
+o.BackgroundTransparency=1
+o.Text=""
+o.AutoButtonColor=false
+o.Size=UDim2.fromScale(1,1)
+o.ZIndex=250
+o.Parent=self.parent
+o.Activated:Connect(function()self:close()end)
+self.layer=o
 return o
 end
 
-
-function h:_paramNames(l)
-local m={}
-local n,o=self.program:scriptOf(l)
-local p=o and o.blocks[1]
-if p and p.op=="custom_define"and type(p.inputs.NAME)=="string"then
-for q,r in ipairs(self.registry.custom.parse(p.inputs.NAME).params)do table.insert(m,r.name)end
+function k:_commit(o,p,q,r)
+local s=r
+if q.type=="number"or q.type=="any"then
+local t=tonumber(r)
+if t~=nil then
+s=t
 end
-return m
 end
-
-function h:_menu(l,m,n,o,p,q,r)
-local s=self:_backdrop()
-local t=#p+(r and 1 or 0)
-local u=math.min(t*i,k)
-local v,w=self:_rel(l.AbsolutePosition),l.AbsoluteSize/g.scale
-local x=self.parent.AbsoluteSize/g.scale
-local y=math.clamp(v.X,4,math.max(4,x.X-j-4))
-local z=v.Y+w.Y+2
-if z+u>x.Y-4 then z=math.max(4,v.Y-u-2)end
-
-local A=Instance.new("ScrollingFrame")
-A.Name="FieldMenu"
-A.BackgroundColor3=g.panel
-A.BorderSizePixel=0
-A.Position=UDim2.fromOffset(y,z)
-A.Size=UDim2.fromOffset(j,u)
-A.CanvasSize=UDim2.new(0,0,0,0)
-A.AutomaticCanvasSize=Enum.AutomaticSize.Y
-A.ScrollBarThickness=4
-A.ScrollBarImageColor3=g.textDim
-A.ZIndex=300
-A.Parent=s
-corner(A)
-
-local C=Instance.new("UIStroke")
-C.Color=g.textDim
-C.Thickness=1
-C.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
-C.Parent=A
-local D=Instance.new("UIListLayout")
-D.SortOrder=Enum.SortOrder.LayoutOrder
-D.Parent=A
-
-local function item(E,F,G,H)
-local I=Instance.new("TextButton")
-I.Name="Item"
-I.AutoButtonColor=false
-I.BackgroundColor3=G and g.accent or g.panel
-I.BackgroundTransparency=G and 0 or 1
-I.BorderSizePixel=0
-I.Size=UDim2.new(1,0,0,i)
-I.LayoutOrder=F
-I.Font=g.font
-I.TextSize=g.textSize
-I.TextColor3=g.text
-I.TextXAlignment=Enum.TextXAlignment.Left
-I.Text=E
-I.ZIndex=301
-I.Parent=A
-local J=Instance.new("UIPadding")
-J.PaddingLeft=UDim.new(0,12)
-J.Parent=I
-I.Activated:Connect(H)
-end
-
-for E,F in ipairs(p)do
-item(tostring(F),E,tostring(F)==tostring(q),function()
 self:close()
-self.program:setInput(m,n,F)
+self.program:setInput(o,p,s)
+end
+
+function k:_text(o,p,q,r,s)
+local t=self:_backdrop()
+local u,v=self:_rel(o.AbsolutePosition),o.AbsoluteSize/j.scale
+local w=Instance.new("TextBox")
+w.Name="FieldBox"
+w.BackgroundColor3=j.field
+w.BorderSizePixel=0
+w.ClearTextOnFocus=false
+w.Font=j.font
+w.TextSize=j.textSize
+w.TextColor3=j.fieldText
+w.TextXAlignment=Enum.TextXAlignment.Left
+w.Text=tostring(s==nil and""or s)
+w.Position=UDim2.fromOffset(u.X,u.Y)
+w.Size=UDim2.fromOffset(math.max(v.X,72),math.max(v.Y,24))
+w.ZIndex=300
+w.Parent=t
+corner(w)
+local x=Instance.new("UIPadding")
+x.PaddingLeft,x.PaddingRight=UDim.new(0,6),UDim.new(0,6)
+x.Parent=w
+
+local y=Instance.new("UIStroke")
+y.Color=j.accent
+y.Thickness=2
+y.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+y.Parent=w
+local z=false
+w.FocusLost:Connect(function()
+if z then return end
+z=true
+self:_commit(p,q,r,w.Text)
+end)
+w:CaptureFocus()
+end
+
+
+function k:_names(o,p)
+local q,r={},{}
+local function add(s)
+if type(s)=="string"and s~=""and not q[s]then
+q[s]=true
+table.insert(r,s)
+end
+end
+local function walk(s)
+for t,u in ipairs(s)do
+local v=self.registry:get(u.op)
+if v then
+for w,x in pairs(v.inputs)do
+local y=u.inputs[w]
+if x.type==o then add(y)end
+if type(y)=="table"and y.op then walk({y})end
+end
+end
+for w,x in pairs(u.stacks)do walk(x)end
+end
+end
+for s,t in ipairs(self.program:get().scripts)do walk(t.blocks)end
+add(p)
+table.sort(r,function(s,t)return string.lower(s)<string.lower(t)end)
+return r
+end
+
+
+function k:_paramNames(o)
+local p={}
+local q,r=self.program:scriptOf(o)
+local s=r and r.blocks[1]
+if s and s.op=="custom_define"and type(s.inputs.NAME)=="string"then
+for t,u in ipairs(self.registry.custom.parse(s.inputs.NAME).params)do table.insert(p,u.name)end
+end
+return p
+end
+
+function k:_menu(o,p,q,r,s,t,u)
+local v=self:_backdrop()
+local w=#s+(u and 1 or 0)
+local x=math.min(w*l,n)
+local y,z=self:_rel(o.AbsolutePosition),o.AbsoluteSize/j.scale
+local A=self.parent.AbsoluteSize/j.scale
+local C=math.clamp(y.X,4,math.max(4,A.X-m-4))
+local D=y.Y+z.Y+2
+if D+x>A.Y-4 then D=math.max(4,y.Y-x-2)end
+
+local E=Instance.new("ScrollingFrame")
+E.Name="FieldMenu"
+E.BackgroundColor3=j.panel
+E.BorderSizePixel=0
+E.Position=UDim2.fromOffset(C,D)
+E.Size=UDim2.fromOffset(m,x)
+E.CanvasSize=UDim2.new(0,0,0,0)
+E.AutomaticCanvasSize=Enum.AutomaticSize.Y
+E.ScrollBarThickness=4
+E.ScrollBarImageColor3=j.textDim
+E.ZIndex=300
+E.Parent=v
+corner(E)
+
+local F=Instance.new("UIStroke")
+F.Color=j.textDim
+F.Thickness=1
+F.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+F.Parent=E
+local G=Instance.new("UIListLayout")
+G.SortOrder=Enum.SortOrder.LayoutOrder
+G.Parent=E
+
+local function item(H,I,J,K)
+local L=Instance.new("TextButton")
+L.Name="Item"
+L.AutoButtonColor=false
+L.BackgroundColor3=J and j.accent or j.panel
+L.BackgroundTransparency=J and 0 or 1
+L.BorderSizePixel=0
+L.Size=UDim2.new(1,0,0,l)
+L.LayoutOrder=I
+L.Font=j.font
+L.TextSize=j.textSize
+L.TextColor3=j.text
+L.TextXAlignment=Enum.TextXAlignment.Left
+L.Text=H
+L.ZIndex=301
+L.Parent=E
+local M=Instance.new("UIPadding")
+M.PaddingLeft=UDim.new(0,12)
+M.Parent=L
+L.Activated:Connect(K)
+end
+
+for H,I in ipairs(s)do
+item(tostring(I),H,tostring(I)==tostring(t),function()
+self:close()
+self.program:setInput(p,q,I)
 end)
 end
-if r then
-item("New name",#p+1,false,function()
-self:_text(l,m,n,o,"")
+if u then
+item("New name",#s+1,false,function()
+self:_text(o,p,q,r,"")
 end)
 end
 end
 
 
-function h:open(l,m)
-local n=self.registry:get(m.block.op)
-local o=n and n.inputs[m.name]
-if not o then return end
-local p=m.block.inputs[m.name]
-if o.options then
-self:_menu(l,m.block,m.name,o,o.options,p,false)
-elseif o.type=="param"and#self:_paramNames(m.block)>0 then
-self:_menu(l,m.block,m.name,o,self:_paramNames(m.block),p,false)
-elseif o.type=="variable"or o.type=="list"then
-self:_menu(l,m.block,m.name,o,self:_names(o.type,p),p,true)
+function k:open(o,p)
+local q=self.registry:get(p.block.op)
+local r=q and q.inputs[p.name]
+if not r then return end
+local s=p.block.inputs[p.name]
+if r.options then
+self:_menu(o,p.block,p.name,r,r.options,s,false)
+elseif r.type=="param"and#self:_paramNames(p.block)>0 then
+self:_menu(o,p.block,p.name,r,self:_paramNames(p.block),s,false)
+elseif r.type=="variable"or r.type=="list"then
+self:_menu(o,p.block,p.name,r,self:_names(r.type,s),s,true)
 else
-self:_text(l,m.block,m.name,o,p)
+self:_text(o,p.block,p.name,r,s)
 end
 end
 
-return h
+return k
 
-end)()end,[25]=function()local b,c,d=a(25)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"UI","Palette"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
-local g=d(c.Parent.Theme)
-local h=d(c.Parent.BlockView)
-local i=d(c.Parent.Drag)
 
-local j={}
-j.__index=j
+local j=i(h.Parent.Theme)
+local k=i(h.Parent.BlockView)
+local l=i(h.Parent.Drag)
 
-local function corner(k)
-local l=Instance.new("UICorner")
-l.CornerRadius=g.radius
-l.Parent=k
+local m={}
+m.__index=m
+
+local function corner(n)
+local o=Instance.new("UICorner")
+o.CornerRadius=j.radius
+o.Parent=n
 end
 
-function j.new(k,l,m,n,o)
-local p=setmetatable({registry=l,onSpawn=m,onHover=n,onHoverEnd=o,tabs={},selected=nil},j)
+function m.new(n,o,p,q,r)
+local s=setmetatable({registry=o,onSpawn=p,onHover=q,onHoverEnd=r,tabs={},selected=nil},m)
 
-local q=Instance.new("Frame")
-q.Name="Palette"
-q.BackgroundColor3=g.panel
-q.BorderSizePixel=0
-q.Size=UDim2.new(0,g.paletteWidth,1,0)
-q.Parent=k
-p.root,p.parent=q,k
-
-local r=Instance.new("ScrollingFrame")
-r.Name="Tabs"
-r.BackgroundTransparency=1
-r.BorderSizePixel=0
-r.Size=UDim2.new(0,g.tabWidth,1,0)
-r.CanvasSize=UDim2.new(0,0,0,0)
-r.AutomaticCanvasSize=Enum.AutomaticSize.Y
-r.ScrollBarThickness=0
-r.Parent=q
-p.tabCol=r
-local s=Instance.new("UIListLayout")
-s.Padding=UDim.new(0,4)
-s.SortOrder=Enum.SortOrder.LayoutOrder
-s.Parent=r
-local t=Instance.new("UIPadding")
-t.PaddingTop,t.PaddingLeft,t.PaddingRight=UDim.new(0,8),UDim.new(0,8),UDim.new(0,4)
-t.Parent=r
+local t=Instance.new("Frame")
+t.Name="Palette"
+t.BackgroundColor3=j.panel
+t.BorderSizePixel=0
+t.Size=UDim2.new(0,j.paletteWidth,1,0)
+t.Parent=n
+s.root,s.parent=t,n
 
 local u=Instance.new("ScrollingFrame")
-u.Name="Blocks"
+u.Name="Tabs"
 u.BackgroundTransparency=1
 u.BorderSizePixel=0
-u.Position=UDim2.new(0,g.tabWidth,0,0)
-u.Size=UDim2.new(1,-g.tabWidth,1,0)
+u.Size=UDim2.new(0,j.tabWidth,1,0)
 u.CanvasSize=UDim2.new(0,0,0,0)
-u.AutomaticCanvasSize=Enum.AutomaticSize.XY
-u.ScrollingDirection=Enum.ScrollingDirection.XY
-u.ScrollBarThickness=6
-u.ScrollBarImageColor3=g.textDim
-u.Parent=q
+u.AutomaticCanvasSize=Enum.AutomaticSize.Y
+u.ScrollBarThickness=0
+u.Parent=t
+s.tabCol=u
 local v=Instance.new("UIListLayout")
 v.Padding=UDim.new(0,4)
 v.SortOrder=Enum.SortOrder.LayoutOrder
 v.Parent=u
 local w=Instance.new("UIPadding")
-w.PaddingTop,w.PaddingLeft,w.PaddingRight,w.PaddingBottom=UDim.new(0,8),UDim.new(0,8),UDim.new(0,8),UDim.new(0,8)
+w.PaddingTop,w.PaddingLeft,w.PaddingRight=UDim.new(0,8),UDim.new(0,8),UDim.new(0,4)
 w.Parent=u
-p.list=u
 
-for x,y in ipairs(l.categoryOrder)do
-p:_addTab(r,y,x)
+local x=Instance.new("ScrollingFrame")
+x.Name="Blocks"
+x.BackgroundTransparency=1
+x.BorderSizePixel=0
+x.Position=UDim2.new(0,j.tabWidth,0,0)
+x.Size=UDim2.new(1,-j.tabWidth,1,0)
+x.CanvasSize=UDim2.new(0,0,0,0)
+x.AutomaticCanvasSize=Enum.AutomaticSize.XY
+x.ScrollingDirection=Enum.ScrollingDirection.XY
+x.ScrollBarThickness=6
+x.ScrollBarImageColor3=j.textDim
+x.Parent=t
+local y=Instance.new("UIListLayout")
+y.Padding=UDim.new(0,4)
+y.SortOrder=Enum.SortOrder.LayoutOrder
+y.Parent=x
+local z=Instance.new("UIPadding")
+z.PaddingTop,z.PaddingLeft,z.PaddingRight,z.PaddingBottom=UDim.new(0,8),UDim.new(0,8),UDim.new(0,8),UDim.new(0,8)
+z.Parent=x
+s.list=x
+
+for A,C in ipairs(o.categoryOrder)do
+s:_addTab(u,C,A)
 end
-if l.categoryOrder[1]then p:select(l.categoryOrder[1])end
-return p
-end
-
-function j:_addTab(k,l,m)
-local n=self.registry.categories[l]
-local o=Instance.new("TextButton")
-o.Name="Tab_"..l
-o.AutoButtonColor=false
-o.BackgroundColor3=g.panel
-o.BorderSizePixel=0
-o.Size=UDim2.new(1,0,0,g.tabHeight)
-o.LayoutOrder=m
-o.Font=g.font
-o.TextSize=g.textSize
-o.TextColor3=g.text
-o.TextXAlignment=Enum.TextXAlignment.Left
-o.Text=n.name
-o.Parent=k
-corner(o)
-local p=Instance.new("UIPadding")
-p.PaddingLeft=UDim.new(0,14)
-p.Parent=o
-
-local q=Instance.new("Frame")
-q.Name="CategoryKey"
-q.BackgroundColor3=g.categoryColor(n)
-q.BorderSizePixel=0
-q.Size=UDim2.new(0,4,1,-12)
-q.Position=UDim2.new(0,-8,0,6)
-q.Parent=o
-o.Activated:Connect(function()self:select(l)end)
-self.tabs[l]=o
+if o.categoryOrder[1]then s:select(o.categoryOrder[1])end
+return s
 end
 
-function j:select(k)
-self.selected=k
-for l,m in pairs(self.tabs)do
-m.BackgroundColor3=(l==k)and g.accent or g.panel
+function m:_addTab(n,o,p)
+local q=self.registry.categories[o]
+local r=Instance.new("TextButton")
+r.Name="Tab_"..o
+r.AutoButtonColor=false
+r.BackgroundColor3=j.panel
+r.BorderSizePixel=0
+r.Size=UDim2.new(1,0,0,j.tabHeight)
+r.LayoutOrder=p
+r.Font=j.font
+r.TextSize=j.textSize
+r.TextColor3=j.text
+r.TextXAlignment=Enum.TextXAlignment.Left
+r.Text=q.name
+r.Parent=n
+corner(r)
+local s=Instance.new("UIPadding")
+s.PaddingLeft=UDim.new(0,14)
+s.Parent=r
+
+local t=Instance.new("Frame")
+t.Name="CategoryKey"
+t.BackgroundColor3=j.categoryColor(q)
+t.BorderSizePixel=0
+t.Size=UDim2.new(0,4,1,-12)
+t.Position=UDim2.new(0,-8,0,6)
+t.Parent=r
+r.Activated:Connect(function()self:select(o)end)
+self.tabs[o]=r
 end
-for l,m in ipairs(self.list:GetChildren())do
-if m:IsA("GuiObject")then m:Destroy()end
+
+function m:select(n)
+self.selected=n
+for o,p in pairs(self.tabs)do
+p.BackgroundColor3=(o==n)and j.accent or j.panel
+end
+for o,p in ipairs(self.list:GetChildren())do
+if p:IsA("GuiObject")then p:Destroy()end
 end
 self.list.CanvasPosition=Vector2.new(0,0)
 
-local l=h.new(self.registry)
-for m,n in ipairs(self.registry:listByCategory(k))do
+local o=k.new(self.registry)
+for p,q in ipairs(self.registry:listByCategory(n))do
 
-local o=Instance.new("Frame")
-o.Name="Item_"..n.id
-o.BackgroundTransparency=1
-o.AutomaticSize=Enum.AutomaticSize.XY
-o.Size=UDim2.new(0,0,0,0)
-o.LayoutOrder=m
-o.Parent=self.list
-local p=Instance.new("UIPadding")
-p.PaddingTop,p.PaddingBottom=UDim.new(0,4),UDim.new(0,4)
-p.Parent=o
-local q=l:build(self.registry:createBlock(n.id),o)
-
-
-local r=Instance.new("TextButton")
-r.Name="Hit"
+local r=Instance.new("Frame")
+r.Name="Item_"..q.id
 r.BackgroundTransparency=1
-r.Text=""
-r.ZIndex=10
-r.Parent=o
-local function fit()r.Size=UDim2.fromOffset(q.AbsoluteSize.X/g.scale,q.AbsoluteSize.Y/g.scale)end
-q:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
+r.AutomaticSize=Enum.AutomaticSize.XY
+r.Size=UDim2.new(0,0,0,0)
+r.LayoutOrder=p
+r.Parent=self.list
+local s=Instance.new("UIPadding")
+s.PaddingTop,s.PaddingBottom=UDim.new(0,4),UDim.new(0,4)
+s.Parent=r
+local t=o:build(self.registry:createBlock(q.id),r)
+
+
+local u=Instance.new("TextButton")
+u.Name="Hit"
+u.BackgroundTransparency=1
+u.Text=""
+u.ZIndex=10
+u.Parent=r
+local function fit()u.Size=UDim2.fromOffset(t.AbsoluteSize.X/j.scale,t.AbsoluteSize.Y/j.scale)end
+t:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
 fit()
-r.InputBegan:Connect(function(s)
-local t=s.UserInputType
-if t==Enum.UserInputType.MouseButton1 or t==Enum.UserInputType.Touch then
-self:_drag(s,n.id,q)
+u.InputBegan:Connect(function(v)
+local w=v.UserInputType
+if w==Enum.UserInputType.MouseButton1 or w==Enum.UserInputType.Touch then
+self:_drag(v,q.id,t)
 end
 end)
 end
 end
 
 
-function j:refresh()
+function m:refresh()
 
-for k,l in ipairs(self.registry.categoryOrder)do
-if not self.tabs[l]then self:_addTab(self.tabCol,l,k)end
+for n,o in ipairs(self.registry.categoryOrder)do
+if not self.tabs[o]then self:_addTab(self.tabCol,o,n)end
 end
 if self.selected then self:select(self.selected)
 elseif self.registry.categoryOrder[1]then self:select(self.registry.categoryOrder[1])end
 end
 
-function j:_ghost(k)
-local l=Instance.new("Frame")
-l.Name="DragGhost"
-l.BackgroundTransparency=1
-l.AutomaticSize=Enum.AutomaticSize.XY
-l.Size=UDim2.new(0,0,0,0)
-l.ZIndex=100
-l.Parent=self.parent
-local m=h.new(self.registry):build(self.registry:createBlock(k),l)
+function m:_ghost(n)
+local o=Instance.new("Frame")
+o.Name="DragGhost"
+o.BackgroundTransparency=1
+o.AutomaticSize=Enum.AutomaticSize.XY
+o.Size=UDim2.new(0,0,0,0)
+o.ZIndex=100
+o.Parent=self.parent
+local p=k.new(self.registry):build(self.registry:createBlock(n),o)
 
-local n=Instance.new("Frame")
-n.BackgroundColor3=Color3.new(0,0,0)
-n.BackgroundTransparency=0.6
-n.BorderSizePixel=0
-n.Position=UDim2.fromOffset(3,4)
-n.ZIndex=0
-n.Parent=l
-corner(n)
-local function fit()n.Size=UDim2.fromOffset(m.AbsoluteSize.X/g.scale,m.AbsoluteSize.Y/g.scale)end
-m:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
+local q=Instance.new("Frame")
+q.BackgroundColor3=Color3.new(0,0,0)
+q.BackgroundTransparency=0.6
+q.BorderSizePixel=0
+q.Position=UDim2.fromOffset(3,4)
+q.ZIndex=0
+q.Parent=o
+corner(q)
+local function fit()q.Size=UDim2.fromOffset(p.AbsoluteSize.X/j.scale,p.AbsoluteSize.Y/j.scale)end
+p:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
 fit()
-return l,m
+return o,p
 end
 
 
-function j:_drag(k,l,m)
-local n=Vector2.new(k.Position.X,k.Position.Y)
-local o=n-m.AbsolutePosition
-local p=k.UserInputType==Enum.UserInputType.Touch
-local q,r,s
-i.track(k,function(t)
-if not q then
-local u=t-n
-if s or u.Magnitude<8 then return end
-if p and math.abs(u.Y)>math.abs(u.X)then
-s=true
+function m:_drag(n,o,p)
+local q=Vector2.new(n.Position.X,n.Position.Y)
+local r=q-p.AbsolutePosition
+local s=n.UserInputType==Enum.UserInputType.Touch
+local t,u,v
+l.track(n,function(w)
+if not t then
+local x=w-q
+if v or x.Magnitude<8 then return end
+if s and math.abs(x.Y)>math.abs(x.X)then
+v=true
 return
 end
 self.list.ScrollingEnabled=false
-q,r=self:_ghost(l)
+t,u=self:_ghost(o)
 end
-q.Position=UDim2.fromOffset((t.X-o.X-self.parent.AbsolutePosition.X)/g.scale,(t.Y-o.Y-self.parent.AbsolutePosition.Y)/g.scale)
+t.Position=UDim2.fromOffset((w.X-r.X-self.parent.AbsolutePosition.X)/j.scale,(w.Y-r.Y-self.parent.AbsolutePosition.Y)/j.scale)
 if self.onHover then
-if t.X>self.root.AbsolutePosition.X+self.root.AbsoluteSize.X then self.onHover(l,r)
+if w.X>self.root.AbsolutePosition.X+self.root.AbsoluteSize.X then self.onHover(o,u)
 elseif self.onHoverEnd then self.onHoverEnd()end
 end
-end,function(t)
+end,function(w)
 self.list.ScrollingEnabled=true
-local u=r and r.AbsoluteSize
-if q then q:Destroy()end
+local x=u and u.AbsoluteSize
+if t then t:Destroy()end
 if self.onHoverEnd then self.onHoverEnd()end
-if s then return end
-if not q or t.X>self.root.AbsolutePosition.X+self.root.AbsoluteSize.X then
-self.onSpawn(l,q and t-o,u)
+if v then return end
+if not t or w.X>self.root.AbsolutePosition.X+self.root.AbsoluteSize.X then
+self.onSpawn(o,t and w-r,x)
 end
 end)
 end
 
-return j
+return m
 
-end)()end,[26]=function()local b,c,d=a(26)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"UI","Program"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
-local g={}
-g.__index=g
 
-function g.new(h)
-return setmetatable({data=h or{scripts={}},listeners={}},g)
+local j={}
+j.__index=j
+
+function j.new(k)
+return setmetatable({data=k or{scripts={}},listeners={}},j)
 end
 
-function g:get()return self.data end
+function j:get()return self.data end
 
-function g:onChanged(h)
-table.insert(self.listeners,h)
+function j:onChanged(k)
+table.insert(self.listeners,k)
 end
 
-function g:changed()
-for h,i in ipairs(self.listeners)do i(self.data)end
+function j:changed()
+for k,l in ipairs(self.listeners)do l(self.data)end
 end
 
-function g:addScript(h,i,j,k)
-table.insert(self.data.scripts,{x=i,y=j,blocks={h}})
-if not k then self:changed()end
+function j:addScript(k,l,m,n)
+table.insert(self.data.scripts,{x=l,y=m,blocks={k}})
+if not n then self:changed()end
 return#self.data.scripts
 end
 
-function g:count()return#self.data.scripts end
+function j:count()return#self.data.scripts end
 
 
-function g:replace(h)
-self.data=h
+function j:replace(k)
+self.data=k
 self:changed()
 end
 
-function g:clear()
+function j:clear()
 self.data={scripts={}}
 self:changed()
 end
 
-local function locate(h,i)
-for j,k in ipairs(h)do
-if k==i then return h,j end
-for l,m in pairs(k.stacks)do
-local n,o=locate(m,i)
-if n then return n,o end
+local function locate(k,l)
+for m,n in ipairs(k)do
+if n==l then return k,m end
+for o,p in pairs(n.stacks)do
+local q,r=locate(p,l)
+if q then return q,r end
 end
 end
 end
 
-function g:find(h)
-for i,j in ipairs(self.data.scripts)do
-local k,l=locate(j.blocks,h)
-if k then return k,l,i end
+function j:find(k)
+for l,m in ipairs(self.data.scripts)do
+local n,o=locate(m.blocks,k)
+if n then return n,o,l end
 end
 end
 
 
-function g:detach(h,i,j)
-local k,l,m=self:find(h)
-if l==1 and k==self.data.scripts[m].blocks then return m end
-local n=table.move(k,l,#k,1,{})
-for o=#k,l,-1 do k[o]=nil end
-table.insert(self.data.scripts,{x=i,y=j,blocks=n})
+function j:detach(k,l,m)
+local n,o,p=self:find(k)
+if o==1 and n==self.data.scripts[p].blocks then return p end
+local q=table.move(n,o,#n,1,{})
+for r=#n,o,-1 do n[r]=nil end
+table.insert(self.data.scripts,{x=l,y=m,blocks=q})
 self:changed()
 return#self.data.scripts
 end
 
 
-local function locateInput(h,i)
-for j,k in ipairs(h)do
-for l,m in pairs(k.inputs)do
-if m==i then return k,l end
-if type(m)=="table"and m.op then
-local n,o=locateInput({m},i)
-if n then return n,o end
-end
-end
-for l,m in pairs(k.stacks)do
-local n,o=locateInput(m,i)
-if n then return n,o end
-end
-end
-end
-
-function g:findInput(h)
-for i,j in ipairs(self.data.scripts)do
-local k,l=locateInput(j.blocks,h)
-if k then return k,l end
-end
-end
-
-
-function g:detachInput(h,i,j,k)
-local l,m=self:findInput(h)
-if not l then return nil end
-l.inputs[m]=k
-table.insert(self.data.scripts,{x=i,y=j,blocks={h}})
-self:changed()
-return#self.data.scripts
-end
-
-
-
-
-
-
-
-
-
-function g:attach(h,i)
-local j=self.data.scripts[h]
-if not j or not i or not i.block or locate(j.blocks,i.block)then return false end
-local k=i.wrap
-if k~=nil then
-local l=j.blocks[1]
-local m=type(l)=="table"and type(l.stacks)=="table"and l.stacks[k]
-if type(m)~="table"or#m>0 then
-if i.kind=="wrap"then return false end
-k=nil
-end
-elseif i.kind=="wrap"then
-return false
-end
-
-
-local l,m,n
-if i.kind=="after"then
-l,m=self:find(i.block)
-if not l then return false end
-elseif i.kind=="before"or i.kind=="wrap"then
-local o,p,q=self:find(i.block)
-if not o or p~=1 or o~=self.data.scripts[q].blocks then return false end
-n=self.data.scripts[q]
-elseif i.kind=="slot"then
-if not self:scriptOf(i.block)then return false end
-elseif i.kind=="input"then
-if not self:scriptOf(i.block)or#j.blocks~=1 then return false end
-else
-return false
-end
-if n==j then return false end
-table.remove(self.data.scripts,h)
-local o=j.blocks
-if i.kind=="after"then
-if k then
-local p=table.move(l,m+1,#l,1,{})
-for q=#l,m+1,-1 do l[q]=nil end
-if#p>0 then o[1].stacks[k]=p end
-end
-for p,q in ipairs(o)do table.insert(l,m+p,q)end
-elseif i.kind=="before"then
-for p=#o,1,-1 do table.insert(n.blocks,1,o[p])end
-n.x,n.y=j.x,j.y
-elseif i.kind=="wrap"then
-o[1].stacks[k]=n.blocks
-n.blocks=o
-n.x,n.y=j.x,j.y
-elseif i.kind=="slot"then
-local p=i.block.stacks[i.name]
-if not p then p={};i.block.stacks[i.name]=p end
-if k and#p>0 then
-o[1].stacks[k]=p
-i.block.stacks[i.name]=o
-else
-for q=#o,1,-1 do table.insert(p,1,o[q])end
-end
-elseif i.kind=="input"then
-local p=i.block.inputs[i.name]
-i.block.inputs[i.name]=o[1]
+local function locateInput(k,l)
+for m,n in ipairs(k)do
+for o,p in pairs(n.inputs)do
+if p==l then return n,o end
 if type(p)=="table"and p.op then
+local q,r=locateInput({p},l)
+if q then return q,r end
+end
+end
+for o,p in pairs(n.stacks)do
+local q,r=locateInput(p,l)
+if q then return q,r end
+end
+end
+end
 
-table.insert(self.data.scripts,{x=j.x+40,y=j.y+40,blocks={p}})
+function j:findInput(k)
+for l,m in ipairs(self.data.scripts)do
+local n,o=locateInput(m.blocks,k)
+if n then return n,o end
+end
+end
+
+
+function j:detachInput(k,l,m,n)
+local o,p=self:findInput(k)
+if not o then return nil end
+o.inputs[p]=n
+table.insert(self.data.scripts,{x=l,y=m,blocks={k}})
+self:changed()
+return#self.data.scripts
+end
+
+
+
+
+
+
+
+
+
+function j:attach(k,l)
+local m=self.data.scripts[k]
+if not m or not l or not l.block or locate(m.blocks,l.block)then return false end
+local n=l.wrap
+if n~=nil then
+local o=m.blocks[1]
+local p=type(o)=="table"and type(o.stacks)=="table"and o.stacks[n]
+if type(p)~="table"or#p>0 then
+if l.kind=="wrap"then return false end
+n=nil
+end
+elseif l.kind=="wrap"then
+return false
+end
+
+
+local o,p,q
+if l.kind=="after"then
+o,p=self:find(l.block)
+if not o then return false end
+elseif l.kind=="before"or l.kind=="wrap"then
+local r,s,t=self:find(l.block)
+if not r or s~=1 or r~=self.data.scripts[t].blocks then return false end
+q=self.data.scripts[t]
+elseif l.kind=="slot"then
+if not self:scriptOf(l.block)then return false end
+elseif l.kind=="input"then
+if not self:scriptOf(l.block)or#m.blocks~=1 then return false end
+else
+return false
+end
+if q==m then return false end
+table.remove(self.data.scripts,k)
+local r=m.blocks
+if l.kind=="after"then
+if n then
+local s=table.move(o,p+1,#o,1,{})
+for t=#o,p+1,-1 do o[t]=nil end
+if#s>0 then r[1].stacks[n]=s end
+end
+for s,t in ipairs(r)do table.insert(o,p+s,t)end
+elseif l.kind=="before"then
+for s=#r,1,-1 do table.insert(q.blocks,1,r[s])end
+q.x,q.y=m.x,m.y
+elseif l.kind=="wrap"then
+r[1].stacks[n]=q.blocks
+q.blocks=r
+q.x,q.y=m.x,m.y
+elseif l.kind=="slot"then
+local s=l.block.stacks[l.name]
+if not s then s={};l.block.stacks[l.name]=s end
+if n and#s>0 then
+r[1].stacks[n]=s
+l.block.stacks[l.name]=r
+else
+for t=#r,1,-1 do table.insert(s,1,r[t])end
+end
+elseif l.kind=="input"then
+local s=l.block.inputs[l.name]
+l.block.inputs[l.name]=r[1]
+if type(s)=="table"and s.op then
+
+table.insert(self.data.scripts,{x=m.x+40,y=m.y+40,blocks={s}})
 end
 end
 self:changed()
@@ -3390,245 +3227,251 @@ end
 
 
 
-local function contains(h,i)
-for j,k in ipairs(h)do
-if k==i then return true end
-for l,m in pairs(k.inputs)do
-if type(m)=="table"and m.op and contains({m},i)then return true end
+local function contains(k,l)
+for m,n in ipairs(k)do
+if n==l then return true end
+for o,p in pairs(n.inputs)do
+if type(p)=="table"and p.op and contains({p},l)then return true end
 end
-for l,m in pairs(k.stacks)do
-if contains(m,i)then return true end
+for o,p in pairs(n.stacks)do
+if contains(p,l)then return true end
 end
 end
 return false
 end
 
-function g:scriptOf(h)
-for i,j in ipairs(self.data.scripts)do
-if contains(j.blocks,h)then return i,j end
+function j:scriptOf(k)
+for l,m in ipairs(self.data.scripts)do
+if contains(m.blocks,k)then return l,m end
 end
 end
 
 
 
 
-function g:setInput(h,i,j)
-local k=h.inputs[i]
-h.inputs[i]=j
-if self.onSet then self.onSet(h,i,k,j)end
+function j:setInput(k,l,m)
+local n=k.inputs[l]
+k.inputs[l]=m
+if self.onSet then self.onSet(k,l,n,m)end
 self:changed()
 end
 
-function g:moveScript(h,i,j)
-local k=self.data.scripts[h]
-k.x,k.y=i,j
+function j:moveScript(k,l,m)
+local n=self.data.scripts[k]
+n.x,n.y=l,m
 self:changed()
 end
 
-function g:removeScript(h)
-table.remove(self.data.scripts,h)
+function j:removeScript(k)
+table.remove(self.data.scripts,k)
 self:changed()
 end
 
-return g
+return j
 
-end)()end,[27]=function()local b,c,d=a(27)local e return(function(...)
-
-
-
-
+end end
+do local g=e for h,i in ipairs({"UI","Shapes"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
 
-local g=d(c.Parent.Theme)
 
-local h={}
 
-local function frame(i,j,k,l,m)
-local n=Instance.new("Frame")
-n.Name=j
-n.BackgroundColor3=k
-n.BorderSizePixel=0
-n.Size=l
-if m then n.Position=m end
-n.Parent=i
+
+
+
+local j=i(h.Parent.Theme)
+
+local k={}
+
+local function frame(l,m,n,o,p)
+local q=Instance.new("Frame")
+q.Name=m
+q.BackgroundColor3=n
+q.BorderSizePixel=0
+q.Size=o
+if p then q.Position=p end
+q.Parent=l
+return q
+end
+
+local function corner(l,m)
+local n=Instance.new("UICorner")
+n.CornerRadius=m
+n.Parent=l
 return n
 end
 
-local function corner(i,j)
-local k=Instance.new("UICorner")
-k.CornerRadius=j
-k.Parent=i
-return k
+
+
+local function holder(l,m,n)
+local o=Instance.new("Frame")
+o.Name=m
+o.BackgroundTransparency=1
+o.BorderSizePixel=0
+o.Size=UDim2.new(0,0,0,0)
+o.LayoutOrder=n
+o.Parent=l
+return o
 end
 
 
 
-local function holder(i,j,k)
-local l=Instance.new("Frame")
-l.Name=j
+
+function k.hexagon(l,m,n,o)
+local p=Instance.new("Frame")
+p.Name="Hex"
+p.BackgroundTransparency=1
+p.BorderSizePixel=0
+p.Size=UDim2.new(1,0,1,0)
+p.ZIndex=o or 1
+p.Parent=l
+
+local function layer(q,r)
+local s=Instance.new("Frame")
+s.Name=q
+s.BackgroundTransparency=1
+s.BorderSizePixel=0
+s.Parent=p
+local t=frame(s,"Mid",r,UDim2.new(0,0,0,0))
+local u=frame(s,"Left",r,UDim2.new(0,0,0,0))
+local v=frame(s,"Right",r,UDim2.new(0,0,0,0))
+for w,x in ipairs({u,v})do
+x.AnchorPoint=Vector2.new(0.5,0.5)
+x.Rotation=45
+end
+return{root=s,mid=t,left=u,right=v}
+end
+local q=n and layer("Edge",n)
+local r=layer("Fill",m)
+
+local function place(s,t,u,v,w)
+s.root.Position=UDim2.fromOffset(t,u)
+s.root.Size=UDim2.fromOffset(v,w)
+local x=w/2
+local y=w/math.sqrt(2)
+s.mid.Position=UDim2.fromOffset(x,0)
+s.mid.Size=UDim2.fromOffset(math.max(0,v-w),w)
+s.left.Size=UDim2.fromOffset(y,y)
+s.left.Position=UDim2.fromOffset(x,x)
+s.right.Size=UDim2.fromOffset(y,y)
+s.right.Position=UDim2.fromOffset(v-x,x)
+end
+
+local function update()
+local s=j.scale>0 and j.scale or 1
+local t,u=p.AbsoluteSize.X/s,p.AbsoluteSize.Y/s
+if u<=0 then return end
+local v=n and(p:GetAttribute("Inset")or 1)or 0
+if q then place(q,0,0,t,u)end
+place(r,v,v,math.max(0,t-2*v),math.max(0,u-2*v))
+end
+p:GetPropertyChangedSignal("AbsoluteSize"):Connect(update)
+p:GetAttributeChangedSignal("Inset"):Connect(update)
+update()
+return p
+end
+
+
+
+
+function k.surface(l,m,n,o,p)
+p=p or{}
+if m=="boolean"then
 l.BackgroundTransparency=1
-l.BorderSizePixel=0
-l.Size=UDim2.new(0,0,0,0)
-l.LayoutOrder=k
-l.Parent=i
+k.hexagon(l,n,o,1)
+local q=Instance.new("Frame")
+q.Name="Content"
+q.BackgroundTransparency=1
+q.BorderSizePixel=0
+q.AutomaticSize=Enum.AutomaticSize.XY
+q.Size=UDim2.new(0,0,0,0)
+q.ZIndex=2
+q.Parent=l
+return q
+end
+
+l.BackgroundColor3=n
+if m=="reporter"then
+corner(l,UDim.new(0.5,0))
+elseif p.bowler then
+corner(l,j.bowlerRadius)
+else
+corner(l,j.blockRadius)
+end
+local q=Instance.new("UIStroke")
+q.Name="Edge"
+q.Color=o
+q.Thickness=1
+q.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+q.Parent=l
+if m=="reporter"then return l end
+
+local r=m~="hat"
+local s=m~="cap"
+local t,u,v=j.notchX,j.notchW,j.notchH
+
+if m=="hat"and not p.bowler then
+
+
+local w=j.hatHeight
+local x=holder(l,"Top",0)
+local y=Instance.new("Frame")
+y.Name="Dome"
+y.BackgroundTransparency=1
+y.BorderSizePixel=0
+y.ClipsDescendants=true
+y.Position=UDim2.new(0,-1,0,-(w+1))
+y.Size=UDim2.new(0,j.hatWidth+2,0,w+1+4)
+y.Parent=x
+corner(frame(y,"Edge",o,UDim2.new(1,0,0,2*(w+1)),UDim2.new(0,0,0,0)),UDim.new(0.5,0))
+corner(frame(y,"Fill",n,UDim2.new(1,-2,0,2*w),UDim2.new(0,1,0,1)),UDim.new(0.5,0))
+elseif r then
+
+local w=holder(l,"Top",0)
+corner(frame(w,"Notch",o,UDim2.new(0,u,0,v),UDim2.new(0,t,0,0)),UDim.new(0,3))
+end
+
+if s then
+
+
+local w=holder(l,"Bottom",10000)
+local x=frame(w,"TabEdge",o,UDim2.new(0,u+2,0,v+2),UDim2.new(0,t-1,0,-1))
+corner(x,UDim.new(0,4))
+x.ZIndex=1
+local y=frame(w,"Tab",n,UDim2.new(0,u,0,v+2),UDim2.new(0,t,0,-2))
+corner(y,UDim.new(0,3))
+y.ZIndex=2
+end
 return l
 end
 
 
-
-
-function h.hexagon(i,j,k,l)
-local m=Instance.new("Frame")
-m.Name="Hex"
-m.BackgroundTransparency=1
-m.BorderSizePixel=0
-m.Size=UDim2.new(1,0,1,0)
-m.ZIndex=l or 1
-m.Parent=i
-
-local function layer(n,o)
-local p=Instance.new("Frame")
-p.Name=n
-p.BackgroundTransparency=1
-p.BorderSizePixel=0
-p.Parent=m
-local q=frame(p,"Mid",o,UDim2.new(0,0,0,0))
-local r=frame(p,"Left",o,UDim2.new(0,0,0,0))
-local s=frame(p,"Right",o,UDim2.new(0,0,0,0))
-for t,u in ipairs({r,s})do
-u.AnchorPoint=Vector2.new(0.5,0.5)
-u.Rotation=45
-end
-return{root=p,mid=q,left=r,right=s}
-end
-local n=k and layer("Edge",k)
-local o=layer("Fill",j)
-
-local function place(p,q,r,s,t)
-p.root.Position=UDim2.fromOffset(q,r)
-p.root.Size=UDim2.fromOffset(s,t)
-local u=t/2
-local v=t/math.sqrt(2)
-p.mid.Position=UDim2.fromOffset(u,0)
-p.mid.Size=UDim2.fromOffset(math.max(0,s-t),t)
-p.left.Size=UDim2.fromOffset(v,v)
-p.left.Position=UDim2.fromOffset(u,u)
-p.right.Size=UDim2.fromOffset(v,v)
-p.right.Position=UDim2.fromOffset(s-u,u)
-end
-
-local function update()
-local p=g.scale>0 and g.scale or 1
-local q,r=m.AbsoluteSize.X/p,m.AbsoluteSize.Y/p
-if r<=0 then return end
-local s=k and(m:GetAttribute("Inset")or 1)or 0
-if n then place(n,0,0,q,r)end
-place(o,s,s,math.max(0,q-2*s),math.max(0,r-2*s))
-end
-m:GetPropertyChangedSignal("AbsoluteSize"):Connect(update)
-m:GetAttributeChangedSignal("Inset"):Connect(update)
-update()
-return m
-end
-
-
-
-
-function h.surface(i,j,k,l,m)
-m=m or{}
-if j=="boolean"then
-i.BackgroundTransparency=1
-h.hexagon(i,k,l,1)
-local n=Instance.new("Frame")
-n.Name="Content"
-n.BackgroundTransparency=1
-n.BorderSizePixel=0
-n.AutomaticSize=Enum.AutomaticSize.XY
-n.Size=UDim2.new(0,0,0,0)
-n.ZIndex=2
-n.Parent=i
-return n
-end
-
-i.BackgroundColor3=k
-if j=="reporter"then
-corner(i,UDim.new(0.5,0))
-elseif m.bowler then
-corner(i,g.bowlerRadius)
-else
-corner(i,g.blockRadius)
-end
-local n=Instance.new("UIStroke")
-n.Name="Edge"
-n.Color=l
-n.Thickness=1
-n.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
-n.Parent=i
-if j=="reporter"then return i end
-
-local o=j~="hat"
-local p=j~="cap"
-local q,r,s=g.notchX,g.notchW,g.notchH
-
-if j=="hat"and not m.bowler then
-
-
-local t=g.hatHeight
-local u=holder(i,"Top",0)
-local v=Instance.new("Frame")
-v.Name="Dome"
-v.BackgroundTransparency=1
-v.BorderSizePixel=0
-v.ClipsDescendants=true
-v.Position=UDim2.new(0,-1,0,-(t+1))
-v.Size=UDim2.new(0,g.hatWidth+2,0,t+1+4)
-v.Parent=u
-corner(frame(v,"Edge",l,UDim2.new(1,0,0,2*(t+1)),UDim2.new(0,0,0,0)),UDim.new(0.5,0))
-corner(frame(v,"Fill",k,UDim2.new(1,-2,0,2*t),UDim2.new(0,1,0,1)),UDim.new(0.5,0))
-elseif o then
-
-local t=holder(i,"Top",0)
-corner(frame(t,"Notch",l,UDim2.new(0,r,0,s),UDim2.new(0,q,0,0)),UDim.new(0,3))
-end
-
-if p then
-
-
-local t=holder(i,"Bottom",10000)
-local u=frame(t,"TabEdge",l,UDim2.new(0,r+2,0,s+2),UDim2.new(0,q-1,0,-1))
-corner(u,UDim.new(0,4))
-u.ZIndex=1
-local v=frame(t,"Tab",k,UDim2.new(0,r,0,s+2),UDim2.new(0,q,0,-2))
-corner(v,UDim.new(0,3))
-v.ZIndex=2
-end
-return i
-end
-
-
-function h.markError(i,j,k)
-local l=i:FindFirstChildOfClass("UIStroke")
-if l then
-l.Color=j
-l.Thickness=k
+function k.markError(l,m,n)
+local o=l:FindFirstChildOfClass("UIStroke")
+if o then
+o.Color=m
+o.Thickness=n
 return
 end
-local m=i:FindFirstChild("Hex")
-if m then
-local n=m:FindFirstChild("Edge")
-if n then
-for o,p in ipairs(n:GetChildren())do p.BackgroundColor3=j end
+local p=l:FindFirstChild("Hex")
+if p then
+local q=p:FindFirstChild("Edge")
+if q then
+for r,s in ipairs(q:GetChildren())do s.BackgroundColor3=m end
 end
-m:SetAttribute("Inset",k)
+p:SetAttribute("Inset",n)
 end
 end
 
-return h
+return k
 
-end)()end,[28]=function()local b,c,d=a(28)local e return(function(...)
+end end
+do local g=e for h,i in ipairs({"UI","Theme"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
-local g={
+
+local j={
 ground=Color3.fromRGB(28,30,34),
 panel=Color3.fromRGB(42,45,51),
 text=Color3.fromRGB(235,237,240),
@@ -3671,1127 +3514,961 @@ consoleHeight=184,
 scale=1,
 }
 
-function g.categoryColor(h)
-local i=h and h.color or{150,150,150}
-return Color3.fromRGB(i[1],i[2],i[3])
+function j.categoryColor(k)
+local l=k and k.color or{150,150,150}
+return Color3.fromRGB(l[1],l[2],l[3])
 end
 
 
 
-function g.edge(h)
-return Color3.new(h.R*0.78,h.G*0.78,h.B*0.78)
+function j.edge(k)
+return Color3.new(k.R*0.78,k.G*0.78,k.B*0.78)
 end
 
 
-function g.dropdown(h)
-return Color3.new(h.R*0.5,h.G*0.5,h.B*0.5)
+function j.dropdown(k)
+return Color3.new(k.R*0.5,k.G*0.5,k.B*0.5)
 end
 
 
-local function luminance(h)
-local function f(i)return i<=0.03928 and i/12.92 or((i+0.055)/1.055)^2.4 end
-return 0.2126*f(h.R)+0.7152*f(h.G)+0.0722*f(h.B)
+local function luminance(k)
+local function f(l)return l<=0.03928 and l/12.92 or((l+0.055)/1.055)^2.4 end
+return 0.2126*f(k.R)+0.7152*f(k.G)+0.0722*f(k.B)
 end
-g.luminance=luminance
+j.luminance=luminance
 
 
 
-function g.textOn(h)
-if g.whiteBlockText then return Color3.new(1,1,1)end
-local i=luminance(h)
-local j=1.05/(i+0.05)
-local k=(i+0.05)/(luminance(g.fieldText)+0.05)
-return j>k and Color3.new(1,1,1)or g.fieldText
-end
-
-
-function g.recess(h)
-return Color3.new(h.R*0.6,h.G*0.6,h.B*0.6)
+function j.textOn(k)
+if j.whiteBlockText then return Color3.new(1,1,1)end
+local l=luminance(k)
+local m=1.05/(l+0.05)
+local n=(l+0.05)/(luminance(j.fieldText)+0.05)
+return m>n and Color3.new(1,1,1)or j.fieldText
 end
 
-return g
 
-end)()end,[29]=function()local b,c,d=a(29)local e return(function(...)
-
-
-local g=d(c.Parent.Theme)
-
-local h={}
-h.__index=h
-
-local i=3
-
-local function button(j,k,l,m,n,o,p)
-local q=Instance.new("TextButton")
-q.Name=k
-q.AutoButtonColor=false
-q.BackgroundColor3=n
-q.BorderSizePixel=0
-q.Size=UDim2.fromOffset(m,44)
-q.LayoutOrder=p
-q.Font=g.font
-q.TextSize=g.textSize
-q.TextColor3=o
-q.Text=l
-q.Parent=j
-local r=Instance.new("UICorner")
-r.CornerRadius=g.radius
-r.Parent=q
-return q
+function j.recess(k)
+return Color3.new(k.R*0.6,k.G*0.6,k.B*0.6)
 end
 
-function h.new(j,k)
-local l=setmetatable({handlers=k,confirmToken=0},h)
+return j
 
-local m=Instance.new("Frame")
-m.Name="Toolbar"
-m.BackgroundColor3=g.panel
-m.BorderSizePixel=0
-m.Position=UDim2.new(0,g.paletteWidth,0,0)
-m.Size=UDim2.new(1,-g.paletteWidth,0,g.toolbarHeight)
-m.Parent=j
-l.bar=m
-
-local n=Instance.new("UIListLayout")
-n.FillDirection=Enum.FillDirection.Horizontal
-n.VerticalAlignment=Enum.VerticalAlignment.Center
-n.SortOrder=Enum.SortOrder.LayoutOrder
-n.Padding=UDim.new(0,8)
-n.Parent=m
-local o=Instance.new("UIPadding")
-o.PaddingLeft=UDim.new(0,8)
-o.Parent=m
+end end
+do local g=e for h,i in ipairs({"UI","Toolbar"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
-l.run=button(m,"Run","Run",96,g.accent,g.fieldText,1)
-l.stop=button(m,"Stop","Stop",96,g.ground,g.textDim,2)
-l.clear=button(m,"ClearWorkspace","Clear workspace",152,g.ground,g.text,3)
 
-l.save=button(m,"Save","Save",88,g.ground,g.text,4)
-l.load=button(m,"Load","Load",88,g.ground,g.text,5)
+local j=i(h.Parent.Theme)
 
-l.run.Activated:Connect(function()
-l:_resetClear()
-k.onRun()
+local k={}
+k.__index=k
+
+local l=3
+
+local function button(m,n,o,p,q,r,s)
+local t=Instance.new("TextButton")
+t.Name=n
+t.AutoButtonColor=false
+t.BackgroundColor3=q
+t.BorderSizePixel=0
+t.Size=UDim2.fromOffset(p,44)
+t.LayoutOrder=s
+t.Font=j.font
+t.TextSize=j.textSize
+t.TextColor3=r
+t.Text=o
+t.Parent=m
+local u=Instance.new("UICorner")
+u.CornerRadius=j.radius
+u.Parent=t
+return t
+end
+
+function k.new(m,n)
+local o=setmetatable({handlers=n,confirmToken=0},k)
+
+local p=Instance.new("Frame")
+p.Name="Toolbar"
+p.BackgroundColor3=j.panel
+p.BorderSizePixel=0
+p.Position=UDim2.new(0,j.paletteWidth,0,0)
+p.Size=UDim2.new(1,-j.paletteWidth,0,j.toolbarHeight)
+p.Parent=m
+o.bar=p
+
+local q=Instance.new("UIListLayout")
+q.FillDirection=Enum.FillDirection.Horizontal
+q.VerticalAlignment=Enum.VerticalAlignment.Center
+q.SortOrder=Enum.SortOrder.LayoutOrder
+q.Padding=UDim.new(0,8)
+q.Parent=p
+local r=Instance.new("UIPadding")
+r.PaddingLeft=UDim.new(0,8)
+r.Parent=p
+
+
+o.run=button(p,"Run","Run",96,j.accent,j.fieldText,1)
+o.stop=button(p,"Stop","Stop",96,j.ground,j.textDim,2)
+o.clear=button(p,"ClearWorkspace","Clear workspace",152,j.ground,j.text,3)
+
+o.save=button(p,"Save","Save",88,j.ground,j.text,4)
+o.load=button(p,"Load","Load",88,j.ground,j.text,5)
+
+o.run.Activated:Connect(function()
+o:_resetClear()
+n.onRun()
 end)
-l.stop.Activated:Connect(function()
-l:_resetClear()
-k.onStop()
+o.stop.Activated:Connect(function()
+o:_resetClear()
+n.onStop()
 end)
-l.save.Activated:Connect(function()
-l:_resetClear()
-k.onSave()
+o.save.Activated:Connect(function()
+o:_resetClear()
+n.onSave()
 end)
-l.load.Activated:Connect(function()
-l:_resetClear()
-k.onLoad()
+o.load.Activated:Connect(function()
+o:_resetClear()
+n.onLoad()
 end)
 
-l.clear.Activated:Connect(function()
-if l.confirming then
-l:_resetClear()
-k.onClear()
+o.clear.Activated:Connect(function()
+if o.confirming then
+o:_resetClear()
+n.onClear()
 return
 end
-l.confirming=true
-l.clear.Text="Tap again to delete all"
-l.clear.TextColor3=g.error
-l.confirmToken+=1
-local p=l.confirmToken
-task.delay(i,function()
-if l.confirmToken==p then l:_resetClear()end
+o.confirming=true
+o.clear.Text="Tap again to delete all"
+o.clear.TextColor3=j.error
+o.confirmToken+=1
+local s=o.confirmToken
+task.delay(l,function()
+if o.confirmToken==s then o:_resetClear()end
 end)
 end)
-return l
+return o
 end
 
-function h:_resetClear()
+function k:_resetClear()
 self.confirmToken+=1
 self.confirming=false
 self.clear.Text="Clear workspace"
-self.clear.TextColor3=g.text
+self.clear.TextColor3=j.text
 end
 
-function h:setRunning(j)
-self.stop.TextColor3=j and g.text or g.textDim
+function k:setRunning(m)
+self.stop.TextColor3=m and j.text or j.textDim
 end
 
-return h
+return k
 
-end)()end,[30]=function()local b,c,d=a(30)local e return(function(...)
-
-
-
-
+end end
+do local g=e for h,i in ipairs({"UI","Transfer"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
-local g=d(c.Parent.Theme)
 
-local h={}
-h.__index=h
 
-local i,j=560,380
 
-local function corner(k)
-local l=Instance.new("UICorner")
-l.CornerRadius=g.radius
-l.Parent=k
+
+
+local j=i(h.Parent.Theme)
+
+local k={}
+k.__index=k
+
+local l,m=560,380
+
+local function corner(n)
+local o=Instance.new("UICorner")
+o.CornerRadius=j.radius
+o.Parent=n
 end
 
-local function label(k,l,m,n,o,p)
-local q=Instance.new("TextLabel")
-q.BackgroundTransparency=1
-q.Position=UDim2.fromOffset(16,m)
-q.Size=UDim2.new(1,-32,0,n)
-q.Font=g.font
-q.TextSize=g.textSize
-q.TextColor3=o
-q.TextXAlignment=Enum.TextXAlignment.Left
-q.TextYAlignment=Enum.TextYAlignment.Top
-q.TextWrapped=p or false
-q.Text=l
-q.Parent=k
-return q
+local function label(n,o,p,q,r,s)
+local t=Instance.new("TextLabel")
+t.BackgroundTransparency=1
+t.Position=UDim2.fromOffset(16,p)
+t.Size=UDim2.new(1,-32,0,q)
+t.Font=j.font
+t.TextSize=j.textSize
+t.TextColor3=r
+t.TextXAlignment=Enum.TextXAlignment.Left
+t.TextYAlignment=Enum.TextYAlignment.Top
+t.TextWrapped=s or false
+t.Text=o
+t.Parent=n
+return t
 end
 
-function h.new(k)
-return setmetatable({parent=k},h)
+function k.new(n)
+return setmetatable({parent=n},k)
 end
 
-function h:close()
+function k:close()
 if self.layer then
 self.layer:Destroy()
 self.layer=nil
 end
 end
 
-function h:open(k)
+function k:open(n)
 self:close()
 
-local l=Instance.new("TextButton")
-l.Name="TransferLayer"
-l.BackgroundTransparency=1
-l.Text=""
-l.AutoButtonColor=false
-l.Size=UDim2.fromScale(1,1)
-l.ZIndex=400
-l.Parent=self.parent
-self.layer=l
+local o=Instance.new("TextButton")
+o.Name="TransferLayer"
+o.BackgroundTransparency=1
+o.Text=""
+o.AutoButtonColor=false
+o.Size=UDim2.fromScale(1,1)
+o.ZIndex=400
+o.Parent=self.parent
+self.layer=o
 
-local m=Instance.new("Frame")
-m.Name="Panel"
-m.BackgroundColor3=g.panel
-m.BorderSizePixel=0
-m.AnchorPoint=Vector2.new(0.5,0.5)
+local p=Instance.new("Frame")
+p.Name="Panel"
+p.BackgroundColor3=j.panel
+p.BorderSizePixel=0
+p.AnchorPoint=Vector2.new(0.5,0.5)
 
-m.Position=UDim2.new(0.5,g.paletteWidth/2,0.5,0)
-m.Size=UDim2.fromOffset(i,j)
-m.Parent=l
-corner(m)
-
-local n=Instance.new("UIStroke")
-n.Color=g.textDim
-n.Thickness=1
-n.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
-n.Parent=m
-
-label(m,k.title or"",10,24,g.text)
-label(m,k.hint or"",36,20,g.textDim)
-
-local o=Instance.new("TextBox")
-o.Name="Text"
-o.BackgroundColor3=g.field
-o.BorderSizePixel=0
-o.Position=UDim2.fromOffset(16,64)
-o.Size=UDim2.new(1,-32,0,212)
-o.MultiLine=true
-o.TextWrapped=true
-o.ClearTextOnFocus=false
-o.Font=g.font
-o.TextSize=g.textSize
-o.TextColor3=g.fieldText
-o.TextXAlignment=Enum.TextXAlignment.Left
-o.TextYAlignment=Enum.TextYAlignment.Top
-o.Text=k.text or""
-o.Parent=m
-corner(o)
-local p=Instance.new("UIPadding")
-p.PaddingLeft,p.PaddingRight,p.PaddingTop,p.PaddingBottom=UDim.new(0,8),UDim.new(0,8),UDim.new(0,6),UDim.new(0,6)
+p.Position=UDim2.new(0.5,j.paletteWidth/2,0.5,0)
+p.Size=UDim2.fromOffset(l,m)
 p.Parent=o
+corner(p)
 
+local q=Instance.new("UIStroke")
+q.Color=j.textDim
+q.Thickness=1
+q.ApplyStrokeMode=Enum.ApplyStrokeMode.Border
+q.Parent=p
 
-local q=label(m,k.error or"",282,34,g.error,true)
+label(p,n.title or"",10,24,j.text)
+label(p,n.hint or"",36,20,j.textDim)
 
-local r=Instance.new("Frame")
-r.BackgroundTransparency=1
-r.Position=UDim2.new(0,16,1,-56)
-r.Size=UDim2.new(1,-32,0,44)
-r.Parent=m
-local s=Instance.new("UIListLayout")
-s.FillDirection=Enum.FillDirection.Horizontal
-s.SortOrder=Enum.SortOrder.LayoutOrder
-s.Padding=UDim.new(0,8)
+local r=Instance.new("TextBox")
+r.Name="Text"
+r.BackgroundColor3=j.field
+r.BorderSizePixel=0
+r.Position=UDim2.fromOffset(16,64)
+r.Size=UDim2.new(1,-32,0,212)
+r.MultiLine=true
+r.TextWrapped=true
+r.ClearTextOnFocus=false
+r.Font=j.font
+r.TextSize=j.textSize
+r.TextColor3=j.fieldText
+r.TextXAlignment=Enum.TextXAlignment.Left
+r.TextYAlignment=Enum.TextYAlignment.Top
+r.Text=n.text or""
+r.Parent=p
+corner(r)
+local s=Instance.new("UIPadding")
+s.PaddingLeft,s.PaddingRight,s.PaddingTop,s.PaddingBottom=UDim.new(0,8),UDim.new(0,8),UDim.new(0,6),UDim.new(0,6)
 s.Parent=r
 
-local function button(t,u,v,w)
-local x=Instance.new("TextButton")
-x.AutoButtonColor=false
-x.BackgroundColor3=g.ground
-x.BorderSizePixel=0
-x.Size=UDim2.fromOffset(u,40)
-x.LayoutOrder=v
-x.Font=g.font
-x.TextSize=g.textSize
-x.TextColor3=g.text
-x.Text=t
-x.Parent=r
-corner(x)
-x.Activated:Connect(w)
+
+local t=label(p,n.error or"",282,34,j.error,true)
+
+local u=Instance.new("Frame")
+u.BackgroundTransparency=1
+u.Position=UDim2.new(0,16,1,-56)
+u.Size=UDim2.new(1,-32,0,44)
+u.Parent=p
+local v=Instance.new("UIListLayout")
+v.FillDirection=Enum.FillDirection.Horizontal
+v.SortOrder=Enum.SortOrder.LayoutOrder
+v.Padding=UDim.new(0,8)
+v.Parent=u
+
+local function button(w,x,y,z)
+local A=Instance.new("TextButton")
+A.AutoButtonColor=false
+A.BackgroundColor3=j.ground
+A.BorderSizePixel=0
+A.Size=UDim2.fromOffset(x,40)
+A.LayoutOrder=y
+A.Font=j.font
+A.TextSize=j.textSize
+A.TextColor3=j.text
+A.Text=w
+A.Parent=u
+corner(A)
+A.Activated:Connect(z)
 end
 
-for t,u in ipairs(k.actions or{})do
-button(u.label,176,t,function()
-local v=u.run(o.Text,o)
-if v==nil then
+for w,x in ipairs(n.actions or{})do
+button(x.label,176,w,function()
+local y=x.run(r.Text,r)
+if y==nil then
 self:close()
-elseif type(v)=="string"then
-q.Text=v
+elseif type(y)=="string"then
+t.Text=y
 else
-q.Text=""
+t.Text=""
 end
 end)
 end
 button("Close",96,100,function()self:close()end)
 end
 
-return h
+return k
 
-end)()end,[31]=function()local b,c,d=a(31)local e return(function(...)
-
-local g=game:GetService("Players")
-local h=d(c.Parent.Theme)
-local i=d(c.Parent.BlockView)
-local j=d(c.Parent.Shapes)
-local k=d(c.Parent.Drag)
-
-local l={}
-l.__index=l
-
-function l.new(m,n,o)
-local p=setmetatable({registry=n,program=o,blockOf={}},l)
-
-local q=Instance.new("ScrollingFrame")
-q.Name="Workspace"
-q.BackgroundColor3=h.ground
-q.BorderSizePixel=0
-
-q.Size=UDim2.new(1,-h.paletteWidth,1,-(h.toolbarHeight+h.consoleHeight))
-q.Position=UDim2.new(0,h.paletteWidth,0,h.toolbarHeight)
-q.ScrollingDirection=Enum.ScrollingDirection.XY
-q.CanvasSize=UDim2.new(0,0,0,0)
-q.AutomaticCanvasSize=Enum.AutomaticSize.XY
-q.ScrollBarThickness=8
-q.ScrollBarImageColor3=h.textDim
-q.Parent=m
-p.canvas=q
-
-local r=Instance.new("Frame")
-r.Name="Scripts"
-r.BackgroundTransparency=1
-r.Size=UDim2.new(1,0,1,0)
-r.Parent=q
-p.layer=r
+end end
+do local g=e for h,i in ipairs({"UI","Workspace"})do g=rawget(g,"__kids")[i]end
+b[g]=function(h,i)
 
 
-local s=Instance.new("Frame")
-s.Name="SnapPreview"
-s.BackgroundColor3=h.accent
-s.BorderSizePixel=0
-s.Visible=false
-s.ZIndex=200
-s.Parent=m
-p.preview,p.targets=s,{inputs={},slots={},fields={}}
+local j=game:GetService("Players")
+local k=i(h.Parent.Theme)
+local l=i(h.Parent.BlockView)
+local m=i(h.Parent.Shapes)
+local n=i(h.Parent.Drag)
 
-p:_wirePan()
-o:onChanged(function()p:render()end)
-p:render()
-return p
+local o={}
+o.__index=o
+
+function o.new(p,q,r)
+local s=setmetatable({registry=q,program=r,blockOf={}},o)
+
+local t=Instance.new("ScrollingFrame")
+t.Name="Workspace"
+t.BackgroundColor3=k.ground
+t.BorderSizePixel=0
+
+t.Size=UDim2.new(1,-k.paletteWidth,1,-(k.toolbarHeight+k.consoleHeight))
+t.Position=UDim2.new(0,k.paletteWidth,0,k.toolbarHeight)
+t.ScrollingDirection=Enum.ScrollingDirection.XY
+t.CanvasSize=UDim2.new(0,0,0,0)
+t.AutomaticCanvasSize=Enum.AutomaticSize.XY
+t.ScrollBarThickness=8
+t.ScrollBarImageColor3=k.textDim
+t.Parent=p
+s.canvas=t
+
+local u=Instance.new("Frame")
+u.Name="Scripts"
+u.BackgroundTransparency=1
+u.Size=UDim2.new(1,0,1,0)
+u.Parent=t
+s.layer=u
+
+
+local v=Instance.new("Frame")
+v.Name="SnapPreview"
+v.BackgroundColor3=k.accent
+v.BorderSizePixel=0
+v.Visible=false
+v.ZIndex=200
+v.Parent=p
+s.preview,s.targets=v,{inputs={},slots={},fields={}}
+
+s:_wirePan()
+r:onChanged(function()s:render()end)
+s:render()
+return s
 end
 
-function l:_toCanvas(m)
-return(m-self.canvas.AbsolutePosition)/h.scale+self.canvas.CanvasPosition
+function o:_toCanvas(p)
+return(p-self.canvas.AbsolutePosition)/k.scale+self.canvas.CanvasPosition
 end
 
 
 
-function l:_grab(m)
-local n=Vector2.new(m.Position.X,m.Position.Y)
+function o:_grab(p,q,r)
 
-local o=self.canvas
-while o and not o:IsA("BasePlayerGui")do o=o.Parent end
-o=o or g.LocalPlayer.PlayerGui
-local p=o:GetGuiObjectsAtPosition(n.X,n.Y)[1]
-local q
-while p and not self.blockOf[p]do
-if not q and self.targets.fields[p]then q=p end
-p=p.Parent
-end
-if not p then return false end
-local r=self.blockOf[p]
-local s,t,u,v
+
+if not q or not self.blockOf[q]then return false end
+local s=Vector2.new(p.Position.X,p.Position.Y)
+local t=self.blockOf[q]
+local u,v,w,x
+self.busy=true
 self.canvas.ScrollingEnabled=false
-k.track(m,function(w)
-if not t then
-if(w-n).Magnitude<6 then return end
-local x=self:_toCanvas(p.AbsolutePosition)
-if self.program:find(r)then
-s=self.program:detach(r,x.X,x.Y-12)
+n.track(p,function(y)
+if not v then
+if(y-s).Magnitude<6 then return end
+local z=self:_toCanvas(q.AbsolutePosition)
+if self.program:find(t)then
+u=self.program:detach(t,z.X,z.Y-12)
 else
-local y,z=self.program:findInput(r)
-local A=y and self.registry:get(y.op).inputs[z]
-s=self.program:detachInput(r,x.X,x.Y-12,A and A.default)
+local A,C=self.program:findInput(t)
+local D=A and self.registry:get(A.op).inputs[C]
+u=self.program:detachInput(t,z.X,z.Y-12,D and D.default)
 end
-if not s then return end
-local y=self.program:get().scripts[s]
-u,v=y.x,y.y
-t=self.layer["Script"..s]
-t.ZIndex=10
+if not u then return end
+local A=self.program:get().scripts[u]
+w,x=A.x,A.y
+v=self.layer["Script"..u]
+v.ZIndex=10
 end
-local x=(w-n)/h.scale
-t.Position=UDim2.fromOffset(math.max(0,u+x.X),math.max(0,v+x.Y)+12)
-self:_showPreview(self:_findTarget(self:_specOfHolder(s,t),t))
-end,function(w)
+local z=(y-s)/k.scale
+v.Position=UDim2.fromOffset(math.max(0,w+z.X),math.max(0,x+z.Y)+12)
+self:_showPreview(self:_findTarget(self:_specOfHolder(u,v),v))
+end,function(y)
+self.busy=false
 self.canvas.ScrollingEnabled=true
 self:_showPreview(nil)
-if not t then
+if not v then
 
-if q and self.editor then self.editor:open(q,self.targets.fields[q])end
+if r and self.editor then self.editor:open(r,self.targets.fields[r])end
 return
 end
-local x=self:_findTarget(self:_specOfHolder(s,t),t)
-local y=(w-n)/h.scale
-if w.X<self.canvas.AbsolutePosition.X then
-self.program:removeScript(s)
-elseif not(x and self.program:attach(s,x))then
-self.program:moveScript(s,math.max(0,u+y.X),math.max(0,v+y.Y))
+local z=self:_findTarget(self:_specOfHolder(u,v),v)
+local A=(y-s)/k.scale
+if y.X<self.canvas.AbsolutePosition.X then
+self.program:removeScript(u)
+elseif not(z and self.program:attach(u,z))then
+self.program:moveScript(u,math.max(0,w+A.X),math.max(0,x+A.Y))
 end
 end)
 return true
 end
 
 
-local m=40
+local p=40
 
-local function isValue(n)return n=="reporter"or n=="boolean"end
+local function isValue(q)return q=="reporter"or q=="boolean"end
 
 
-function l:_specOfHolder(n,o)
-local p=self.program:get().scripts[n].blocks
-local q,r=self.registry:shapeOf(p[1]),self.registry:shapeOf(p[#p])
-local s=o.AbsolutePosition
+function o:_specOfHolder(q,r)
+local s=self.program:get().scripts[q].blocks
+local t,u=self.registry:shapeOf(s[1]),self.registry:shapeOf(s[#s])
+local v=r.AbsolutePosition
 
-local t=self.registry:wrapSlot(p[1])
-local u
-if t then
-for v,w in pairs(self.targets.slots)do
-if w.block==p[1]and w.name==t then
-u=v.AbsolutePosition+Vector2.new(h.cSlotIndent*h.scale,0)
+local w=self.registry:wrapSlot(s[1])
+local x
+if w then
+for y,z in pairs(self.targets.slots)do
+if z.block==s[1]and z.name==w then
+x=y.AbsolutePosition+Vector2.new(k.cSlotIndent*k.scale,0)
 break
 end
 end
 end
-return{first=q,last=r,count=#p,top=s,bottom=s+Vector2.new(0,o.AbsoluteSize.Y),
-def=self.registry:get(p[1].op),wrap=t,slotPos=u}
+return{first=t,last=u,count=#s,top=v,bottom=v+Vector2.new(0,r.AbsoluteSize.Y),
+def=self.registry:get(s[1].op),wrap=w,slotPos=x}
 end
 
 
-function l:_specOfOp(n,o,p)
-local q=self.registry:createBlock(n)
-local r=self.registry:shapeOf(q)
-local s=self.registry:wrapSlot(q)
+function o:_specOfOp(q,r,s)
+local t=self.registry:createBlock(q)
+local u=self.registry:shapeOf(t)
+local v=self.registry:wrapSlot(t)
 
-local t=s and(o+Vector2.new(h.cSlotIndent*h.scale,h.rowHeight*h.scale))or nil
-return{first=r,last=r,count=1,top=o,bottom=o+Vector2.new(0,p.Y),
-def=self.registry:get(n),wrap=s,slotPos=t}
+local w=v and(r+Vector2.new(k.cSlotIndent*k.scale,k.rowHeight*k.scale))or nil
+return{first=u,last=u,count=1,top=r,bottom=r+Vector2.new(0,s.Y),
+def=self.registry:get(q),wrap=v,slotPos=w}
 end
 
 
-function l:_findTarget(n,o)
-local p,q,r=self.registry,self.program,h.scale
-local s,t=nil,m*r
-local function skip(u)return o and(u==o or o:IsAncestorOf(u))end
+function o:_findTarget(q,r)
+local s,t,u=self.registry,self.program,k.scale
+local v,w=nil,p*u
+local function skip(x)return r and(x==r or r:IsAncestorOf(x))end
 
-if isValue(n.first)then
-if n.count~=1 then return nil end
-for u,v in pairs(self.targets.inputs)do
-local w=(u.AbsolutePosition-n.top).Magnitude
-if w<t and not skip(u)then
+if isValue(q.first)then
+if q.count~=1 then return nil end
+for x,y in pairs(self.targets.inputs)do
+local z=(x.AbsolutePosition-q.top).Magnitude
+if z<w and not skip(x)then
 
-if p:accepts(p:get(v.block.op),v.name,n.first,n.def)then
-s,t={kind="input",block=v.block,name=v.name,pos=u.AbsolutePosition,size=u.AbsoluteSize},w
+if s:accepts(s:get(y.block.op),y.name,q.first,q.def)then
+v,w={kind="input",block=y.block,name=y.name,pos=x.AbsolutePosition,size=x.AbsoluteSize},z
 end
 end
 end
-return s
+return v
 end
 
-for u,v in pairs(self.blockOf)do
-if not skip(u)then
-local w=p:shapeOf(v)
-if not isValue(w)then
-local x,y=u.AbsolutePosition,u.AbsoluteSize
+for x,y in pairs(self.blockOf)do
+if not skip(x)then
+local z=s:shapeOf(y)
+if not isValue(z)then
+local A,C=x.AbsolutePosition,x.AbsoluteSize
 
-local z=Vector2.new(x.X,x.Y+y.Y)
-local A=(z-n.top).Magnitude
-if A<t and w~="cap"and n.first~="hat"then
-local C,D=q:find(v)
+local D=Vector2.new(A.X,A.Y+C.Y)
+local E=(D-q.top).Magnitude
+if E<w and z~="cap"and q.first~="hat"then
+local F,G=t:find(y)
 
-local E=(C and D<#C)and n.wrap or nil
-if C and not(n.last=="cap"and D<#C and not E)then
-s,t={kind="after",block=v,wrap=E,pos=z,size=y},A
-end
-end
-
-A=(x-n.bottom).Magnitude
-if A<t and w~="hat"and n.last~="cap"then
-local C,D,E=q:find(v)
-if C and D==1 and C==q:get().scripts[E].blocks then
-s,t={kind="before",block=v,pos=x,size=y},A
+local H=(F and G<#F)and q.wrap or nil
+if F and not(q.last=="cap"and G<#F and not H)then
+v,w={kind="after",block=y,wrap=H,pos=D,size=C},E
 end
 end
 
-if n.wrap and n.slotPos and w~="hat"then
-local C=(x-n.slotPos).Magnitude
-if C<t then
-local D,E,F=q:find(v)
-if D and E==1 and D==q:get().scripts[F].blocks then
-s,t={kind="wrap",block=v,wrap=n.wrap,pos=x,size=y},C
+E=(A-q.bottom).Magnitude
+if E<w and z~="hat"and q.last~="cap"then
+local F,G,H=t:find(y)
+if F and G==1 and F==t:get().scripts[H].blocks then
+v,w={kind="before",block=y,pos=A,size=C},E
 end
-end
-end
-end
-end
-end
-if n.first~="hat"then
-for u,v in pairs(self.targets.slots)do
-if not skip(u)then
-local w=u.AbsolutePosition+Vector2.new(h.cSlotIndent*r,0)
-local x=(w-n.top).Magnitude
-local y=v.block.stacks[v.name]
-local z=y and#y>0
-local A=z and n.wrap or nil
-if x<t and not(n.last=="cap"and z and not A)then
-s,t={kind="slot",block=v.block,name=v.name,wrap=A,pos=w,size=Vector2.new(u.AbsoluteSize.X-h.cSlotIndent*r,0)},x
-end
-end
-end
-end
-return s
 end
 
-function l:_showPreview(n)
-local o=self.preview
-if not n then o.Visible=false return end
-local p,q=h.scale,o.Parent.AbsolutePosition
-local r,s=n.pos,n.size
-if n.kind=="input"then
-o.BackgroundTransparency=0.5
+if q.wrap and q.slotPos and z~="hat"then
+local F=(A-q.slotPos).Magnitude
+if F<w then
+local G,H,I=t:find(y)
+if G and H==1 and G==t:get().scripts[I].blocks then
+v,w={kind="wrap",block=y,wrap=q.wrap,pos=A,size=C},F
+end
+end
+end
+end
+end
+end
+if q.first~="hat"then
+for x,y in pairs(self.targets.slots)do
+if not skip(x)then
+local z=x.AbsolutePosition+Vector2.new(k.cSlotIndent*u,0)
+local A=(z-q.top).Magnitude
+local C=y.block.stacks[y.name]
+local D=C and#C>0
+local E=D and q.wrap or nil
+if A<w and not(q.last=="cap"and D and not E)then
+v,w={kind="slot",block=y.block,name=y.name,wrap=E,pos=z,size=Vector2.new(x.AbsoluteSize.X-k.cSlotIndent*u,0)},A
+end
+end
+end
+end
+return v
+end
+
+function o:_showPreview(q)
+local r=self.preview
+if not q then r.Visible=false return end
+local s,t=k.scale,r.Parent.AbsolutePosition
+local u,v=q.pos,q.size
+if q.kind=="input"then
+r.BackgroundTransparency=0.5
 else
-o.BackgroundTransparency=0
-r=Vector2.new(r.X,r.Y-2*p)
-s=Vector2.new(math.max(s.X,60*p),4*p)
+r.BackgroundTransparency=0
+u=Vector2.new(u.X,u.Y-2*s)
+v=Vector2.new(math.max(v.X,60*s),4*s)
 end
-o.Position=UDim2.fromOffset((r.X-q.X)/p,(r.Y-q.Y)/p)
-o.Size=UDim2.fromOffset(s.X/p,s.Y/p)
-o.Visible=true
-end
-
-
-function l:hover(n,o)
-self:_showPreview(self:_findTarget(self:_specOfOp(n,o.AbsolutePosition,o.AbsoluteSize)))
+r.Position=UDim2.fromOffset((u.X-t.X)/s,(u.Y-t.Y)/s)
+r.Size=UDim2.fromOffset(v.X/s,v.Y/s)
+r.Visible=true
 end
 
-function l:hoverEnd()self:_showPreview(nil)end
 
-function l:_wirePan()
-self.canvas.InputBegan:Connect(function(n)
-local o=n.UserInputType
-if o~=Enum.UserInputType.MouseButton1 and o~=Enum.UserInputType.Touch then return end
-if self:_grab(n)or o==Enum.UserInputType.Touch then return end
-local p=Vector2.new(n.Position.X,n.Position.Y)
-k.track(n,function(q)
-local r=self.canvas.CanvasPosition-(q-p)/h.scale
-self.canvas.CanvasPosition=Vector2.new(math.max(0,r.X),math.max(0,r.Y))
-p=q
+function o:hover(q,r)
+self:_showPreview(self:_findTarget(self:_specOfOp(q,r.AbsolutePosition,r.AbsoluteSize)))
+end
+
+function o:hoverEnd()self:_showPreview(nil)end
+
+local function depthOf(q)
+local r=0
+while q do r=r+1;q=q.Parent end
+return r
+end
+
+local function isPress(q)
+local r=q.UserInputType
+return r==Enum.UserInputType.MouseButton1 or r==Enum.UserInputType.Touch
+end
+
+
+
+
+function o:_press(q,r,s)
+if not isPress(q)then return end
+local t=q.UserInputType==Enum.UserInputType.Touch
+
+
+if self.busy and t then return end
+local u=t and"touch"or"mouse"
+local v=self.pending[u]
+if not v then
+v={blocks={},fields={}}
+self.pending[u]=v
+task.defer(function()
+self.pending[u]=nil
+local w,x,y,z=nil,-1,nil,-1
+for A,C in ipairs(v.blocks)do
+local D=depthOf(C)
+if D>x and C.Parent then w,x=C,D end
+end
+for A,C in ipairs(v.fields)do
+local D=depthOf(C)
+if D>z and w and C:IsDescendantOf(w)then y,z=C,D end
+end
+if self:_grab(q,w,y)then return end
+if t then return end
+self.busy=true
+local A=Vector2.new(q.Position.X,q.Position.Y)
+n.track(q,function(C)
+local D=self.canvas.CanvasPosition-(C-A)/k.scale
+self.canvas.CanvasPosition=Vector2.new(math.max(0,D.X),math.max(0,D.Y))
+A=C
+end,function()self.busy=false end)
 end)
-end)
+end
+if r=="block"then table.insert(v.blocks,s)
+elseif r=="field"then table.insert(v.fields,s)end
 end
 
-function l:render()
+function o:_wirePan()
+self.pending={}
+self.canvas.InputBegan:Connect(function(q)self:_press(q,"canvas")end)
+end
+
+
+function o:_wireHits()
+for q in pairs(self.blockOf)do
+q.InputBegan:Connect(function(r)self:_press(r,"block",q)end)
+end
+for q in pairs(self.targets.fields)do
+q.InputBegan:Connect(function(r)self:_press(r,"field",q)end)
+end
+end
+
+function o:render()
 self.layer:ClearAllChildren()
 self.blockOf={}
 self.targets={inputs={},slots={},fields={}}
-local n=i.new(self.registry,self.blockOf,self.targets)
-for o,p in ipairs(self.program:get().scripts)do
-local q=Instance.new("Frame")
-q.Name="Script"..o
-q.BackgroundTransparency=1
-q.AutomaticSize=Enum.AutomaticSize.XY
-q.Size=UDim2.new(0,0,0,0)
+local q=l.new(self.registry,self.blockOf,self.targets)
+for r,s in ipairs(self.program:get().scripts)do
+local t=Instance.new("Frame")
+t.Name="Script"..r
+t.BackgroundTransparency=1
+t.AutomaticSize=Enum.AutomaticSize.XY
+t.Size=UDim2.new(0,0,0,0)
 
-q.Position=UDim2.new(0,p.x,0,p.y+12)
-q.Parent=self.layer
-n:buildStack(p.blocks,q)
+t.Position=UDim2.new(0,s.x,0,s.y+12)
+t.Parent=self.layer
+q:buildStack(s.blocks,t)
 end
+self:_wireHits()
 self:_applyError()
 end
 
 
 
 
-function l:markError(n)
-self.errorBlock=n
+function o:markError(q)
+self.errorBlock=q
 self:_applyError(true)
 end
 
-function l:clearError()
+function o:clearError()
 if not self.errorBlock then return end
 self.errorBlock=nil
 self:render()
 end
 
-function l:_applyError(n)
-local o=self.errorBlock
-if not o then return end
-local p
-for q,r in pairs(self.blockOf)do
-if r==o then p=q break end
+function o:_applyError(q)
+local r=self.errorBlock
+if not r then return end
+local s
+for t,u in pairs(self.blockOf)do
+if u==r then s=t break end
 end
-if not p then return end
-j.markError(p,h.error,3)
-if n then
+if not s then return end
+m.markError(s,k.error,3)
+if q then
 
 task.defer(function()
-if not p.Parent then return end
-local q=self.canvas
-local r,s=self:_toCanvas(p.AbsolutePosition),p.AbsoluteSize/h.scale
-local t=q.AbsoluteSize/h.scale
-local u=q.CanvasPosition
-local v=(r.X<u.X or r.X+s.X>u.X+t.X)and math.max(0,r.X-24)or u.X
-local w=(r.Y<u.Y or r.Y+s.Y>u.Y+t.Y)and math.max(0,r.Y-48)or u.Y
-q.CanvasPosition=Vector2.new(v,w)
+if not s.Parent then return end
+local t=self.canvas
+local u,v=self:_toCanvas(s.AbsolutePosition),s.AbsoluteSize/k.scale
+local w=t.AbsoluteSize/k.scale
+local x=t.CanvasPosition
+local y=(u.X<x.X or u.X+v.X>x.X+w.X)and math.max(0,u.X-24)or x.X
+local z=(u.Y<x.Y or u.Y+v.Y>x.Y+w.Y)and math.max(0,u.Y-48)or x.Y
+t.CanvasPosition=Vector2.new(y,z)
 end)
 end
 end
 
 
 
-function l:spawn(n,o,p)
-local q=(self.program:count()%8)*32
-local r=o and self:_toCanvas(o)-Vector2.new(0,12)or self.canvas.CanvasPosition+Vector2.new(24+q,24+q)
-local s=self.program:addScript(self.registry:createBlock(n),math.max(0,math.floor(r.X)),math.max(0,math.floor(r.Y)),true)
-local t=o and p and self:_findTarget(self:_specOfOp(n,o,p))
-if not(t and self.program:attach(s,t))then self.program:changed()end
+function o:spawn(q,r,s)
+local t=(self.program:count()%8)*32
+local u=r and self:_toCanvas(r)-Vector2.new(0,12)or self.canvas.CanvasPosition+Vector2.new(24+t,24+t)
+local v=self.program:addScript(self.registry:createBlock(q),math.max(0,math.floor(u.X)),math.max(0,math.floor(u.Y)),true)
+local w=r and s and self:_findTarget(self:_specOfOp(q,r,s))
+if not(w and self.program:attach(v,w))then self.program:changed()end
 end
 
-return l
+return o
 
-end)()end}
-
-
-local c={{1,4,{"BlockScript"},{{2,2,{"Lang"},{{12,1,{"Core"},{{13,2,{"Interpreter"}},{17,2,{"Values"}},{14,2,{"Plugins"}},{16,2,{"Validate"}},{15,2,{"Registry"}}}},{3,2,{"Blocks"},{{6,2,{"Events"}},{10,2,{"Sensing"}},{11,2,{"Variables"}},{9,2,{"Output"}},{4,2,{"Control"}},{7,2,{"Lists"}},{5,2,{"Custom"}},{8,2,{"Operators"}}}}}},{18,2,{"Plugin"}},{19,1,{"UI"},{{28,2,{"Theme"}},{31,2,{"Workspace"}},{26,2,{"Program"}},{30,2,{"Transfer"}},{20,2,{"Assets"}},{25,2,{"Palette"}},{22,2,{"Console"}},{23,2,{"Drag"}},{21,2,{"BlockView"}},{24,2,{"Editor"}},{29,2,{"Toolbar"}},{27,2,{"Shapes"}}}}}}}
-
-
-local d=nil
-
-
-local e="0.4.2"
-local g="WaxRuntime"
+end end
+return(function(g,h)
 
 
 
 
-local h,i,j,k,l,m,n,o,p,q,r,s,t,u,v=
-string,task,setmetatable,error,next,table,unpack,coroutine,script,type,require,pcall,tostring,tonumber,_VERSION
 
-local w=m.insert
-local x=m.remove
-local y=m.freeze or function(y)return y end
-
-local z=o.wrap
-
-local A=h.sub
-local C=h.match
-local D=h.gmatch
-
-
-
-if v and A(v,1,4)=="Lune"then
-local E,F=s(r,"@lune/task")
-if E and F then
-i=F
-end
-end
-
-local E=i and i.defer
+local i=game:GetService("Players")
+local j=game:GetService("HttpService")
+local k=game:GetService("UserInputService")
+local l=h(g.Lang)
+local m=h(g.UI.Theme)
+local n=h(g.UI.Program)
+local o=h(g.UI.Palette)
+local p=h(g.UI.Workspace)
+local q=h(g.UI.Editor)
+local r=h(g.UI.Toolbar)
+local s=h(g.UI.Console)
+local t=h(g.UI.Transfer)
+local u=h(g.Plugin)
 
 
-local F=E or function(F,...)
-z(F)(...)
+local v=true
+
+local w=l.newRegistry()
+
+local function B(x,y,z)
+local A=w:createBlock(x)
+for C,D in pairs(y or{})do A.inputs[C]=D end
+for C,D in pairs(z or{})do A.stacks[C]=D end
+return A
 end
 
 
-local G={
-[1]="Folder",
-[2]="ModuleScript",
-[3]="Script",
-[4]="LocalScript",
-[5]="StringValue",
-}
+local x=n.new({scripts={
+{x=24,y=24,blocks={
+B("events_when_run"),
+B("data_set",{NAME="i",VALUE=0}),
+B("control_repeat",{TIMES=3},{SUBSTACK={
+B("data_change",{NAME="i",BY=1}),
+B("out_print",{TEXT=B("op_join",{A="i = ",B=B("data_get",{NAME="i"})})}),
+}}),
+}},
+{x=24,y=240,blocks={
+B("events_when_run"),
+B("control_if_else",{COND=B("op_contains",{S="block",T="lock"})},{
+THEN={B("out_print",{TEXT="found"})},
+ELSE={B("out_print",{TEXT="missing"})},
+}),
+}},
+}})
 
-local H={}
-
-local I={}
-local J={}
-local K={}
-local L={}
-
-
-local M={}
-
-
-
-local N={}
-
-
-local O={
-GetFullName={{},function(O)
-local P=O.Name
-local Q=O.Parent
-
-while Q do
-P=Q.Name.."."..P
+local y=Instance.new("ScreenGui")
+y.Name="BlockScript"
+y.ResetOnSpawn=false
 
 
-Q=Q.Parent
-end
+y.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
 
-return P
-end},
 
-GetChildren={{},function(O)
-local P={}
+local function applyInset()y.IgnoreGuiInset=not k.TouchEnabled end
+applyInset()
+k:GetPropertyChangedSignal("TouchEnabled"):Connect(applyInset)
 
-for Q in l,N[O]do
-w(P,Q)
-end
 
-return P
-end},
 
-GetDescendants={{},function(O)
-local P={}
-
-for Q in l,N[O]do
-w(P,Q)
-
-for R,S in l,Q:GetDescendants()do
-w(P,S)
+local function guiParent()
+local z,A=pcall(function()return type(gethui)=="function"and gethui()or nil end)
+if z and typeof(A)=="Instance"then
+local C=A
+while C do
+if C:IsA("BasePlayerGui")then return A end
+C=C.Parent
 end
 end
-
-return P
-end},
-
-FindFirstChild={{"string","boolean?"},function(O,P,Q)
-local R=N[O]
-
-for S in l,R do
-if S.Name==P then
-return S
+return i.LocalPlayer:WaitForChild("PlayerGui")
 end
+y.Parent=guiParent()
+
+local z=Instance.new("Frame")
+z.Name="Root"
+z.BackgroundColor3=m.ground
+z.BorderSizePixel=0
+z.Parent=y
+
+local A=Instance.new("UIScale")
+A.Parent=z
+
+local function fit()
+local C=y.AbsoluteSize
+m.scale=math.clamp(math.min(C.X/1100,C.Y/650),0.7,0.8)
+A.Scale=m.scale
+z.Size=UDim2.fromScale(1/m.scale,1/m.scale)
 end
+y:GetPropertyChangedSignal("AbsoluteSize"):Connect(fit)
+fit()
 
-if Q then
-for S in l,R do
+local C=p.new(z,w,x)
+C.editor=q.new(z,w,x)
+local D=o.new(z,w,
+function(D,E,F)C:spawn(D,E,F)end,
+function(D,E)C:hover(D,E)end,
+function()C:hoverEnd()end)
 
 
-return S:FindFirstChild(P,true)
+local function syncCustom()
+if w.custom.sync(x:get().scripts)then D:refresh()end
 end
-end
-end},
-
-FindFirstAncestor={{"string"},function(O,P)
-local Q=O.Parent
-while Q do
-if Q.Name==P then
-return Q
-end
-
-Q=Q.Parent
-end
-end},
-
-
-WaitForChild={{"string","number?"},function(O,P)
-return O:FindFirstChild(P)
-end},
-}
-
-
-local P={}
-for Q,R in l,O do
-local S=R[1]
-local T=R[2]
-
-local U={}
-for V,W in l,S do
-local X,Y=C(W,"^([^%?]+)(%??)")
-U[V]={X,Y}
-end
-
-P[Q]=function(V,...)
-if not N[V]then
-k("Expected ':' not '.' calling member function "..Q,2)
-end
-
-local W={...}
-for X,Y in l,U do
-local Z=W[X]
-local _=q(Z)
-local aa,ab=Y[1],Y[2]
-
-if Z==nil and not ab then
-k("Argument "..Z.." missing or nil",3)
-end
-
-if aa~="any"and _~=aa and not(_=="nil"and ab)then
-k("Argument "..X.." expects type \""..aa.."\", got \"".._.."\"",2)
-end
-end
-
-return T(V,...)
-end
-end
-
-local function CreateRef(aa,ab,Q)
+x:onChanged(syncCustom)
+local E
 
 
 
-local R
+x.onSet=function(F,G,H,I)
+if F.op=="custom_define"and G=="NAME"then
 
-
-local S=j({},{__mode="k"})
-
-
-local function InvalidMember(T)
-k(T.." is not a valid (virtual) member of "..aa.." \""..ab.."\"",3)
-end
-local function ReadOnlyProperty(T)
-k("Unable to assign (virtual) property "..T..". Property is read only",3)
-end
-
-local T={}
-local U={}
-
-U.__metatable=false
-
-U.__index=function(V,W)
-if W=="ClassName"then
-return aa
-elseif W=="Name"then
-return ab
-elseif W=="Parent"then
-return Q
-elseif aa=="StringValue"and W=="Value"then
-
-return R
-else
-local X=P[W]
-
-if X then
-return X
-end
-end
-
-
-for X in l,S do
-if X.Name==W then
-return X
-end
-end
-
-
-InvalidMember(W)
-end
-
-U.__newindex=function(V,W,X)
-
-if W=="ClassName"then
-ReadOnlyProperty(W)
-elseif W=="Name"then
-ab=X
-elseif W=="Parent"then
-
-if X==T then
+local J=w.custom.parse(tostring(I or"")).code
+if J~=""and J~=w.custom.parse(tostring(H or"")).code then
+for K,L in ipairs(x:get().scripts)do
+local M=L.blocks[1]
+if M and M~=F and M.op=="custom_define"
+and w.custom.parse(tostring(M.inputs.NAME or"")).code==J then
+F.inputs.NAME=H
+E:add("A define named \""..tostring(I).."\" already exists. Name not changed.","error")
 return
 end
-
-if Q~=nil then
-
-N[Q][T]=nil
-end
-
-Q=X
-
-if X~=nil then
-
-N[X][T]=true
-end
-elseif aa=="StringValue"and W=="Value"then
-
-R=X
-else
-
-InvalidMember(W)
 end
 end
-
-U.__tostring=function()
-return ab
+w.custom.sync(x:get().scripts)
+w.custom.rename(x:get().scripts,F,H,I)
 end
-
-j(T,U)
-
-N[T]=S
-
-if Q~=nil then
-N[Q][T]=true
+if w:shapeOf(F)=="cap"then
+local J,K,L=x:find(F)
+if J and J[K+1]then
+local M=x:get().scripts[L]
+x:detach(J[K+1],M.x+40,M.y+40)
 end
-
-return T
-end
-
-
-local function CreateRefFromObject(aa,ab)
-local Q=aa[1]
-local R=aa[2]
-local S=aa[3]
-local T=aa[4]
-
-local U=G[R]
-
-local V=S and x(S,1)or U
-
-local W=CreateRef(U,V,ab)
-H[Q]=W
-
-if S then
-for X,Y in l,S do
-W[X]=Y
-end
-end
-
-if T then
-for X,Y in l,T do
-CreateRefFromObject(Y,W)
-end
-end
-
-return W
-end
-
-local aa=CreateRef("Folder","["..g.."]")
-for ab,Q in l,c do
-CreateRefFromObject(Q,aa)
-end
-
-
-for ab,Q in l,b do
-local R=H[ab]
-
-I[R]=Q
-J[R]=ab
-
-local S=R.ClassName
-if S=="LocalScript"or S=="Script"then
-w(L,R)
-end
-end
-
-local function LoadScript(ab)
-local Q=ab.ClassName
-
-
-local R=K[ab]
-if R and Q=="ModuleScript"then
-return n(R)
-end
-
-local S=I[ab]
-
-local function FormatError(T)
-T=t(T)
-
-local U=ab:GetFullName()
-
-
-local V,W=C(T,"[^:]+:(%d+): (.+)")
-
-if not V or not d then
-return U..":*: "..(W or T)
-end
-
-V=u(V)
-
-local X=J[ab]
-local Y=d[X]
-
-local Z=V-Y+1
-if Z<0 then
-Z="?"
-end
-
-return U..":"..Z..": "..W
-end
-
-
-if Q=="LocalScript"or Q=="Script"then
-local T,U=s(S)
-if not T then
-k(FormatError(U),0)
-end
-else
-local T={s(S)}
-
-local U=x(T,1)
-if not U then
-local V=x(T,1)
-k(FormatError(V),0)
-end
-
-K[ab]=T
-return n(T)
 end
 end
 
 
+E=s.new(z)
+local F=t.new(z)
+local G
 
-function a(ab)
-local Q=H[ab]
 
-local function RealCall(R,...)
-local S={s(R,...)}
+local H,I={
+["space"]=Enum.KeyCode.Space,["up arrow"]=Enum.KeyCode.Up,["down arrow"]=Enum.KeyCode.Down,
+["right arrow"]=Enum.KeyCode.Right,["left arrow"]=Enum.KeyCode.Left,
+},{}
+local J={"Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"}
+for K=string.byte("a"),string.byte("z")do H[string.char(K)]=Enum.KeyCode[string.upper(string.char(K))]end
+for K=0,9 do H[tostring(K)]=Enum.KeyCode[J[K+1] ]end
+for K,L in pairs(H)do I[L]=K end
 
-local T=x(S,1)
-if not T then
-k(S[1],3)
+local K
+K=l.newInterpreter(w,{
+keyDown=function(L)
+if not v then return false end
+if k:GetFocusedTextBox()then return false end
+if L=="any"then
+for M,N in pairs(H)do
+if k:IsKeyDown(N)then return true end
 end
-
-return n(S)
+return false
 end
-
-
-local R=y(j({},{
-__index=M,
-__newindex=function(R,S,T)
-M[S]=T
+local M=H[L]
+return M~=nil and k:IsKeyDown(M)
 end,
-__len=function()
-return#M
+mouseDown=function()return v and k:IsMouseButtonPressed(Enum.UserInputType.MouseButton1)end,
+
+date=function()
+local L=DateTime.now():ToLocalTime()
+return{year=L.Year,month=L.Month,day=L.Day,hour=L.Hour,min=L.Minute,sec=L.Second}
 end,
-__iter=function()
-return l,M
+output=function(L,M)E:add(L,M)end,
+clear=function()E:clear()end,
+ask=function(L)return E:ask(L)end,
+onError=function(L,M)
+E:add("Error: "..L,"error")
+if M then C:markError(M)end
 end,
-}))
-
-local S=y({
-
-version=e,
-envname=g,
-
-shared=R,
-
-
-script=p,
-require=r,
+onFinish=function()G:setRunning(false)end,
 })
 
-local T=Q
+k.InputBegan:Connect(function(L,M)
+if not v or M or not K.running then return end
+local N=I[L.KeyCode]
+if N then K:fire("key",N)end
+end)
 
-local function Global_require(U,...)
-local V=q(U)
-
-local W="Attempted to call require with a non-ModuleScript"
-local X="Attempted to call require with self"
-
-if V=="table"and N[U]then
-if U.ClassName~="ModuleScript"then
-k(W,2)
-elseif U==Q then
-k(X,2)
+local function stop()
+K:stop()
+E:cancel()
 end
 
-return LoadScript(U)
-elseif V=="string"and A(U,1,1)~="@"then
+G=r.new(z,{
+onRun=function()
+E:cancel()
+C:clearError()
+E:clear()
+K:run(x:get())
+G:setRunning(K.running)
+end,
+onStop=stop,
+onClear=function()
+stop()
+K:resetData()
+C:clearError()
+x:clear()
+end,
+onSave=function()
+local L={blockscript=l.Validate.VERSION,scripts=x:get().scripts}
+local M,N=pcall(j.JSONEncode,j,L)
+F:open({
+title="Save program",
+hint="Copy this text and keep it. Load takes it back.",
+text=M and N or"",
+error=M and""or("Could not encode: "..string.sub(tostring(N),1,120)),
+actions={{label="Select all",run=function(O,P)
+P:CaptureFocus()
+P.CursorPosition=#P.Text+1
+P.SelectionStart=1
+return true
+end}},
+})
+end,
+onLoad=function()
+F:open({
+title="Load program",
+hint="Paste saved text. Loading replaces everything in the workspace.",
+text="",
+actions={{label="Replace workspace",run=function(L)
+if string.match(L,"^%s*$")then return"Paste saved text first."end
+if#L>l.Values.LIMITS.MAX_JSON_BYTES then return"Text is too large to load."end
+local M,N=pcall(j.JSONDecode,j,L)
+if not M then return"Not valid JSON: "..string.sub(tostring(N),1,120)end
+local O,P=l.importProgram(w,N)
+if not O then
+syncCustom()
+return P
+end
+stop()
+K:resetData()
+C:clearError()
+x:replace(O)
+return nil
+end}},
+})
+end,
+})
 
 
-if#U==0 then
-k("Attempted to call require with empty string",2)
+
+
+local L={Plugin=u,Registry=w,Palette=D,Program=x,
+Interpreter=K,Gui=y,Visible=true}
+
+function L:LoadPlugin(M)
+local N=l.loadPlugin(w,M)
+if N~=nil then return N end
+local O,P=pcall(function()D:refresh()end)
+if not O then return"palette refresh failed after loading plugin: "..tostring(P)end
+return nil
 end
 
-local Y=Q
 
-if A(U,1,1)=="/"then
-Y=aa
-elseif A(U,1,2)=="./"then
-U=A(U,3)
+function L:SetVisibility(M)
+assert(type(M)=="boolean","SetVisibility expects a boolean")
+v=M
+self.Visible=M
+y.Enabled=M
 end
 
-local Z
-for _ in D(U,"([^/]*)/?")do
-local ac=_
-if _==".."then
-ac="Parent"
-end
+return L
 
-
-if ac~=""then
-local ad=Y:FindFirstChild(ac)
-if not ad then
-local ae=Y.Parent
-if ae then
-ad=ae:FindFirstChild(ac)
-end
-end
-
-if ad then
-Y=ad
-elseif _~=Z and _~="init"and _~="init.server"and _~="init.client"then
-k("Virtual script path \""..U.."\" not found",2)
-end
-end
-
-
-Z=_
-end
-
-if Y.ClassName~="ModuleScript"then
-k(W,2)
-elseif Y==Q then
-k(X,2)
-end
-
-return LoadScript(Y)
-end
-
-return RealCall(r,U,...)
-end
-
-
-return S,T,Global_require
-end
-
-for ab,ac in l,L do
-F(LoadScript,ac)
-end
+end)(e,__require)

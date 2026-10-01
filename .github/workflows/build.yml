@@ -1,0 +1,54 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:   # the "Run workflow" button in the Actions tab
+
+permissions:
+  contents: write      # lets the job commit the rebuilt dist/ file
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DARKLUA_VERSION: "0.19.0"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install darklua
+        run: |
+          curl -fsSL -o darklua.zip \
+            "https://github.com/seaofvoices/darklua/releases/download/v${DARKLUA_VERSION}/darklua-linux-x86_64.zip"
+          unzip -o darklua.zip darklua
+          chmod +x darklua
+          sudo mv darklua /usr/local/bin/darklua
+          darklua --version
+
+      - name: Build
+        run: |
+          chmod +x scripts/build.sh
+          ./scripts/build.sh
+
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlockScript.client.luau
+          path: dist/BlockScript.client.luau
+
+      - name: Commit rebuilt dist/
+        run: |
+          if git diff --quiet -- dist/BlockScript.client.luau; then
+            echo "dist/ already up to date"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dist/BlockScript.client.luau
+            git commit -m "Rebuild dist [skip ci]"
+            git push
+          fi

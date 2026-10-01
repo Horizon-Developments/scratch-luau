@@ -56,21 +56,14 @@ end
 
 -- Drags the block under the pointer (with everything below it if it is a stack block, or just the reporter
 -- if it sits in an input slot). Returns false if no block is there.
-function Workspace:_grab(input)
+function Workspace:_grab(input, frame, field)
+  -- No coordinate hit-test: the frame (and literal field) come from the frames' own InputBegan events
+  -- (see _wireHits), so the GUI inset, other ScreenGuis on top and gethui() containers cannot throw it off.
+  if not frame or not self.blockOf[frame] then return false end
   local p0 = Vector2.new(input.Position.X, input.Position.Y)
-  -- Hit-test on whichever PlayerGui/CoreGui holds this GUI (init.client.lua may parent it under gethui()).
-  local host = self.canvas
-  while host and not host:IsA("BasePlayerGui") do host = host.Parent end
-  host = host or Players.LocalPlayer.PlayerGui
-  local frame = host:GetGuiObjectsAtPosition(p0.X, p0.Y)[1]
-  local field
-  while frame and not self.blockOf[frame] do
-    if not field and self.targets.fields[frame] then field = frame end
-    frame = frame.Parent
-  end
-  if not frame then return false end
   local block = self.blockOf[frame]
   local index, holder, x0, y0
+  self.busy = true
   self.canvas.ScrollingEnabled = false
   Drag.track(input, function(p)
     if not holder then
@@ -93,6 +86,7 @@ function Workspace:_grab(input)
     holder.Position = UDim2.fromOffset(math.max(0, x0 + d.X), math.max(0, y0 + d.Y) + 12)
     self:_showPreview(self:_findTarget(self:_specOfHolder(index, holder), holder))
   end, function(p)
+    self.busy = false
     self.canvas.ScrollingEnabled = true
     self:_showPreview(nil)
     if not holder then
@@ -245,18 +239,70 @@ end
 
 function Workspace:hoverEnd() self:_showPreview(nil) end
 
-function Workspace:_wirePan()
-  self.canvas.InputBegan:Connect(function(input)
-    local t = input.UserInputType
-    if t ~= Enum.UserInputType.MouseButton1 and t ~= Enum.UserInputType.Touch then return end
-    if self:_grab(input) or t == Enum.UserInputType.Touch then return end
-    local last = Vector2.new(input.Position.X, input.Position.Y)
-    Drag.track(input, function(p)
-      local pos = self.canvas.CanvasPosition - (p - last) / Theme.scale
-      self.canvas.CanvasPosition = Vector2.new(math.max(0, pos.X), math.max(0, pos.Y))
-      last = p
+local function depthOf(inst)
+  local d = 0
+  while inst do d = d + 1; inst = inst.Parent end
+  return d
+end
+
+local function isPress(input)
+  local t = input.UserInputType
+  return t == Enum.UserInputType.MouseButton1 or t == Enum.UserInputType.Touch
+end
+
+-- Every block/field frame and the canvas report a press on their own. Which events fire, and in what order,
+-- is not relied on: the presses for one input are gathered, then resolved once (deepest block wins, so a
+-- reporter inside a stack block is grabbed instead of the block around it).
+function Workspace:_press(input, kind, frame)
+  if not isPress(input) then return end
+  local touch = input.UserInputType == Enum.UserInputType.Touch
+  -- a mouse has one left button, so a press while "busy" can only be a stale lock (button released outside the
+  -- window); a touch is blocked while another finger drags
+  if self.busy and touch then return end
+  local key = touch and "touch" or "mouse"
+  local pend = self.pending[key]
+  if not pend then
+    pend = { blocks = {}, fields = {} }
+    self.pending[key] = pend
+    task.defer(function()
+      self.pending[key] = nil
+      local best, bestD, field, fieldD = nil, -1, nil, -1
+      for _, f in ipairs(pend.blocks) do
+        local d = depthOf(f)
+        if d > bestD and f.Parent then best, bestD = f, d end
+      end
+      for _, f in ipairs(pend.fields) do
+        local d = depthOf(f)
+        if d > fieldD and best and f:IsDescendantOf(best) then field, fieldD = f, d end
+      end
+      if self:_grab(input, best, field) then return end
+      if touch then return end
+      self.busy = true
+      local last = Vector2.new(input.Position.X, input.Position.Y)
+      Drag.track(input, function(p)
+        local pos = self.canvas.CanvasPosition - (p - last) / Theme.scale
+        self.canvas.CanvasPosition = Vector2.new(math.max(0, pos.X), math.max(0, pos.Y))
+        last = p
+      end, function() self.busy = false end)
     end)
-  end)
+  end
+  if kind == "block" then table.insert(pend.blocks, frame)
+  elseif kind == "field" then table.insert(pend.fields, frame) end
+end
+
+function Workspace:_wirePan()
+  self.pending = {}
+  self.canvas.InputBegan:Connect(function(input) self:_press(input, "canvas") end)
+end
+
+-- Called after every render: connects the fresh frames (old ones were destroyed with their connections).
+function Workspace:_wireHits()
+  for frame in pairs(self.blockOf) do
+    frame.InputBegan:Connect(function(input) self:_press(input, "block", frame) end)
+  end
+  for frame in pairs(self.targets.fields) do
+    frame.InputBegan:Connect(function(input) self:_press(input, "field", frame) end)
+  end
 end
 
 function Workspace:render()
@@ -275,6 +321,7 @@ function Workspace:render()
 		holder.Parent = self.layer
 		view:buildStack(script.blocks, holder)
 	end
+	self:_wireHits()
 	self:_applyError()
 end
 

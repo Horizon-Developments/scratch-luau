@@ -2,7 +2,7 @@
 Scratch-like visual language for Roblox, no stage/sprites. Modular source, bundled to one script.
 
 Dev (multi-file): `rojo serve default.project.json` -> src/ appears in StarterPlayerScripts.BlockScript.
-Ship (single file): `./scripts/build.sh` -> dist/BlockScript.client.luau (wax bundle + darklua minify per .darklua.json). Needs lune, rojo, darklua on PATH. A prebuilt copy is in dist/.
+Ship (single file): `./scripts/build.sh` -> dist/BlockScript.client.luau (`scripts/bundle.py` require-shim bundle + darklua minify per .darklua.json + `scripts/prelude.luau`). Needs python3 and darklua on PATH. A prebuilt copy is in dist/.
 Tests: `tests/harness.lua` loads `src/Lang` under plain Lua with a virtual scheduler; `t_values.lua`, `t_interp.lua`, `t_deep.lua`, `t_place.lua` use it (they were run with Lua 5.5 through lupa, not Luau). The older probes in `tests/probes/` still need a `common.lua` that is not in this copy.
 
 Layout: src/init.client.lua (entry) | src/Lang (engine + blocks) | src/UI (GUI modules).

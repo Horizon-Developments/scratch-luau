@@ -51,6 +51,9 @@ local program = Program.new({ scripts = {
 local gui = Instance.new("ScreenGui")
 gui.Name = "BlockScript"
 gui.ResetOnSpawn = false
+-- Siblings stack by ZIndex within their parent only. Under Global (an executor container may default to it) a block's
+-- ZIndex (set in BlockView:buildStack so earlier blocks overlap later ones) would hide its own text behind its fill.
+gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 -- On touch devices the GUI starts below Roblox's built-in top bar instead of under it: with the inset kept, the
 -- ScreenGui is shorter by the bar's height, and fit() below scales the layout to that smaller area.
 local function applyInset() gui.IgnoreGuiInset = not UserInputService.TouchEnabled end
