@@ -1,0 +1,10 @@
+{
+  "rules": [
+    "remove_comments",
+    "remove_empty_do",
+    "remove_unused_if_branch",
+    "compute_expression",
+    "remove_spaces",
+    { "rule": "rename_variables", "globals": ["$default", "$roblox"] }
+  ]
+}

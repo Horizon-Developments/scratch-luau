@@ -1,0 +1,10 @@
+{
+  "name": "BlockScript",
+  "tree": {
+    "$className": "DataModel",
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": { "BlockScript": { "$path": "src" } }
+    }
+  }
+}
